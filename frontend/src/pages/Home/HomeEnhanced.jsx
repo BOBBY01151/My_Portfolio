@@ -24,11 +24,18 @@ import {
 } from 'lucide-react';
 
 // Import FigmaUI components
-import { Button } from '../../components/FigmaUI/ui/button';
-import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from '../../components/FigmaUI/ui/card';
-import { Badge } from '../../components/FigmaUI/ui/badge';
-import { TypingEffect } from '../../components/FigmaUI/TypingEffect';
-import { ImageWithFallback } from '../../components/FigmaUI/ImageWithFallback';
+import { 
+  Button, 
+  Card, 
+  CardHeader, 
+  CardTitle, 
+  CardDescription, 
+  CardContent, 
+  CardFooter,
+  Badge,
+  TypingEffect,
+  ImageWithFallback
+} from '../../components/FigmaUI';
 
 // Import existing components
 import Container from '../../components/Layout/Container';
