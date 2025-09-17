@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { motion, useScroll, useTransform, useSpring } from 'motion/react';
+import { motion, useScroll, useTransform, useSpring, useMotionValue } from 'motion/react';
 import { Button } from './components/ui/button';
 import { Card } from './components/ui/card';
 import { Badge } from './components/ui/badge';
@@ -7,6 +7,7 @@ import { Input } from './components/ui/input';
 import { Textarea } from './components/ui/textarea';
 import { ImageWithFallback } from './components/figma/ImageWithFallback';
 import { TypingEffect } from './components/TypingEffect';
+import profileImage from 'figma:asset/88d802b1f0074a8f6082841b611d87e2c24e237b.png';
 import { 
   Github, 
   Linkedin, 
@@ -29,6 +30,7 @@ import {
 
 export default function App() {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  const [isHovering, setIsHovering] = useState(false);
   const { scrollY } = useScroll();
 
   // Enhanced parallax transforms
@@ -38,18 +40,29 @@ export default function App() {
   const skillsY = useTransform(scrollY, [800, 1800], [0, -150]);
   const projectsY = useTransform(scrollY, [1200, 2200], [0, -100]);
 
-  // Smooth spring animations
-  const smoothMouseX = useSpring(mousePosition.x, { stiffness: 50, damping: 20 });
-  const smoothMouseY = useSpring(mousePosition.y, { stiffness: 50, damping: 20 });
+  // Advanced interactive mouse tracking
+  const mouseX = useMotionValue(0);
+  const mouseY = useMotionValue(0);
+  const smoothMouseX = useSpring(mouseX, { stiffness: 80, damping: 30 });
+  const smoothMouseY = useSpring(mouseY, { stiffness: 80, damping: 30 });
+  
+  // Transform values for interactive elements
+  const heroRotateX = useTransform(smoothMouseY, [0, typeof window !== 'undefined' ? window.innerHeight : 1080], [5, -5]);
+  const heroRotateY = useTransform(smoothMouseX, [0, typeof window !== 'undefined' ? window.innerWidth : 1920], [-5, 5]);
+  const glowIntensity = useTransform(smoothMouseX, [0, typeof window !== 'undefined' ? window.innerWidth : 1920], [0.3, 0.8]);
 
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
-      setMousePosition({ x: e.clientX, y: e.clientY });
+      const x = e.clientX;
+      const y = e.clientY;
+      setMousePosition({ x, y });
+      mouseX.set(x);
+      mouseY.set(y);
     };
 
     window.addEventListener('mousemove', handleMouseMove);
     return () => window.removeEventListener('mousemove', handleMouseMove);
-  }, []);
+  }, [mouseX, mouseY]);
 
   const typingWords = [
     'Full-Stack Developer',
@@ -120,44 +133,69 @@ export default function App() {
         }} />
       </div>
 
-      {/* Dynamic Particle Background */}
+      {/* Enhanced Interactive Particle Background */}
       <div className="fixed inset-0 overflow-hidden pointer-events-none">
-        {[...Array(6)].map((_, i) => (
+        {/* Floating particles with mouse interaction */}
+        {[...Array(12)].map((_, i) => (
           <motion.div
             key={i}
-            className="absolute w-2 h-2 bg-cyan-400 rounded-full opacity-60"
+            className={`absolute rounded-full ${
+              i % 4 === 0 ? 'bg-cyan-400' : 
+              i % 4 === 1 ? 'bg-emerald-400' : 
+              i % 4 === 2 ? 'bg-yellow-400' : 'bg-blue-400'
+            }`}
+            style={{
+              width: `${Math.random() * 8 + 4}px`,
+              height: `${Math.random() * 8 + 4}px`,
+              left: `${Math.random() * 100}%`,
+              top: `${Math.random() * 100}%`,
+              x: useTransform(smoothMouseX, [0, typeof window !== 'undefined' ? window.innerWidth : 1920], 
+                [Math.random() * -100, Math.random() * 100]),
+              y: useTransform(smoothMouseY, [0, typeof window !== 'undefined' ? window.innerHeight : 1080], 
+                [Math.random() * -50, Math.random() * 50]),
+            }}
             animate={{
-              x: [0, 100, 0],
-              y: [0, -100, 0],
               scale: [1, 1.5, 1],
+              opacity: [0.3, 0.8, 0.3],
             }}
             transition={{
-              duration: 4 + i,
+              duration: 3 + i * 0.5,
               repeat: Infinity,
               ease: "easeInOut",
-              delay: i * 0.5
-            }}
-            style={{
-              left: `${20 + i * 15}%`,
-              top: `${30 + i * 10}%`
+              delay: i * 0.2
             }}
           />
         ))}
         
+        {/* Large interactive glows */}
         <motion.div 
-          className="absolute w-96 h-96 bg-gradient-to-r from-cyan-500/10 to-purple-600/10 rounded-full blur-3xl"
+          className="absolute w-96 h-96 bg-gradient-to-r from-cyan-500/20 to-blue-600/20 rounded-full blur-3xl"
           style={{
-            transform: useTransform(smoothMouseX, [0, typeof window !== 'undefined' ? window.innerWidth : 1920], [-50, 50]),
-            left: '10%',
-            top: '20%'
+            x: useTransform(smoothMouseX, [0, typeof window !== 'undefined' ? window.innerWidth : 1920], [-100, 100]),
+            y: useTransform(smoothMouseY, [0, typeof window !== 'undefined' ? window.innerHeight : 1080], [-50, 50]),
+            left: '20%',
+            top: '10%',
+            scale: useTransform(glowIntensity, [0.3, 0.8], [1, 1.3])
           }}
         />
         <motion.div 
-          className="absolute w-96 h-96 bg-gradient-to-r from-pink-500/10 to-orange-600/10 rounded-full blur-3xl"
+          className="absolute w-96 h-96 bg-gradient-to-r from-emerald-500/20 to-yellow-600/20 rounded-full blur-3xl"
           style={{
-            transform: useTransform(smoothMouseY, [0, typeof window !== 'undefined' ? window.innerHeight : 1080], [-30, 30]),
-            right: '10%',
-            bottom: '20%'
+            x: useTransform(smoothMouseX, [0, typeof window !== 'undefined' ? window.innerWidth : 1920], [50, -50]),
+            y: useTransform(smoothMouseY, [0, typeof window !== 'undefined' ? window.innerHeight : 1080], [30, -30]),
+            right: '20%',
+            bottom: '10%',
+            scale: useTransform(glowIntensity, [0.3, 0.8], [1.2, 0.9])
+          }}
+        />
+        <motion.div 
+          className="absolute w-72 h-72 bg-gradient-to-r from-purple-500/15 to-pink-600/15 rounded-full blur-3xl"
+          style={{
+            x: useTransform(smoothMouseX, [0, typeof window !== 'undefined' ? window.innerWidth : 1920], [-30, 30]),
+            y: useTransform(smoothMouseY, [0, typeof window !== 'undefined' ? window.innerHeight : 1080], [-20, 20]),
+            left: '50%',
+            top: '50%',
+            scale: useTransform(glowIntensity, [0.3, 0.8], [0.8, 1.4])
           }}
         />
       </div>
@@ -210,35 +248,64 @@ export default function App() {
         </motion.div>
       </nav>
 
-      {/* Enhanced Hero Section */}
-      <section className="min-h-screen flex items-center justify-center relative pt-20">
+      {/* Highly Interactive Hero Section */}
+      <section className="min-h-screen flex items-center justify-center relative pt-20 overflow-hidden">
+        {/* Interactive 3D Background */}
         <motion.div 
-          style={{ y: heroY, scale: heroScale }} 
-          className="absolute inset-0 opacity-30"
+          style={{ 
+            y: heroY, 
+            scale: heroScale,
+            rotateX: heroRotateX,
+            rotateY: heroRotateY
+          }} 
+          className="absolute inset-0"
         >
-          <ImageWithFallback
-            src="https://images.unsplash.com/photo-1689692784625-1ce82784a25a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtb2Rlcm4lMjB3b3Jrc3BhY2UlMjBjeWJlcnB1bmslMjBuZW9ufGVufDF8fHx8MTc1Njk1OTU2OHww&ixlib=rb-4.1.0&q=80&w=1080"
-            alt="Cyberpunk workspace"
-            className="w-full h-full object-cover"
+          <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/20 to-black/60 z-10" />
+          {/* Glitch effect overlay */}
+          <motion.div 
+            className="absolute inset-0 z-20 mix-blend-overlay"
+            animate={{
+              opacity: [0, 0.1, 0, 0.05, 0],
+            }}
+            transition={{
+              duration: 0.2,
+              repeat: Infinity,
+              repeatDelay: 5 + Math.random() * 10
+            }}
+            style={{
+              background: `linear-gradient(45deg, 
+                transparent 30%, 
+                rgba(0, 255, 255, 0.1) 50%, 
+                transparent 70%)`
+            }}
           />
-          <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-transparent to-black/50" />
         </motion.div>
         
-        <div className="max-w-7xl mx-auto px-6 text-center relative z-10">
+        <div className="max-w-7xl mx-auto px-6 relative z-30 grid lg:grid-cols-2 gap-16 items-center w-full">
+          {/* Left side - Text content */}
           <motion.div
-            initial={{ scale: 0.8, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
+            initial={{ scale: 0.8, opacity: 0, x: -100 }}
+            animate={{ scale: 1, opacity: 1, x: 0 }}
             transition={{ duration: 1, delay: 0.2 }}
-            className="space-y-8"
+            className="space-y-8 text-center lg:text-left"
           >
-            {/* Floating Elements */}
+            {/* Floating geometric elements */}
             <div className="relative">
-              {[...Array(3)].map((_, i) => (
+              {[...Array(6)].map((_, i) => (
                 <motion.div
                   key={i}
-                  className="absolute w-20 h-20 border border-cyan-400/30 rounded-lg"
+                  className={`absolute border rounded-lg ${
+                    i % 3 === 0 ? 'border-cyan-400/40 w-16 h-16' : 
+                    i % 3 === 1 ? 'border-emerald-400/40 w-12 h-12' : 'border-yellow-400/40 w-8 h-8'
+                  }`}
+                  style={{
+                    x: useTransform(smoothMouseX, [0, typeof window !== 'undefined' ? window.innerWidth : 1920], 
+                      [Math.random() * -30, Math.random() * 30]),
+                    y: useTransform(smoothMouseY, [0, typeof window !== 'undefined' ? window.innerHeight : 1080], 
+                      [Math.random() * -20, Math.random() * 20]),
+                  }}
                   animate={{ 
-                    rotate: [0, 360],
+                    rotate: [0, 180, 360],
                     scale: [1, 1.2, 1]
                   }}
                   transition={{ 
@@ -246,23 +313,57 @@ export default function App() {
                     repeat: Infinity,
                     ease: "linear"
                   }}
-                  style={{
-                    top: `${-40 + i * 20}px`,
-                    right: `${-60 + i * 30}px`
-                  }}
+                  className={`${
+                    i % 2 === 0 ? 'top-0 -right-16' : i % 3 === 1 ? '-top-8 right-8' : 'top-8 -right-12'
+                  }`}
                 />
               ))}
               
               <motion.h1 
-                className="text-7xl md:text-9xl font-bold mb-8"
+                className="text-5xl md:text-7xl xl:text-8xl font-bold mb-8 relative"
                 initial={{ opacity: 0, y: 50 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, delay: 0.5 }}
+                style={{
+                  x: useTransform(smoothMouseX, [0, typeof window !== 'undefined' ? window.innerWidth : 1920], [-10, 10]),
+                  y: useTransform(smoothMouseY, [0, typeof window !== 'undefined' ? window.innerHeight : 1080], [-5, 5]),
+                }}
               >
-                <span className="text-white">Vimukthi</span>
+                <span className="text-white relative">
+                  Vimukthi
+                  {/* Glitch text effect */}
+                  <motion.span
+                    className="absolute inset-0 text-cyan-400"
+                    animate={{
+                      x: [0, 2, 0, -2, 0],
+                      opacity: [0, 0.5, 0, 0.3, 0]
+                    }}
+                    transition={{
+                      duration: 0.3,
+                      repeat: Infinity,
+                      repeatDelay: 3 + Math.random() * 5
+                    }}
+                  >
+                    Vimukthi
+                  </motion.span>
+                </span>
                 <br />
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-purple-500 to-pink-500">
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-emerald-400 via-yellow-400 to-blue-500 relative">
                   Buddika
+                  <motion.span
+                    className="absolute inset-0 text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-cyan-400"
+                    animate={{
+                      x: [0, -2, 0, 2, 0],
+                      opacity: [0, 0.7, 0, 0.4, 0]
+                    }}
+                    transition={{
+                      duration: 0.4,
+                      repeat: Infinity,
+                      repeatDelay: 4 + Math.random() * 6
+                    }}
+                  >
+                    Buddika
+                  </motion.span>
                 </span>
               </motion.h1>
             </div>
@@ -271,7 +372,10 @@ export default function App() {
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.7 }}
-              className="text-2xl md:text-4xl text-cyan-300 mb-8 min-h-[3rem] flex items-center justify-center"
+              className="text-xl md:text-3xl text-cyan-300 mb-8 min-h-[3rem] flex items-center justify-center lg:justify-start"
+              style={{
+                x: useTransform(smoothMouseX, [0, typeof window !== 'undefined' ? window.innerWidth : 1920], [-5, 5]),
+              }}
             >
               <TypingEffect 
                 words={typingWords}
@@ -286,7 +390,7 @@ export default function App() {
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.9 }}
-              className="text-xl text-gray-300 max-w-3xl mx-auto leading-relaxed"
+              className="text-lg text-gray-300 max-w-2xl mx-auto lg:mx-0 leading-relaxed"
             >
               Passionate software engineer from Sri Lanka, specializing in cutting-edge web technologies, 
               artificial intelligence, and creating digital experiences that push the boundaries of innovation.
@@ -296,27 +400,168 @@ export default function App() {
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 1.1 }}
-              className="flex flex-col sm:flex-row gap-6 justify-center items-center pt-8"
+              className="flex flex-col sm:flex-row gap-6 justify-center lg:justify-start items-center pt-8"
             >
-              <Button 
-                size="lg" 
-                className="bg-gradient-to-r from-cyan-500 to-purple-600 hover:from-cyan-600 hover:to-purple-700 text-white border-0 px-8 py-4 text-lg shadow-lg shadow-cyan-500/25 relative overflow-hidden group"
+              <motion.div
+                whileHover={{ scale: 1.05, y: -5 }}
+                whileTap={{ scale: 0.95 }}
               >
-                <span className="relative z-10 flex items-center gap-2">
-                  <Zap className="w-5 h-5" />
-                  Explore My Work
-                </span>
-                <div className="absolute inset-0 bg-gradient-to-r from-purple-600 to-cyan-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-              </Button>
+                <Button 
+                  size="lg" 
+                  className="bg-gradient-to-r from-cyan-500 to-purple-600 hover:from-cyan-600 hover:to-purple-700 text-white border-0 px-8 py-4 text-lg shadow-lg shadow-cyan-500/25 relative overflow-hidden group"
+                >
+                  <span className="relative z-10 flex items-center gap-2">
+                    <Zap className="w-5 h-5" />
+                    Explore My Work
+                  </span>
+                  <div className="absolute inset-0 bg-gradient-to-r from-purple-600 to-cyan-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                </Button>
+              </motion.div>
               
-              <Button 
-                size="lg" 
-                variant="outline" 
-                className="border-cyan-400/50 text-cyan-400 hover:bg-cyan-500/10 hover:border-cyan-400 px-8 py-4 text-lg backdrop-blur-sm"
+              <motion.div
+                whileHover={{ scale: 1.05, y: -5 }}
+                whileTap={{ scale: 0.95 }}
               >
-                <Download className="w-5 h-5 mr-2" />
-                Download CV
-              </Button>
+                <Button 
+                  size="lg" 
+                  variant="outline" 
+                  className="border-cyan-400/50 text-cyan-400 hover:bg-cyan-500/10 hover:border-cyan-400 px-8 py-4 text-lg backdrop-blur-sm"
+                >
+                  <Download className="w-5 h-5 mr-2" />
+                  Download CV
+                </Button>
+              </motion.div>
+            </motion.div>
+          </motion.div>
+
+          {/* Right side - Interactive Profile Image */}
+          <motion.div
+            initial={{ scale: 0.8, opacity: 0, x: 100 }}
+            animate={{ scale: 1, opacity: 1, x: 0 }}
+            transition={{ duration: 1, delay: 0.4 }}
+            className="relative"
+            onMouseEnter={() => setIsHovering(true)}
+            onMouseLeave={() => setIsHovering(false)}
+          >
+            {/* Outer glow ring */}
+            <motion.div
+              className="absolute inset-0 rounded-full"
+              style={{
+                background: `conic-gradient(from 0deg, 
+                  rgba(6, 182, 212, 0.5), 
+                  rgba(16, 185, 129, 0.5), 
+                  rgba(250, 204, 21, 0.5), 
+                  rgba(59, 130, 246, 0.5), 
+                  rgba(147, 51, 234, 0.5), 
+                  rgba(6, 182, 212, 0.5))`,
+                scale: useTransform(glowIntensity, [0.3, 0.8], [1.1, 1.3]),
+                filter: 'blur(20px)'
+              }}
+              animate={{
+                rotate: [0, 360]
+              }}
+              transition={{
+                duration: 20,
+                repeat: Infinity,
+                ease: "linear"
+              }}
+            />
+
+            {/* Interactive frame */}
+            <motion.div
+              className="relative z-10 rounded-full p-4 backdrop-blur-xl bg-gradient-to-br from-black/20 to-gray-900/40 border-2 border-gradient-to-r from-cyan-400/50 to-purple-600/50"
+              style={{
+                rotateX: useTransform(smoothMouseY, [0, typeof window !== 'undefined' ? window.innerHeight : 1080], [5, -5]),
+                rotateY: useTransform(smoothMouseX, [0, typeof window !== 'undefined' ? window.innerWidth : 1920], [-5, 5]),
+                scale: isHovering ? 1.05 : 1,
+              }}
+              transition={{ type: "spring", stiffness: 300, damping: 30 }}
+            >
+              {/* Profile image with interactive effects */}
+              <motion.div
+                className="relative rounded-full overflow-hidden"
+                style={{
+                  filter: `hue-rotate(${useTransform(smoothMouseX, [0, typeof window !== 'undefined' ? window.innerWidth : 1920], [0, 30])}deg) 
+                           brightness(${useTransform(glowIntensity, [0.3, 0.8], [1.1, 1.3])})`,
+                }}
+              >
+                <img
+                  src={profileImage}
+                  alt="Vimukthi Buddika"
+                  className="w-80 h-80 md:w-96 md:h-96 object-cover rounded-full"
+                />
+                
+                {/* Animated overlay effects */}
+                <div className="absolute inset-0 rounded-full bg-gradient-to-tr from-cyan-400/10 via-transparent to-purple-600/10" />
+                
+                {/* Floating particles around image */}
+                {[...Array(8)].map((_, i) => (
+                  <motion.div
+                    key={i}
+                    className={`absolute w-3 h-3 rounded-full ${
+                      i % 4 === 0 ? 'bg-cyan-400' : 
+                      i % 4 === 1 ? 'bg-emerald-400' : 
+                      i % 4 === 2 ? 'bg-yellow-400' : 'bg-blue-400'
+                    }`}
+                    style={{
+                      left: `${50 + Math.cos(i * Math.PI / 4) * 45}%`,
+                      top: `${50 + Math.sin(i * Math.PI / 4) * 45}%`,
+                      x: useTransform(smoothMouseX, [0, typeof window !== 'undefined' ? window.innerWidth : 1920], 
+                        [Math.cos(i * Math.PI / 4) * -20, Math.cos(i * Math.PI / 4) * 20]),
+                      y: useTransform(smoothMouseY, [0, typeof window !== 'undefined' ? window.innerHeight : 1080], 
+                        [Math.sin(i * Math.PI / 4) * -10, Math.sin(i * Math.PI / 4) * 10]),
+                    }}
+                    animate={{
+                      scale: [1, 1.5, 1],
+                      opacity: [0.4, 1, 0.4],
+                    }}
+                    transition={{
+                      duration: 2 + i * 0.3,
+                      repeat: Infinity,
+                      ease: "easeInOut",
+                      delay: i * 0.2
+                    }}
+                  />
+                ))}
+              </motion.div>
+
+              {/* Interactive code elements */}
+              <motion.div
+                className="absolute -top-4 -left-4 bg-black/80 backdrop-blur-sm rounded-lg px-3 py-2 text-cyan-400 text-sm font-mono border border-cyan-400/30"
+                style={{
+                  x: useTransform(smoothMouseX, [0, typeof window !== 'undefined' ? window.innerWidth : 1920], [-10, 10]),
+                  y: useTransform(smoothMouseY, [0, typeof window !== 'undefined' ? window.innerHeight : 1080], [-5, 5]),
+                }}
+                animate={{
+                  opacity: [0.7, 1, 0.7],
+                }}
+                transition={{
+                  duration: 2,
+                  repeat: Infinity,
+                  ease: "easeInOut"
+                }}
+              >
+                const dev = "innovative";
+              </motion.div>
+              
+              <motion.div
+                className="absolute -bottom-4 -right-4 bg-black/80 backdrop-blur-sm rounded-lg px-3 py-2 text-emerald-400 text-sm font-mono border border-emerald-400/30"
+                style={{
+                  x: useTransform(smoothMouseX, [0, typeof window !== 'undefined' ? window.innerWidth : 1920], [10, -10]),
+                  y: useTransform(smoothMouseY, [0, typeof window !== 'undefined' ? window.innerHeight : 1080], [5, -5]),
+                }}
+                animate={{
+                  opacity: [0.7, 1, 0.7],
+                }}
+                transition={{
+                  duration: 2.5,
+                  repeat: Infinity,
+                  ease: "easeInOut",
+                  delay: 0.5
+                }}
+              >
+                return &lt;Future /&gt;;
+              </motion.div>
             </motion.div>
           </motion.div>
         </div>

@@ -4,7 +4,7 @@ const Card = ({ children, className = '', ...props }) => {
   return (
     <div
       className={cn(
-        'rounded-lg border border-border bg-card shadow-sm',
+        'rounded-lg border border-gray-200 bg-white shadow-sm dark:border-gray-800 dark:bg-gray-900',
         className
       )}
       {...props}
@@ -39,7 +39,7 @@ const CardTitle = ({ children, className = '', ...props }) => {
 const CardDescription = ({ children, className = '', ...props }) => {
   return (
     <p
-      className={cn('text-sm text-muted-foreground', className)}
+      className={cn('text-sm text-gray-500 dark:text-gray-400', className)}
       {...props}
     >
       {children}

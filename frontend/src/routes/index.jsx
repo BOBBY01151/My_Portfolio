@@ -8,6 +8,7 @@ import Footer from '../components/Layout/Footer'
 
 // Pages
 import Home from '../pages/Home/Home'
+import HomeEnhanced from '../pages/Home/HomeEnhanced'
 import Login from '../pages/Auth/Login'
 import Projects from '../pages/Projects/Projects'
 import Experience from '../pages/Experience/Experience'
@@ -15,7 +16,6 @@ import Contact from '../pages/Contact/Contact'
 import Admin from '../pages/Admin/Admin'
 import AdminProjects from '../pages/Admin/Projects/List'
 import AdminExperience from '../pages/Admin/Experience/List'
-import FigmaUIDemo from '../pages/FigmaUI/FigmaUI'
 
 const AppRoutes = () => {
   return (
@@ -24,12 +24,11 @@ const AppRoutes = () => {
       <main className="min-h-screen">
         <Routes>
           {/* Public Routes */}
-          <Route path={ROUTES.HOME} element={<Home />} />
+          <Route path={ROUTES.HOME} element={<HomeEnhanced />} />
           <Route path={ROUTES.LOGIN} element={<Login />} />
           <Route path={ROUTES.PROJECTS} element={<Projects />} />
           <Route path={ROUTES.EXPERIENCE} element={<Experience />} />
           <Route path={ROUTES.CONTACT} element={<Contact />} />
-          <Route path="/figma-ui" element={<FigmaUIDemo />} />
 
           {/* Protected Routes */}
           <Route
@@ -63,15 +62,15 @@ const AppRoutes = () => {
             element={
               <div className="min-h-screen flex items-center justify-center">
                 <div className="text-center">
-                  <h1 className="text-4xl font-bold text-foreground mb-4">
+                  <h1 className="text-4xl font-bold text-gray-900 dark:text-white mb-4">
                     404
                   </h1>
-                  <p className="text-muted-foreground mb-8">
+                  <p className="text-gray-600 dark:text-gray-400 mb-8">
                     Page not found
                   </p>
                   <a
                     href={ROUTES.HOME}
-                    className="text-primary hover:text-primary/80"
+                    className="text-primary-600 hover:text-primary-700 dark:text-primary-400 dark:hover:text-primary-300"
                   >
                     Go back home
                   </a>

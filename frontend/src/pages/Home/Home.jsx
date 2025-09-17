@@ -5,7 +5,7 @@ import Button from '../../components/UI/Button'
 import Container from '../../components/Layout/Container'
 import { Section, SectionHeader, SectionContent } from '../../components/UI/Section'
 
-const Home = () => {
+const HomeOriginal = () => {
   return (
     <>
       {/* Hero Section */}
@@ -118,4 +118,4 @@ const Home = () => {
   )
 }
 
-export default Home
+export default HomeOriginal
