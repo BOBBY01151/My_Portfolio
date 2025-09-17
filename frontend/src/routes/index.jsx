@@ -11,8 +11,10 @@ import Home from '../pages/Home/Home'
 import HomeEnhanced from '../pages/Home/HomeEnhanced'
 import Login from '../pages/Auth/Login'
 import Projects from '../pages/Projects/Projects'
+import ProjectsEnhanced from '../pages/Projects/ProjectsEnhanced'
 import Experience from '../pages/Experience/Experience'
 import Contact from '../pages/Contact/Contact'
+import ContactEnhanced from '../pages/Contact/ContactEnhanced'
 import Admin from '../pages/Admin/Admin'
 import AdminProjects from '../pages/Admin/Projects/List'
 import AdminExperience from '../pages/Admin/Experience/List'
@@ -26,9 +28,9 @@ const AppRoutes = () => {
           {/* Public Routes */}
           <Route path={ROUTES.HOME} element={<HomeEnhanced />} />
           <Route path={ROUTES.LOGIN} element={<Login />} />
-          <Route path={ROUTES.PROJECTS} element={<Projects />} />
+          <Route path={ROUTES.PROJECTS} element={<ProjectsEnhanced />} />
           <Route path={ROUTES.EXPERIENCE} element={<Experience />} />
-          <Route path={ROUTES.CONTACT} element={<Contact />} />
+          <Route path={ROUTES.CONTACT} element={<ContactEnhanced />} />
 
           {/* Protected Routes */}
           <Route
