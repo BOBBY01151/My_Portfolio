@@ -4,7 +4,7 @@ import { Menu, X, LogIn } from 'lucide-react'
 import { cn } from '../../lib/helpers'
 import { ROUTES } from '../../lib/constants'
 import useAuthStore from '../../store/authStore'
-import Button from '../UI/Button'
+import { Button } from '../UI/Button'
 import ThemeToggle from './ThemeToggle'
 
 const Navbar = () => {

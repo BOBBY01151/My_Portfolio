@@ -1,6 +1,6 @@
 import { Sun, Moon } from 'lucide-react'
 import { useTheme } from '../../hooks/useTheme'
-import Button from '../UI/Button'
+import { Button } from '../UI/Button'
 
 const ThemeToggle = ({ className = '' }) => {
   const { theme, toggleTheme } = useTheme()

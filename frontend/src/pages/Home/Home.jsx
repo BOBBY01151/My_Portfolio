@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom'
 import { ArrowRight, Code, Briefcase, Mail } from 'lucide-react'
 import { ROUTES } from '../../lib/constants'
-import Button from '../../components/UI/Button'
+import { Button } from '../../components/UI/Button'
 import Container from '../../components/Layout/Container'
 import { Section, SectionHeader, SectionContent } from '../../components/UI/Section'
 

@@ -1,6 +1,6 @@
 import Container from '../../../components/Layout/Container'
 import { Section, SectionHeader, SectionContent } from '../../../components/UI/Section'
-import Button from '../../../components/UI/Button'
+import { Button } from '../../../components/UI/Button'
 
 const AdminProjects = () => {
   return (

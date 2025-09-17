@@ -3,8 +3,8 @@ import { Navigate, useLocation } from 'react-router-dom'
 import { Eye, EyeOff } from 'lucide-react'
 import useAuthStore from '../../store/authStore'
 import { ROUTES } from '../../lib/constants'
-import Button from '../../components/UI/Button'
-import Input from '../../components/UI/Input'
+import { Button } from '../../components/UI/Button'
+import { Input } from '../../components/UI/Input'
 import Container from '../../components/Layout/Container'
 
 const Login = () => {

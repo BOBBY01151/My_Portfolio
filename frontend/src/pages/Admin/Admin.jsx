@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom'
 import { ROUTES } from '../../lib/constants'
 import Container from '../../components/Layout/Container'
 import { Section, SectionHeader, SectionContent } from '../../components/UI/Section'
-import Button from '../../components/UI/Button'
+import { Button } from '../../components/UI/Button'
 import { Card, CardContent, CardHeader, CardTitle } from '../../components/UI/Card'
 
 const Admin = () => {
