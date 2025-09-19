@@ -33,6 +33,8 @@ import {
   CardContent, 
   CardFooter,
   Badge,
+  Input,
+  Textarea,
   TypingEffect,
   ImageWithFallback
 } from '../../components/FigmaUI';
@@ -57,6 +59,9 @@ const HomeEnhanced = () => {
   // Smooth spring animations
   const smoothMouseX = useSpring(mousePosition.x, { stiffness: 50, damping: 20 });
   const smoothMouseY = useSpring(mousePosition.y, { stiffness: 50, damping: 20 });
+  
+  // FigmaUI glow intensity transform
+  const glowIntensity = useTransform(smoothMouseX, [0, typeof window !== 'undefined' ? window.innerWidth : 1920], [0.3, 0.8]);
 
   useEffect(() => {
     const handleMouseMove = (e) => {
@@ -115,7 +120,7 @@ const HomeEnhanced = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-white dark:bg-black relative overflow-x-hidden">
+    <div className="min-h-screen bg-black relative overflow-x-hidden">
       {/* FigmaUI Animated Grid Background */}
       <div className="fixed inset-0 opacity-20">
         <div className="absolute inset-0" style={{
@@ -169,7 +174,7 @@ const HomeEnhanced = () => {
             y: useTransform(smoothMouseY, [0, typeof window !== 'undefined' ? window.innerHeight : 1080], [-50, 50]),
             left: '20%',
             top: '10%',
-            scale: useTransform(useTransform(smoothMouseX, [0, typeof window !== 'undefined' ? window.innerWidth : 1920], [0.3, 0.8]), [0.3, 0.8], [1, 1.3])
+            scale: useTransform(glowIntensity, [0.3, 0.8], [1, 1.3])
           }}
         />
         <motion.div 
@@ -179,7 +184,7 @@ const HomeEnhanced = () => {
             y: useTransform(smoothMouseY, [0, typeof window !== 'undefined' ? window.innerHeight : 1080], [30, -30]),
             right: '20%',
             bottom: '10%',
-            scale: useTransform(useTransform(smoothMouseX, [0, typeof window !== 'undefined' ? window.innerWidth : 1920], [0.3, 0.8]), [0.3, 0.8], [1.2, 0.9])
+            scale: useTransform(glowIntensity, [0.3, 0.8], [1.2, 0.9])
           }}
         />
         <motion.div 
@@ -189,7 +194,7 @@ const HomeEnhanced = () => {
             y: useTransform(smoothMouseY, [0, typeof window !== 'undefined' ? window.innerHeight : 1080], [-20, 20]),
             left: '50%',
             top: '50%',
-            scale: useTransform(useTransform(smoothMouseX, [0, typeof window !== 'undefined' ? window.innerWidth : 1920], [0.3, 0.8]), [0.3, 0.8], [0.8, 1.4])
+            scale: useTransform(glowIntensity, [0.3, 0.8], [0.8, 1.4])
           }}
         />
       </div>
@@ -229,17 +234,17 @@ const HomeEnhanced = () => {
         
         <div className="max-w-7xl mx-auto px-6 relative z-30 grid lg:grid-cols-2 gap-16 items-center w-full">
           {/* Left side - Text content */}
-          <motion.div
+            <motion.div
             initial={{ scale: 0.8, opacity: 0, x: -100 }}
             animate={{ scale: 1, opacity: 1, x: 0 }}
-            transition={{ duration: 1, delay: 0.2 }}
+              transition={{ duration: 1, delay: 0.2 }}
             className="space-y-8 text-center lg:text-left"
-          >
+            >
             {/* Floating geometric elements */}
-            <div className="relative">
+              <div className="relative">
               {[...Array(6)].map((_, i) => (
-                <motion.div
-                  key={i}
+                  <motion.div
+                    key={i}
                   className={`absolute border rounded-lg ${
                     i % 3 === 0 ? 'border-cyan-400/40 w-16 h-16' : 
                     i % 3 === 1 ? 'border-emerald-400/40 w-12 h-12' : 'border-yellow-400/40 w-8 h-8'
@@ -252,23 +257,23 @@ const HomeEnhanced = () => {
                     y: useTransform(smoothMouseY, [0, typeof window !== 'undefined' ? window.innerHeight : 1080], 
                       [Math.random() * -20, Math.random() * 20]),
                   }}
-                  animate={{ 
+                    animate={{ 
                     rotate: [0, 180, 360],
-                    scale: [1, 1.2, 1]
-                  }}
-                  transition={{ 
-                    duration: 8 + i * 2, 
-                    repeat: Infinity,
-                    ease: "linear"
-                  }}
-                />
-              ))}
-              
-              <motion.h1 
+                      scale: [1, 1.2, 1]
+                    }}
+                    transition={{ 
+                      duration: 8 + i * 2, 
+                      repeat: Infinity,
+                      ease: "linear"
+                    }}
+                  />
+                ))}
+                
+                <motion.h1 
                 className="text-5xl md:text-7xl xl:text-8xl font-bold mb-8 relative"
-                initial={{ opacity: 0, y: 50 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: 0.5 }}
+                  initial={{ opacity: 0, y: 50 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.8, delay: 0.5 }}
                 style={{
                   x: useTransform(smoothMouseX, [0, typeof window !== 'undefined' ? window.innerWidth : 1920], [-10, 10]),
                   y: useTransform(smoothMouseY, [0, typeof window !== 'undefined' ? window.innerHeight : 1080], [-5, 5]),
@@ -292,7 +297,7 @@ const HomeEnhanced = () => {
                     Vimukthi
                   </motion.span>
                 </span>
-                <br />
+                  <br />
                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-emerald-400 via-yellow-400 to-blue-500 relative">
                   Buddika
                   <motion.span
@@ -309,42 +314,42 @@ const HomeEnhanced = () => {
                   >
                     Buddika
                   </motion.span>
-                </span>
-              </motion.h1>
-            </div>
+                  </span>
+                </motion.h1>
+              </div>
 
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.7 }}
+              <motion.div
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: 0.7 }}
               className="text-xl md:text-3xl text-cyan-300 mb-8 min-h-[3rem] flex items-center justify-center lg:justify-start"
               style={{
                 x: useTransform(smoothMouseX, [0, typeof window !== 'undefined' ? window.innerWidth : 1920], [-5, 5]),
               }}
-            >
-              <TypingEffect 
-                words={typingWords}
-                className="font-medium"
-                typingSpeed={100}
-                deletingSpeed={80}
-                delayBetweenWords={2000}
-              />
-            </motion.div>
+              >
+                <TypingEffect 
+                  words={typingWords}
+                  className="font-medium"
+                  typingSpeed={100}
+                  deletingSpeed={80}
+                  delayBetweenWords={2000}
+                />
+              </motion.div>
 
-            <motion.p
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.9 }}
+              <motion.p
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: 0.9 }}
               className="text-lg text-gray-300 max-w-2xl mx-auto lg:mx-0 leading-relaxed"
-            >
-              Passionate software engineer from Sri Lanka, specializing in cutting-edge web technologies, 
-              artificial intelligence, and creating digital experiences that push the boundaries of innovation.
-            </motion.p>
+              >
+                Passionate software engineer from Sri Lanka, specializing in cutting-edge web technologies, 
+                artificial intelligence, and creating digital experiences that push the boundaries of innovation.
+              </motion.p>
 
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 1.1 }}
+              <motion.div
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: 1.1 }}
               className="flex flex-col sm:flex-row gap-6 justify-center lg:justify-start items-center pt-8"
             >
               <motion.div
@@ -513,15 +518,15 @@ const HomeEnhanced = () => {
               >
                 return &lt;Future /&gt;;
               </motion.div>
+              </motion.div>
             </motion.div>
-          </motion.div>
-        </div>
+          </div>
       </section>
 
       {/* Enhanced About Section - FigmaUI Style */}
       <section id="about" className="py-32 relative">
         <motion.div style={{ y: aboutY }} className="max-w-7xl mx-auto px-6">
-          <motion.div
+          <motion.div 
             initial={{ opacity: 0, y: 100 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
@@ -616,7 +621,7 @@ const HomeEnhanced = () => {
                   );
                 })}
               </motion.div>
-            </div>
+                </div>
           </motion.div>
         </motion.div>
       </section>
@@ -624,7 +629,7 @@ const HomeEnhanced = () => {
       {/* Enhanced Skills & Expertise Section - FigmaUI Style */}
       <section id="skills" className="py-32 relative">
         <motion.div style={{ y: skillsY }} className="max-w-7xl mx-auto px-6">
-          <motion.div
+          <motion.div 
             initial={{ opacity: 0, y: 100 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
@@ -683,7 +688,7 @@ const HomeEnhanced = () => {
                         </div>
                       </div>
                     </div>
-                  </div>
+                    </div>
                 </motion.div>
               );
             })}
@@ -712,7 +717,7 @@ const HomeEnhanced = () => {
 
           <div className="grid lg:grid-cols-2 gap-8 mb-16">
             {projects.filter(p => p.featured).map((project, index) => (
-              <motion.div
+          <motion.div 
                 key={project.title}
                 initial={{ opacity: 0, y: 50 }}
                 whileInView={{ opacity: 1, y: 0 }}
@@ -723,45 +728,45 @@ const HomeEnhanced = () => {
               >
                 <Card className="backdrop-blur-2xl bg-gradient-to-br from-white/50 to-gray-100/50 dark:from-black/50 dark:to-gray-900/50 border border-cyan-500/20 shadow-2xl overflow-hidden hover:border-cyan-400/50 transition-all duration-300 h-full">
                   <div className="relative overflow-hidden">
-                    <ImageWithFallback
-                      src={project.image}
-                      alt={project.title}
+                  <ImageWithFallback
+                    src={project.image}
+                    alt={project.title}
                       className="w-full h-64 object-cover group-hover:scale-110 transition-transform duration-500"
-                    />
+                  />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
                     <div className="absolute top-4 right-4">
                       <Badge className="bg-gradient-to-r from-cyan-500 to-purple-600 text-white border-0">
-                        Featured
-                      </Badge>
+                      Featured
+                    </Badge>
                     </div>
-                  </div>
+                </div>
                   
                   <div className="p-8 space-y-6">
                     <h3 className="text-2xl font-bold text-gray-900 dark:text-white group-hover:text-cyan-400 transition-colors">
-                      {project.title}
+                    {project.title}
                     </h3>
                     <p className="text-gray-600 dark:text-gray-300 leading-relaxed">{project.description}</p>
                     
                     <div className="flex flex-wrap gap-2">
                       {project.tags.map((tag) => (
                         <Badge key={tag} className="bg-cyan-500/20 text-cyan-600 dark:text-cyan-300 border-cyan-500/30 hover:bg-cyan-500/30 transition-colors">
-                          {tag}
-                        </Badge>
-                      ))}
-                    </div>
+                        {tag}
+                      </Badge>
+                    ))}
+                  </div>
                     
                     <div className="flex gap-4 pt-4">
                       <Button size="sm" variant="outline" className="border-cyan-400/50 text-cyan-600 dark:text-cyan-400 hover:bg-cyan-500/10 hover:border-cyan-400">
                         <Github className="w-4 h-4 mr-2" />
-                        Code
-                      </Button>
+                    Code
+                  </Button>
                       <Button size="sm" className="bg-gradient-to-r from-cyan-500 to-purple-600 hover:from-cyan-600 hover:to-purple-700 text-white border-0">
                         <ExternalLink className="w-4 h-4 mr-2" />
                         Live Demo
-                      </Button>
+                  </Button>
                     </div>
                   </div>
-                </Card>
+              </Card>
               </motion.div>
             ))}
           </div>
@@ -809,10 +814,10 @@ const HomeEnhanced = () => {
                     </div>
                   </div>
                 </Card>
-              </motion.div>
+          </motion.div>
             ))}
           </div>
-
+          
           <div className="text-center">
             <Link to={ROUTES.PROJECTS}>
               <Button variant="outline" size="lg" className="border-cyan-400/50 text-cyan-600 dark:text-cyan-400 hover:bg-cyan-500/10 hover:border-cyan-400">
@@ -822,6 +827,107 @@ const HomeEnhanced = () => {
             </Link>
           </div>
         </motion.div>
+      </section>
+
+      {/* Enhanced Get in Touch Section - FigmaUI Style */}
+      <section id="contact" className="py-32 relative">
+        <div className="max-w-7xl mx-auto px-6">
+          <motion.div
+            initial={{ opacity: 0, y: 100 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            viewport={{ once: true }}
+            className="text-center mb-20"
+          >
+            <h2 className="text-5xl font-bold text-gray-900 dark:text-white mb-6">
+              Get In <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-purple-600">Touch</span>
+            </h2>
+            <div className="w-20 h-1 bg-gradient-to-r from-cyan-400 to-purple-600 rounded-full mx-auto mb-6" />
+            <p className="text-xl text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
+              Ready to bring your next project to life? Let's create something amazing together.
+            </p>
+          </motion.div>
+
+          <div className="grid lg:grid-cols-2 gap-16">
+            <motion.div
+              initial={{ opacity: 0, x: -50 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8 }}
+              viewport={{ once: true }}
+              className="space-y-8"
+            >
+              <div className="backdrop-blur-2xl bg-gradient-to-br from-cyan-500/10 to-purple-600/10 border border-cyan-500/30 rounded-3xl p-8 shadow-2xl">
+                <h3 className="text-2xl font-semibold text-gray-900 dark:text-white mb-8">Let's Connect</h3>
+                <div className="space-y-6">
+                  {[
+                    { icon: Mail, label: 'Email', value: 'vimukthi.buddika@email.com', color: 'from-blue-500 to-cyan-500' },
+                    { icon: Phone, label: 'Phone', value: '+94 71 234 5678', color: 'from-green-500 to-emerald-500' },
+                    { icon: MapPin, label: 'Location', value: 'Colombo, Sri Lanka', color: 'from-purple-500 to-pink-500' }
+                  ].map((contact, index) => {
+                    const Icon = contact.icon;
+                    return (
+                      <motion.div
+                        key={contact.label}
+                        initial={{ opacity: 0, x: -30 }}
+                        whileInView={{ opacity: 1, x: 0 }}
+                        transition={{ duration: 0.6, delay: index * 0.1 }}
+                        viewport={{ once: true }}
+                        className="flex items-center gap-4 p-4 backdrop-blur-sm bg-white/20 dark:bg-black/20 rounded-xl hover:bg-white/30 dark:hover:bg-black/30 transition-colors"
+                      >
+                        <div className={`w-12 h-12 bg-gradient-to-r ${contact.color} rounded-xl flex items-center justify-center`}>
+                          <Icon className="w-6 h-6 text-white" />
+                        </div>
+                        <div>
+                          <p className="text-gray-600 dark:text-gray-400 text-sm">{contact.label}</p>
+                          <p className="text-gray-900 dark:text-white font-medium">{contact.value}</p>
+                        </div>
+                      </motion.div>
+                    );
+                  })}
+                </div>
+              </div>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, x: 50 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8 }}
+              viewport={{ once: true }}
+              className="backdrop-blur-2xl bg-gradient-to-br from-white/50 to-gray-100/50 dark:from-black/50 dark:to-gray-900/50 border border-cyan-500/20 rounded-3xl p-8 shadow-2xl"
+            >
+              <h3 className="text-2xl font-semibold text-gray-900 dark:text-white mb-8">Send a Message</h3>
+              <form className="space-y-6">
+                <div className="grid md:grid-cols-2 gap-4">
+                  <Input
+                    placeholder="Your Name"
+                    className="bg-white/30 dark:bg-black/30 border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white placeholder:text-gray-500 dark:placeholder:text-gray-400 focus:border-cyan-500 focus:ring-cyan-500/20"
+                  />
+                  <Input
+                    type="email"
+                    placeholder="Your Email"
+                    className="bg-white/30 dark:bg-black/30 border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white placeholder:text-gray-500 dark:placeholder:text-gray-400 focus:border-cyan-500 focus:ring-cyan-500/20"
+                  />
+                </div>
+                <Input
+                  placeholder="Subject"
+                  className="bg-white/30 dark:bg-black/30 border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white placeholder:text-gray-500 dark:placeholder:text-gray-400 focus:border-cyan-500 focus:ring-cyan-500/20"
+                />
+                <Textarea
+                  placeholder="Your Message"
+                  rows={6}
+                  className="bg-white/30 dark:bg-black/30 border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white placeholder:text-gray-500 dark:placeholder:text-gray-400 focus:border-cyan-500 focus:ring-cyan-500/20 resize-none"
+                />
+                <Button className="w-full bg-gradient-to-r from-cyan-500 to-purple-600 hover:from-cyan-600 hover:to-purple-700 text-white border-0 py-3 relative overflow-hidden group">
+                  <span className="relative z-10 flex items-center justify-center gap-2">
+                    <Send className="w-5 h-5" />
+                    Send Message
+                  </span>
+                  <div className="absolute inset-0 bg-gradient-to-r from-purple-600 to-cyan-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                </Button>
+              </form>
+            </motion.div>
+          </div>
+        </div>
       </section>
     </div>
   );
