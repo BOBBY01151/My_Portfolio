@@ -3,7 +3,7 @@ import { ROUTES } from '../lib/constants'
 import ProtectedRoute from './ProtectedRoute'
 
 // Layout
-import Navbar from '../components/Layout/Navbar'
+import FuturisticNavbar from '../components/Layout/FuturisticNavbar'
 import Footer from '../components/Layout/Footer'
 
 // Pages
@@ -22,7 +22,7 @@ import AdminExperience from '../pages/Admin/Experience/List'
 const AppRoutes = () => {
   return (
     <>
-      <Navbar />
+      <FuturisticNavbar />
       <main className="min-h-screen">
         <Routes>
           {/* Public Routes */}

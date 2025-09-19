@@ -179,7 +179,6 @@ const HomeEnhanced = () => {
             alt="Modern workspace"
             className="w-full h-full object-cover"
           />
-          <div className="absolute inset-0 bg-gradient-to-b from-white/50 via-transparent to-white/50 dark:from-black/50 dark:via-transparent dark:to-black/50" />
         </motion.div>
         
         <Container>

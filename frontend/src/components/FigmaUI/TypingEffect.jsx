@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react'
 
 export function TypingEffect({ 
   words, 
@@ -7,46 +7,46 @@ export function TypingEffect({
   deletingSpeed = 100, 
   delayBetweenWords = 2000 
 }) {
-  const [currentWordIndex, setCurrentWordIndex] = useState(0);
-  const [currentText, setCurrentText] = useState('');
-  const [isDeleting, setIsDeleting] = useState(false);
-  const [showCursor, setShowCursor] = useState(true);
+  const [currentWordIndex, setCurrentWordIndex] = useState(0)
+  const [currentText, setCurrentText] = useState('')
+  const [isDeleting, setIsDeleting] = useState(false)
+  const [showCursor, setShowCursor] = useState(true)
 
   useEffect(() => {
-    const currentWord = words[currentWordIndex];
+    const currentWord = words[currentWordIndex]
     
     const timeout = setTimeout(() => {
       if (!isDeleting) {
         // Typing
         if (currentText.length < currentWord.length) {
-          setCurrentText(currentWord.slice(0, currentText.length + 1));
+          setCurrentText(currentWord.slice(0, currentText.length + 1))
         } else {
           // Finished typing, wait then start deleting
-          setTimeout(() => setIsDeleting(true), delayBetweenWords);
+          setTimeout(() => setIsDeleting(true), delayBetweenWords)
         }
       } else {
         // Deleting
         if (currentText.length > 0) {
-          setCurrentText(currentText.slice(0, -1));
+          setCurrentText(currentText.slice(0, -1))
         } else {
           // Finished deleting, move to next word
-          setIsDeleting(false);
-          setCurrentWordIndex((prev) => (prev + 1) % words.length);
+          setIsDeleting(false)
+          setCurrentWordIndex((prev) => (prev + 1) % words.length)
         }
       }
-    }, isDeleting ? deletingSpeed : typingSpeed);
+    }, isDeleting ? deletingSpeed : typingSpeed)
 
-    return () => clearTimeout(timeout);
-  }, [currentText, isDeleting, currentWordIndex, words, typingSpeed, deletingSpeed, delayBetweenWords]);
+    return () => clearTimeout(timeout)
+  }, [currentText, isDeleting, currentWordIndex, words, typingSpeed, deletingSpeed, delayBetweenWords])
 
   // Cursor blinking effect
   useEffect(() => {
     const cursorInterval = setInterval(() => {
-      setShowCursor(prev => !prev);
-    }, 530);
+      setShowCursor(prev => !prev)
+    }, 530)
 
-    return () => clearInterval(cursorInterval);
-  }, []);
+    return () => clearInterval(cursorInterval)
+  }, [])
 
   return (
     <span className={className}>
@@ -55,5 +55,5 @@ export function TypingEffect({
         |
       </span>
     </span>
-  );
+  )
 }

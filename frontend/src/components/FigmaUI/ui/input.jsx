@@ -1,6 +1,5 @@
-import * as React from "react";
-
-import { cn } from "../../../lib/helpers";
+import * as React from "react"
+import { cn } from "../../../lib/helpers"
 
 function Input({ className, type, ...props }) {
   return (
@@ -15,7 +14,7 @@ function Input({ className, type, ...props }) {
       )}
       {...props}
     />
-  );
+  )
 }
 
-export { Input };
+export { Input }
