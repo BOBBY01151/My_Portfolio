@@ -47,6 +47,8 @@ import { ROUTES } from '../../lib/constants';
 const HomeEnhanced = () => {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const [isHovering, setIsHovering] = useState(false);
+  const [windowWidth, setWindowWidth] = useState(1920);
+  const [windowHeight, setWindowHeight] = useState(1080);
   const { scrollY } = useScroll();
 
   // Enhanced parallax transforms
@@ -61,15 +63,31 @@ const HomeEnhanced = () => {
   const smoothMouseY = useSpring(mousePosition.y, { stiffness: 50, damping: 20 });
   
   // FigmaUI glow intensity transform
-  const glowIntensity = useTransform(smoothMouseX, [0, typeof window !== 'undefined' ? window.innerWidth : 1920], [0.3, 0.8]);
+  const glowIntensity = useTransform(smoothMouseX, [0, windowWidth], [0.3, 0.8]);
 
   useEffect(() => {
     const handleMouseMove = (e) => {
       setMousePosition({ x: e.clientX, y: e.clientY });
     };
 
+    const handleResize = () => {
+      setWindowWidth(window.innerWidth);
+      setWindowHeight(window.innerHeight);
+    };
+
+    // Set initial values
+    if (typeof window !== 'undefined') {
+      setWindowWidth(window.innerWidth);
+      setWindowHeight(window.innerHeight);
+    }
+
     window.addEventListener('mousemove', handleMouseMove);
-    return () => window.removeEventListener('mousemove', handleMouseMove);
+    window.addEventListener('resize', handleResize);
+    
+    return () => {
+      window.removeEventListener('mousemove', handleMouseMove);
+      window.removeEventListener('resize', handleResize);
+    };
   }, []);
 
   const typingWords = [
@@ -97,7 +115,8 @@ const HomeEnhanced = () => {
       tags: ['React', 'Python', 'TensorFlow', 'PostgreSQL', 'AWS'],
       github: '#',
       demo: '#',
-      featured: true
+      featured: true,
+      color: 'from-purple-400 to-pink-500'
     },
     {
       title: 'Real-time Collaboration Suite',
@@ -106,7 +125,8 @@ const HomeEnhanced = () => {
       tags: ['Next.js', 'WebRTC', 'Socket.io', 'Redis', 'Docker'],
       github: '#',
       demo: '#',
-      featured: true
+      featured: true,
+      color: 'from-cyan-400 to-blue-500'
     },
     {
       title: 'Blockchain Analytics Dashboard',
@@ -115,7 +135,18 @@ const HomeEnhanced = () => {
       tags: ['Vue.js', 'Web3.js', 'Node.js', 'MongoDB', 'Chart.js'],
       github: '#',
       demo: '#',
-      featured: false
+      featured: false,
+      color: 'from-green-400 to-emerald-500'
+    },
+    {
+      title: 'Smart IoT Home System',
+      description: 'Intelligent home automation system with voice control, energy optimization, and predictive maintenance capabilities.',
+      image: 'https://images.unsplash.com/photo-1689692784625-1ce82784a25a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtb2Rlcm4lMjB3b3Jrc3BhY2UlMjBjeWJlcnB1bmslMjBuZW9ufGVufDF8fHx8MTc1Njk1OTU2OHww&ixlib=rb-4.1.0&q=80&w=1080',
+      tags: ['React Native', 'Python', 'MQTT', 'TensorFlow', 'Raspberry Pi'],
+      github: '#',
+      demo: '#',
+      featured: false,
+      color: 'from-orange-400 to-red-500'
     }
   ];
 
@@ -134,7 +165,7 @@ const HomeEnhanced = () => {
 
       {/* Enhanced Interactive Particle Background - FigmaUI Style */}
       <div className="fixed inset-0 overflow-hidden pointer-events-none">
-        {/* Floating particles with mouse interaction */}
+        {/* Floating particles with automatic animation only */}
         {[...Array(12)].map((_, i) => (
           <motion.div
             key={i}
@@ -148,10 +179,6 @@ const HomeEnhanced = () => {
               height: `${Math.random() * 8 + 4}px`,
               left: `${Math.random() * 100}%`,
               top: `${Math.random() * 100}%`,
-              x: useTransform(smoothMouseX, [0, typeof window !== 'undefined' ? window.innerWidth : 1920], 
-                [Math.random() * -100, Math.random() * 100]),
-              y: useTransform(smoothMouseY, [0, typeof window !== 'undefined' ? window.innerHeight : 1080], 
-                [Math.random() * -50, Math.random() * 50]),
             }}
             animate={{
               scale: [1, 1.5, 1],
@@ -166,48 +193,66 @@ const HomeEnhanced = () => {
           />
         ))}
         
-        {/* Large interactive glows - FigmaUI Style */}
+        {/* Large static glows - FigmaUI Style */}
         <motion.div 
           className="absolute w-96 h-96 bg-gradient-to-r from-cyan-500/20 to-blue-600/20 rounded-full blur-3xl"
           style={{
-            x: useTransform(smoothMouseX, [0, typeof window !== 'undefined' ? window.innerWidth : 1920], [-100, 100]),
-            y: useTransform(smoothMouseY, [0, typeof window !== 'undefined' ? window.innerHeight : 1080], [-50, 50]),
             left: '20%',
             top: '10%',
-            scale: useTransform(glowIntensity, [0.3, 0.8], [1, 1.3])
+          }}
+          animate={{
+            scale: [1, 1.2, 1],
+            opacity: [0.7, 1, 0.7],
+          }}
+          transition={{
+            duration: 4,
+            repeat: Infinity,
+            ease: "easeInOut"
           }}
         />
         <motion.div 
           className="absolute w-96 h-96 bg-gradient-to-r from-emerald-500/20 to-yellow-600/20 rounded-full blur-3xl"
           style={{
-            x: useTransform(smoothMouseX, [0, typeof window !== 'undefined' ? window.innerWidth : 1920], [50, -50]),
-            y: useTransform(smoothMouseY, [0, typeof window !== 'undefined' ? window.innerHeight : 1080], [30, -30]),
             right: '20%',
             bottom: '10%',
-            scale: useTransform(glowIntensity, [0.3, 0.8], [1.2, 0.9])
+          }}
+          animate={{
+            scale: [1.2, 0.9, 1.2],
+            opacity: [0.8, 1, 0.8],
+          }}
+          transition={{
+            duration: 5,
+            repeat: Infinity,
+            ease: "easeInOut",
+            delay: 1
           }}
         />
         <motion.div 
           className="absolute w-72 h-72 bg-gradient-to-r from-purple-500/15 to-pink-600/15 rounded-full blur-3xl"
           style={{
-            x: useTransform(smoothMouseX, [0, typeof window !== 'undefined' ? window.innerWidth : 1920], [-30, 30]),
-            y: useTransform(smoothMouseY, [0, typeof window !== 'undefined' ? window.innerHeight : 1080], [-20, 20]),
             left: '50%',
             top: '50%',
-            scale: useTransform(glowIntensity, [0.3, 0.8], [0.8, 1.4])
+          }}
+          animate={{
+            scale: [0.8, 1.4, 0.8],
+            opacity: [0.6, 1, 0.6],
+          }}
+          transition={{
+            duration: 6,
+            repeat: Infinity,
+            ease: "easeInOut",
+            delay: 2
           }}
         />
       </div>
 
       {/* Highly Interactive Hero Section - FigmaUI Style */}
       <section className="min-h-screen flex items-center justify-center relative pt-20 overflow-hidden">
-        {/* Interactive 3D Background */}
+        {/* Parallax 3D Background */}
         <motion.div 
           style={{ 
             y: heroY, 
             scale: heroScale,
-            rotateX: useTransform(smoothMouseY, [0, typeof window !== 'undefined' ? window.innerHeight : 1080], [5, -5]),
-            rotateY: useTransform(smoothMouseX, [0, typeof window !== 'undefined' ? window.innerWidth : 1920], [-5, 5])
           }} 
           className="absolute inset-0"
         >
@@ -252,9 +297,9 @@ const HomeEnhanced = () => {
                     i % 2 === 0 ? 'top-0 -right-16' : i % 3 === 1 ? '-top-8 right-8' : 'top-8 -right-12'
                   }`}
                   style={{
-                    x: useTransform(smoothMouseX, [0, typeof window !== 'undefined' ? window.innerWidth : 1920], 
+                    x: useTransform(smoothMouseX, [0, windowWidth], 
                       [Math.random() * -30, Math.random() * 30]),
-                    y: useTransform(smoothMouseY, [0, typeof window !== 'undefined' ? window.innerHeight : 1080], 
+                    y: useTransform(smoothMouseY, [0, windowHeight], 
                       [Math.random() * -20, Math.random() * 20]),
                   }}
                     animate={{ 
@@ -275,8 +320,8 @@ const HomeEnhanced = () => {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.8, delay: 0.5 }}
                 style={{
-                  x: useTransform(smoothMouseX, [0, typeof window !== 'undefined' ? window.innerWidth : 1920], [-10, 10]),
-                  y: useTransform(smoothMouseY, [0, typeof window !== 'undefined' ? window.innerHeight : 1080], [-5, 5]),
+                  x: useTransform(smoothMouseX, [0, windowWidth], [-10, 10]),
+                  y: useTransform(smoothMouseY, [0, windowHeight], [-5, 5]),
                 }}
               >
                 <span className="text-white relative">
@@ -324,7 +369,7 @@ const HomeEnhanced = () => {
                 transition={{ duration: 0.8, delay: 0.7 }}
               className="text-xl md:text-3xl text-cyan-300 mb-8 min-h-[3rem] flex items-center justify-center lg:justify-start"
               style={{
-                x: useTransform(smoothMouseX, [0, typeof window !== 'undefined' ? window.innerWidth : 1920], [-5, 5]),
+                x: useTransform(smoothMouseX, [0, windowWidth], [-5, 5]),
               }}
               >
                 <TypingEffect 
@@ -408,16 +453,23 @@ const HomeEnhanced = () => {
                   rgba(59, 130, 246, 0.5), 
                   rgba(147, 51, 234, 0.5), 
                   rgba(6, 182, 212, 0.5))`,
-                scale: useTransform(useTransform(smoothMouseX, [0, typeof window !== 'undefined' ? window.innerWidth : 1920], [0.3, 0.8]), [0.3, 0.8], [1.1, 1.3]),
                 filter: 'blur(20px)'
               }}
               animate={{
-                rotate: [0, 360]
+                rotate: [0, 360],
+                scale: [1.1, 1.3, 1.1]
               }}
               transition={{
-                duration: 20,
-                repeat: Infinity,
-                ease: "linear"
+                rotate: {
+                  duration: 20,
+                  repeat: Infinity,
+                  ease: "linear"
+                },
+                scale: {
+                  duration: 8,
+                  repeat: Infinity,
+                  ease: "easeInOut"
+                }
               }}
             />
 
@@ -425,8 +477,8 @@ const HomeEnhanced = () => {
             <motion.div
               className="relative z-10 rounded-full p-4 backdrop-blur-xl bg-gradient-to-br from-black/20 to-gray-900/40 border-2 border-gradient-to-r from-cyan-400/50 to-purple-600/50"
               style={{
-                rotateX: useTransform(smoothMouseY, [0, typeof window !== 'undefined' ? window.innerHeight : 1080], [5, -5]),
-                rotateY: useTransform(smoothMouseX, [0, typeof window !== 'undefined' ? window.innerWidth : 1920], [-5, 5]),
+                rotateX: useTransform(smoothMouseY, [0, windowHeight], [5, -5]),
+                rotateY: useTransform(smoothMouseX, [0, windowWidth], [-5, 5]),
               }}
               animate={{
                 scale: isHovering ? 1.05 : 1,
@@ -437,8 +489,8 @@ const HomeEnhanced = () => {
               <motion.div
                 className="relative rounded-full overflow-hidden"
                 style={{
-                  filter: `hue-rotate(${useTransform(smoothMouseX, [0, typeof window !== 'undefined' ? window.innerWidth : 1920], [0, 30])}deg) 
-                           brightness(${useTransform(useTransform(smoothMouseX, [0, typeof window !== 'undefined' ? window.innerWidth : 1920], [0.3, 0.8]), [0.3, 0.8], [1.1, 1.3])})`,
+                  filter: `hue-rotate(${useTransform(smoothMouseX, [0, windowWidth], [0, 30])}deg) 
+                           brightness(${useTransform(useTransform(smoothMouseX, [0, windowWidth], [0.3, 0.8]), [0.3, 0.8], [1.1, 1.3])})`,
                 }}
               >
                 <ImageWithFallback
@@ -462,14 +514,12 @@ const HomeEnhanced = () => {
                     style={{
                       left: `${50 + Math.cos(i * Math.PI / 4) * 45}%`,
                       top: `${50 + Math.sin(i * Math.PI / 4) * 45}%`,
-                      x: useTransform(smoothMouseX, [0, typeof window !== 'undefined' ? window.innerWidth : 1920], 
-                        [Math.cos(i * Math.PI / 4) * -20, Math.cos(i * Math.PI / 4) * 20]),
-                      y: useTransform(smoothMouseY, [0, typeof window !== 'undefined' ? window.innerHeight : 1080], 
-                        [Math.sin(i * Math.PI / 4) * -10, Math.sin(i * Math.PI / 4) * 10]),
                     }}
                     animate={{
                       scale: [1, 1.5, 1],
                       opacity: [0.4, 1, 0.4],
+                      x: [Math.cos(i * Math.PI / 4) * -10, Math.cos(i * Math.PI / 4) * 10, Math.cos(i * Math.PI / 4) * -10],
+                      y: [Math.sin(i * Math.PI / 4) * -5, Math.sin(i * Math.PI / 4) * 5, Math.sin(i * Math.PI / 4) * -5],
                     }}
                     transition={{
                       duration: 2 + i * 0.3,
@@ -485,8 +535,8 @@ const HomeEnhanced = () => {
               <motion.div
                 className="absolute -top-4 -left-4 bg-black/80 backdrop-blur-sm rounded-lg px-3 py-2 text-cyan-400 text-sm font-mono border border-cyan-400/30"
                 style={{
-                  x: useTransform(smoothMouseX, [0, typeof window !== 'undefined' ? window.innerWidth : 1920], [-10, 10]),
-                  y: useTransform(smoothMouseY, [0, typeof window !== 'undefined' ? window.innerHeight : 1080], [-5, 5]),
+                  x: useTransform(smoothMouseX, [0, windowWidth], [-10, 10]),
+                  y: useTransform(smoothMouseY, [0, windowHeight], [-5, 5]),
                 }}
                 animate={{
                   opacity: [0.7, 1, 0.7],
@@ -503,8 +553,8 @@ const HomeEnhanced = () => {
               <motion.div
                 className="absolute -bottom-4 -right-4 bg-black/80 backdrop-blur-sm rounded-lg px-3 py-2 text-emerald-400 text-sm font-mono border border-emerald-400/30"
                 style={{
-                  x: useTransform(smoothMouseX, [0, typeof window !== 'undefined' ? window.innerWidth : 1920], [10, -10]),
-                  y: useTransform(smoothMouseY, [0, typeof window !== 'undefined' ? window.innerHeight : 1080], [5, -5]),
+                  x: useTransform(smoothMouseX, [0, windowWidth], [10, -10]),
+                  y: useTransform(smoothMouseY, [0, windowHeight], [5, -5]),
                 }}
                 animate={{
                   opacity: [0.7, 1, 0.7],
@@ -567,7 +617,7 @@ const HomeEnhanced = () => {
                 transition={{ duration: 0.6 }}
                 viewport={{ once: true }}
               >
-                <h2 className="text-5xl font-bold text-gray-900 dark:text-white mb-4">
+                <h2 className="text-5xl font-bold text-white mb-4">
                   About <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-purple-600">Me</span>
                 </h2>
                 <div className="w-20 h-1 bg-gradient-to-r from-cyan-400 to-purple-600 rounded-full" />
@@ -636,7 +686,7 @@ const HomeEnhanced = () => {
             viewport={{ once: true }}
             className="text-center mb-20"
           >
-            <h2 className="text-5xl font-bold text-gray-900 dark:text-white mb-6">
+            <h2 className="text-5xl font-bold text-white mb-6">
               Skills & <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-purple-600">Expertise</span>
             </h2>
             <div className="w-20 h-1 bg-gradient-to-r from-cyan-400 to-purple-600 rounded-full mx-auto mb-6" />
@@ -696,7 +746,7 @@ const HomeEnhanced = () => {
         </motion.div>
       </section>
 
-      {/* Enhanced Featured Projects Section - FigmaUI Style */}
+      {/* Enhanced Projects Section - FigmaUI Style with Colors */}
       <section id="projects" className="py-32 relative">
         <motion.div style={{ y: projectsY }} className="max-w-7xl mx-auto px-6">
           <motion.div
@@ -717,7 +767,7 @@ const HomeEnhanced = () => {
 
           <div className="grid lg:grid-cols-2 gap-8 mb-16">
             {projects.filter(p => p.featured).map((project, index) => (
-          <motion.div 
+              <motion.div
                 key={project.title}
                 initial={{ opacity: 0, y: 50 }}
                 whileInView={{ opacity: 1, y: 0 }}
@@ -726,52 +776,61 @@ const HomeEnhanced = () => {
                 whileHover={{ y: -15 }}
                 className="group relative"
               >
-                <Card className="backdrop-blur-2xl bg-gradient-to-br from-black/50 to-gray-900/50 border border-cyan-500/20 shadow-2xl overflow-hidden hover:border-cyan-400/50 transition-all duration-300 h-full">
+                <Card className="backdrop-blur-2xl bg-gradient-to-br from-black/50 to-gray-900/50 border border-cyan-500/20 shadow-2xl overflow-hidden hover:border-cyan-400/50 transition-all duration-300 h-full relative">
+                  {/* Animated background gradient */}
+                  <div className={`absolute inset-0 bg-gradient-to-br ${project.color} opacity-0 group-hover:opacity-10 transition-opacity duration-300`} />
                   <div className="relative overflow-hidden">
-                  <ImageWithFallback
-                    src={project.image}
-                    alt={project.title}
+                    <ImageWithFallback
+                      src={project.image}
+                      alt={project.title}
                       className="w-full h-64 object-cover group-hover:scale-110 transition-transform duration-500"
-                  />
+                    />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
                     <div className="absolute top-4 right-4">
-                      <Badge className="bg-gradient-to-r from-cyan-500 to-purple-600 text-white border-0">
-                      Featured
-                    </Badge>
+                      <Badge className={`bg-gradient-to-r ${project.color} text-white border-0 shadow-lg`}>
+                        Featured
+                      </Badge>
                     </div>
-                </div>
+                    
+                    {/* Colorful project icon */}
+                    <div className="absolute top-4 left-4">
+                      <div className={`w-12 h-12 bg-gradient-to-r ${project.color} rounded-xl flex items-center justify-center shadow-lg`}>
+                        <Briefcase className="w-6 h-6 text-white" />
+                      </div>
+                    </div>
+                  </div>
                   
                   <div className="p-8 space-y-6">
                     <h3 className="text-2xl font-bold text-white group-hover:text-cyan-400 transition-colors">
-                    {project.title}
+                      {project.title}
                     </h3>
                     <p className="text-gray-300 leading-relaxed">{project.description}</p>
                     
                     <div className="flex flex-wrap gap-2">
                       {project.tags.map((tag) => (
-                        <Badge key={tag} className="bg-cyan-500/20 text-cyan-300 border-cyan-500/30 hover:bg-cyan-500/30 transition-colors">
-                        {tag}
-                      </Badge>
-                    ))}
-                  </div>
+                        <Badge key={tag} className={`bg-gradient-to-r ${project.color} bg-opacity-20 text-white border-0 hover:bg-opacity-30 transition-all duration-300`}>
+                          {tag}
+                        </Badge>
+                      ))}
+                    </div>
                     
                     <div className="flex gap-4 pt-4">
-                      <Button size="sm" variant="outline" className="border-cyan-400/50 text-cyan-400 hover:bg-cyan-500/10 hover:border-cyan-400">
+                      <Button size="sm" variant="outline" className={`border-transparent bg-gradient-to-r ${project.color} bg-opacity-20 text-white hover:bg-opacity-30 transition-all duration-300`}>
                         <Github className="w-4 h-4 mr-2" />
-                    Code
-                  </Button>
-                      <Button size="sm" className="bg-gradient-to-r from-cyan-500 to-purple-600 hover:from-cyan-600 hover:to-purple-700 text-white border-0">
+                        Code
+                      </Button>
+                      <Button size="sm" className={`bg-gradient-to-r ${project.color} hover:opacity-90 text-white border-0 shadow-lg`}>
                         <ExternalLink className="w-4 h-4 mr-2" />
                         Live Demo
-                  </Button>
+                      </Button>
                     </div>
                   </div>
-              </Card>
+                </Card>
               </motion.div>
             ))}
           </div>
 
-          <div className="grid md:grid-cols-2 gap-8 mb-16">
+          <div className="grid md:grid-cols-2 gap-8">
             {projects.filter(p => !p.featured).map((project, index) => (
               <motion.div
                 key={project.title}
@@ -782,7 +841,9 @@ const HomeEnhanced = () => {
                 whileHover={{ y: -10 }}
                 className="group"
               >
-                <Card className="backdrop-blur-2xl bg-gradient-to-br from-black/30 to-gray-900/30 border border-gray-700/50 shadow-xl overflow-hidden hover:border-cyan-400/50 transition-all duration-300">
+                <Card className="backdrop-blur-2xl bg-gradient-to-br from-black/30 to-gray-900/30 border border-gray-700/50 shadow-xl overflow-hidden hover:border-cyan-400/50 transition-all duration-300 relative">
+                  {/* Animated background gradient */}
+                  <div className={`absolute inset-0 bg-gradient-to-br ${project.color} opacity-0 group-hover:opacity-10 transition-opacity duration-300`} />
                   <div className="relative overflow-hidden h-48">
                     <ImageWithFallback
                       src={project.image}
@@ -790,6 +851,13 @@ const HomeEnhanced = () => {
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+                    
+                    {/* Colorful project icon */}
+                    <div className="absolute top-4 left-4">
+                      <div className={`w-10 h-10 bg-gradient-to-r ${project.color} rounded-lg flex items-center justify-center shadow-lg`}>
+                        <Code className="w-5 h-5 text-white" />
+                      </div>
+                    </div>
                   </div>
                   
                   <div className="p-6 space-y-4">
@@ -798,7 +866,7 @@ const HomeEnhanced = () => {
                     
                     <div className="flex flex-wrap gap-1">
                       {project.tags.slice(0, 3).map((tag) => (
-                        <Badge key={tag} className="bg-gray-700/50 text-gray-300 border-gray-600/50 text-xs">
+                        <Badge key={tag} className={`bg-gradient-to-r ${project.color} bg-opacity-20 text-white border-0 text-xs`}>
                           {tag}
                         </Badge>
                       ))}
@@ -814,17 +882,8 @@ const HomeEnhanced = () => {
                     </div>
                   </div>
                 </Card>
-          </motion.div>
+              </motion.div>
             ))}
-          </div>
-          
-          <div className="text-center">
-            <Link to={ROUTES.PROJECTS}>
-              <Button variant="outline" size="lg" className="border-cyan-400/50 text-cyan-400 hover:bg-cyan-500/10 hover:border-cyan-400">
-                View All Projects
-                <ArrowRight className="ml-2 h-5 w-5" />
-              </Button>
-            </Link>
           </div>
         </motion.div>
       </section>
