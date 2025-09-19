@@ -442,7 +442,7 @@ const HomeEnhanced = () => {
                 }}
               >
                 <ImageWithFallback
-                  src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxwb3J0cmFpdCUyMG1hbiUyMHByb2Zlc3Npb25hbHxlbnwxfHx8fDE3NTY5NTk1Njh8MA&ixlib=rb-4.1.0&q=80&w=1080"
+                  src="/src/Images/WhatsApp Image 2025-09-19 at 13.31.21.jpeg"
                   alt="Vimukthi Buddika"
                   className="w-80 h-80 md:w-96 md:h-96 object-cover rounded-full"
                 />
@@ -658,7 +658,7 @@ const HomeEnhanced = () => {
                   whileHover={{ y: -10, scale: 1.02 }}
                   className="group relative"
                 >
-                  <div className="backdrop-blur-2xl bg-gradient-to-br from-white/50 to-gray-100/50 dark:from-black/50 dark:to-gray-900/50 border border-cyan-500/20 rounded-2xl p-8 shadow-2xl hover:border-cyan-400/50 transition-all duration-300 relative overflow-hidden">
+                  <div className="backdrop-blur-2xl bg-gradient-to-br from-black/50 to-gray-900/50 border border-cyan-500/20 rounded-2xl p-8 shadow-2xl hover:border-cyan-400/50 transition-all duration-300 relative overflow-hidden">
                     {/* Animated background gradient */}
                     <div className={`absolute inset-0 bg-gradient-to-br ${skill.color} opacity-0 group-hover:opacity-10 transition-opacity duration-300`} />
                     
@@ -667,15 +667,15 @@ const HomeEnhanced = () => {
                         <div className={`w-14 h-14 bg-gradient-to-r ${skill.color} rounded-xl flex items-center justify-center shadow-lg`}>
                           <Icon className="w-7 h-7 text-white" />
                         </div>
-                        <h3 className="text-xl font-semibold text-gray-900 dark:text-white">{skill.name}</h3>
+                        <h3 className="text-xl font-semibold text-white">{skill.name}</h3>
                       </div>
                       
                       <div className="space-y-3">
                         <div className="flex justify-between items-center">
-                          <span className="text-gray-600 dark:text-gray-400 text-sm">Proficiency</span>
+                          <span className="text-gray-400 text-sm">Proficiency</span>
                           <span className="text-cyan-400 font-semibold">{skill.level}%</span>
                         </div>
-                        <div className="relative h-3 bg-gray-200 dark:bg-gray-800 rounded-full overflow-hidden">
+                        <div className="relative h-3 bg-gray-800 rounded-full overflow-hidden">
                           <motion.div
                             initial={{ width: 0 }}
                             whileInView={{ width: `${skill.level}%` }}
@@ -706,11 +706,11 @@ const HomeEnhanced = () => {
             viewport={{ once: true }}
             className="text-center mb-20"
           >
-            <h2 className="text-5xl font-bold text-gray-900 dark:text-white mb-6">
+            <h2 className="text-5xl font-bold text-white mb-6">
               Featured <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-purple-600">Projects</span>
             </h2>
             <div className="w-20 h-1 bg-gradient-to-r from-cyan-400 to-purple-600 rounded-full mx-auto mb-6" />
-            <p className="text-xl text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
+            <p className="text-xl text-gray-300 max-w-2xl mx-auto">
               Innovative solutions that showcase technical expertise and creative problem-solving
             </p>
           </motion.div>
@@ -726,7 +726,7 @@ const HomeEnhanced = () => {
                 whileHover={{ y: -15 }}
                 className="group relative"
               >
-                <Card className="backdrop-blur-2xl bg-gradient-to-br from-white/50 to-gray-100/50 dark:from-black/50 dark:to-gray-900/50 border border-cyan-500/20 shadow-2xl overflow-hidden hover:border-cyan-400/50 transition-all duration-300 h-full">
+                <Card className="backdrop-blur-2xl bg-gradient-to-br from-black/50 to-gray-900/50 border border-cyan-500/20 shadow-2xl overflow-hidden hover:border-cyan-400/50 transition-all duration-300 h-full">
                   <div className="relative overflow-hidden">
                   <ImageWithFallback
                     src={project.image}
@@ -742,21 +742,21 @@ const HomeEnhanced = () => {
                 </div>
                   
                   <div className="p-8 space-y-6">
-                    <h3 className="text-2xl font-bold text-gray-900 dark:text-white group-hover:text-cyan-400 transition-colors">
+                    <h3 className="text-2xl font-bold text-white group-hover:text-cyan-400 transition-colors">
                     {project.title}
                     </h3>
-                    <p className="text-gray-600 dark:text-gray-300 leading-relaxed">{project.description}</p>
+                    <p className="text-gray-300 leading-relaxed">{project.description}</p>
                     
                     <div className="flex flex-wrap gap-2">
                       {project.tags.map((tag) => (
-                        <Badge key={tag} className="bg-cyan-500/20 text-cyan-600 dark:text-cyan-300 border-cyan-500/30 hover:bg-cyan-500/30 transition-colors">
+                        <Badge key={tag} className="bg-cyan-500/20 text-cyan-300 border-cyan-500/30 hover:bg-cyan-500/30 transition-colors">
                         {tag}
                       </Badge>
                     ))}
                   </div>
                     
                     <div className="flex gap-4 pt-4">
-                      <Button size="sm" variant="outline" className="border-cyan-400/50 text-cyan-600 dark:text-cyan-400 hover:bg-cyan-500/10 hover:border-cyan-400">
+                      <Button size="sm" variant="outline" className="border-cyan-400/50 text-cyan-400 hover:bg-cyan-500/10 hover:border-cyan-400">
                         <Github className="w-4 h-4 mr-2" />
                     Code
                   </Button>
@@ -782,7 +782,7 @@ const HomeEnhanced = () => {
                 whileHover={{ y: -10 }}
                 className="group"
               >
-                <Card className="backdrop-blur-2xl bg-gradient-to-br from-white/30 to-gray-100/30 dark:from-black/30 dark:to-gray-900/30 border border-gray-300/50 dark:border-gray-700/50 shadow-xl overflow-hidden hover:border-cyan-400/50 transition-all duration-300">
+                <Card className="backdrop-blur-2xl bg-gradient-to-br from-black/30 to-gray-900/30 border border-gray-700/50 shadow-xl overflow-hidden hover:border-cyan-400/50 transition-all duration-300">
                   <div className="relative overflow-hidden h-48">
                     <ImageWithFallback
                       src={project.image}
@@ -793,22 +793,22 @@ const HomeEnhanced = () => {
                   </div>
                   
                   <div className="p-6 space-y-4">
-                    <h3 className="text-xl font-semibold text-gray-900 dark:text-white">{project.title}</h3>
-                    <p className="text-gray-600 dark:text-gray-400 text-sm leading-relaxed">{project.description}</p>
+                    <h3 className="text-xl font-semibold text-white">{project.title}</h3>
+                    <p className="text-gray-400 text-sm leading-relaxed">{project.description}</p>
                     
                     <div className="flex flex-wrap gap-1">
                       {project.tags.slice(0, 3).map((tag) => (
-                        <Badge key={tag} className="bg-gray-200/50 dark:bg-gray-700/50 text-gray-700 dark:text-gray-300 border-gray-300/50 dark:border-gray-600/50 text-xs">
+                        <Badge key={tag} className="bg-gray-700/50 text-gray-300 border-gray-600/50 text-xs">
                           {tag}
                         </Badge>
                       ))}
                     </div>
                     
                     <div className="flex gap-3 pt-2">
-                      <Button size="sm" variant="ghost" className="text-gray-600 dark:text-gray-400 hover:text-cyan-600 dark:hover:text-cyan-400 p-2">
+                      <Button size="sm" variant="ghost" className="text-gray-400 hover:text-cyan-400 p-2">
                         <Github className="w-4 h-4" />
                       </Button>
-                      <Button size="sm" variant="ghost" className="text-gray-600 dark:text-gray-400 hover:text-cyan-600 dark:hover:text-cyan-400 p-2">
+                      <Button size="sm" variant="ghost" className="text-gray-400 hover:text-cyan-400 p-2">
                         <ExternalLink className="w-4 h-4" />
                       </Button>
                     </div>
@@ -820,7 +820,7 @@ const HomeEnhanced = () => {
           
           <div className="text-center">
             <Link to={ROUTES.PROJECTS}>
-              <Button variant="outline" size="lg" className="border-cyan-400/50 text-cyan-600 dark:text-cyan-400 hover:bg-cyan-500/10 hover:border-cyan-400">
+              <Button variant="outline" size="lg" className="border-cyan-400/50 text-cyan-400 hover:bg-cyan-500/10 hover:border-cyan-400">
                 View All Projects
                 <ArrowRight className="ml-2 h-5 w-5" />
               </Button>
@@ -839,11 +839,11 @@ const HomeEnhanced = () => {
             viewport={{ once: true }}
             className="text-center mb-20"
           >
-            <h2 className="text-5xl font-bold text-gray-900 dark:text-white mb-6">
+            <h2 className="text-5xl font-bold text-white mb-6">
               Get In <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-purple-600">Touch</span>
             </h2>
             <div className="w-20 h-1 bg-gradient-to-r from-cyan-400 to-purple-600 rounded-full mx-auto mb-6" />
-            <p className="text-xl text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
+            <p className="text-xl text-gray-300 max-w-2xl mx-auto">
               Ready to bring your next project to life? Let's create something amazing together.
             </p>
           </motion.div>
@@ -857,7 +857,7 @@ const HomeEnhanced = () => {
               className="space-y-8"
             >
               <div className="backdrop-blur-2xl bg-gradient-to-br from-cyan-500/10 to-purple-600/10 border border-cyan-500/30 rounded-3xl p-8 shadow-2xl">
-                <h3 className="text-2xl font-semibold text-gray-900 dark:text-white mb-8">Let's Connect</h3>
+                <h3 className="text-2xl font-semibold text-white mb-8">Let's Connect</h3>
                 <div className="space-y-6">
                   {[
                     { icon: Mail, label: 'Email', value: 'vimukthi.buddika@email.com', color: 'from-blue-500 to-cyan-500' },
@@ -878,8 +878,8 @@ const HomeEnhanced = () => {
                           <Icon className="w-6 h-6 text-white" />
                         </div>
                         <div>
-                          <p className="text-gray-600 dark:text-gray-400 text-sm">{contact.label}</p>
-                          <p className="text-gray-900 dark:text-white font-medium">{contact.value}</p>
+                          <p className="text-gray-400 text-sm">{contact.label}</p>
+                          <p className="text-white font-medium">{contact.value}</p>
                         </div>
                       </motion.div>
                     );
@@ -893,19 +893,19 @@ const HomeEnhanced = () => {
               whileInView={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.8 }}
               viewport={{ once: true }}
-              className="backdrop-blur-2xl bg-gradient-to-br from-white/50 to-gray-100/50 dark:from-black/50 dark:to-gray-900/50 border border-cyan-500/20 rounded-3xl p-8 shadow-2xl"
+              className="backdrop-blur-2xl bg-gradient-to-br from-black/50 to-gray-900/50 border border-cyan-500/20 rounded-3xl p-8 shadow-2xl"
             >
-              <h3 className="text-2xl font-semibold text-gray-900 dark:text-white mb-8">Send a Message</h3>
+              <h3 className="text-2xl font-semibold text-white mb-8">Send a Message</h3>
               <form className="space-y-6">
                 <div className="grid md:grid-cols-2 gap-4">
                   <Input
                     placeholder="Your Name"
-                    className="bg-white/30 dark:bg-black/30 border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white placeholder:text-gray-500 dark:placeholder:text-gray-400 focus:border-cyan-500 focus:ring-cyan-500/20"
+                    className="bg-black/30 border-gray-600 text-white placeholder:text-gray-400 focus:border-cyan-500 focus:ring-cyan-500/20"
                   />
                   <Input
                     type="email"
                     placeholder="Your Email"
-                    className="bg-white/30 dark:bg-black/30 border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white placeholder:text-gray-500 dark:placeholder:text-gray-400 focus:border-cyan-500 focus:ring-cyan-500/20"
+                    className="bg-black/30 border-gray-600 text-white placeholder:text-gray-400 focus:border-cyan-500 focus:ring-cyan-500/20"
                   />
                 </div>
                 <Input

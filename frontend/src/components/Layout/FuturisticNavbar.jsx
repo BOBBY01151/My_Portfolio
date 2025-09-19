@@ -5,7 +5,7 @@ import { Cpu, Github, Linkedin, Menu, X, LogIn } from 'lucide-react'
 import { cn } from '../../lib/helpers'
 import { ROUTES } from '../../lib/constants'
 import useAuthStore from '../../store/authStore'
-import { Button } from '../UI/Button'
+import { Button } from '../FigmaUI'
 import ThemeToggle from './ThemeToggle'
 
 const FuturisticNavbar = () => {
@@ -74,12 +74,26 @@ const FuturisticNavbar = () => {
                 <ThemeToggle />
                 
                 {/* Social Links */}
-                <Button variant="ghost" size="sm" className="text-gray-300 hover:text-cyan-400 hover:bg-cyan-500/10 border border-cyan-500/30">
-                  <Github className="w-4 h-4" />
-                </Button>
-                <Button variant="ghost" size="sm" className="text-gray-300 hover:text-cyan-400 hover:bg-cyan-500/10 border border-cyan-500/30">
-                  <Linkedin className="w-4 h-4" />
-                </Button>
+                <a 
+                  href="https://github.com/vimukthi-buddika" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="inline-block"
+                >
+                  <Button variant="ghost" size="sm" className="text-gray-300 hover:text-cyan-400 hover:bg-cyan-500/10 border border-cyan-500/30">
+                    <Github className="w-4 h-4" />
+                  </Button>
+                </a>
+                <a 
+                  href="https://linkedin.com/in/vimukthi-buddika" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="inline-block"
+                >
+                  <Button variant="ghost" size="sm" className="text-gray-300 hover:text-cyan-400 hover:bg-cyan-500/10 border border-cyan-500/30">
+                    <Linkedin className="w-4 h-4" />
+                  </Button>
+                </a>
 
                 {/* Auth Actions */}
                 {isAuthenticated ? (
@@ -153,12 +167,26 @@ const FuturisticNavbar = () => {
               <div className="pt-4 border-t border-cyan-500/30 space-y-2">
                 {/* Social Links */}
                 <div className="flex space-x-2 justify-center">
-                  <Button variant="ghost" size="sm" className="text-gray-300 hover:text-cyan-400 hover:bg-cyan-500/10 border border-cyan-500/30">
-                    <Github className="w-4 h-4" />
-                  </Button>
-                  <Button variant="ghost" size="sm" className="text-gray-300 hover:text-cyan-400 hover:bg-cyan-500/10 border border-cyan-500/30">
-                    <Linkedin className="w-4 h-4" />
-                  </Button>
+                  <a 
+                    href="https://github.com/vimukthi-buddika" 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="inline-block"
+                  >
+                    <Button variant="ghost" size="sm" className="text-gray-300 hover:text-cyan-400 hover:bg-cyan-500/10 border border-cyan-500/30">
+                      <Github className="w-4 h-4" />
+                    </Button>
+                  </a>
+                  <a 
+                    href="https://linkedin.com/in/vimukthi-buddika" 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="inline-block"
+                  >
+                    <Button variant="ghost" size="sm" className="text-gray-300 hover:text-cyan-400 hover:bg-cyan-500/10 border border-cyan-500/30">
+                      <Linkedin className="w-4 h-4" />
+                    </Button>
+                  </a>
                 </div>
 
                 {/* Auth Actions */}
