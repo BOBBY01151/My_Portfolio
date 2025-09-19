@@ -243,6 +243,8 @@ const HomeEnhanced = () => {
                   className={`absolute border rounded-lg ${
                     i % 3 === 0 ? 'border-cyan-400/40 w-16 h-16' : 
                     i % 3 === 1 ? 'border-emerald-400/40 w-12 h-12' : 'border-yellow-400/40 w-8 h-8'
+                  } ${
+                    i % 2 === 0 ? 'top-0 -right-16' : i % 3 === 1 ? '-top-8 right-8' : 'top-8 -right-12'
                   }`}
                   style={{
                     x: useTransform(smoothMouseX, [0, typeof window !== 'undefined' ? window.innerWidth : 1920], 
@@ -259,9 +261,6 @@ const HomeEnhanced = () => {
                     repeat: Infinity,
                     ease: "linear"
                   }}
-                  className={`${
-                    i % 2 === 0 ? 'top-0 -right-16' : i % 3 === 1 ? '-top-8 right-8' : 'top-8 -right-12'
-                  }`}
                 />
               ))}
               
@@ -519,58 +518,6 @@ const HomeEnhanced = () => {
         </div>
       </section>
 
-      {/* Quick Stats */}
-      <Section>
-        <Container>
-          <motion.div 
-            style={{ y: aboutY }}
-            className="grid grid-cols-1 md:grid-cols-3 gap-8"
-          >
-            <Card className="text-center border-blue-200 dark:border-blue-800 bg-gradient-to-br from-blue-50 to-purple-50 dark:from-blue-900/20 dark:to-purple-900/20">
-              <CardContent className="pt-6">
-                <div className="bg-blue-100 dark:bg-blue-900 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <Code className="h-8 w-8 text-blue-600 dark:text-blue-400" />
-                </div>
-                <CardTitle className="text-xl font-semibold text-gray-900 dark:text-white mb-2">
-                  50+ Projects
-                </CardTitle>
-                <CardDescription>
-                  Completed projects across various technologies
-                </CardDescription>
-              </CardContent>
-            </Card>
-            
-            <Card className="text-center border-green-200 dark:border-green-800 bg-gradient-to-br from-green-50 to-emerald-50 dark:from-green-900/20 dark:to-emerald-900/20">
-              <CardContent className="pt-6">
-                <div className="bg-green-100 dark:bg-green-900 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <Briefcase className="h-8 w-8 text-green-600 dark:text-green-400" />
-                </div>
-                <CardTitle className="text-xl font-semibold text-gray-900 dark:text-white mb-2">
-                  5+ Years
-                </CardTitle>
-                <CardDescription>
-                  Professional experience in software development
-                </CardDescription>
-              </CardContent>
-            </Card>
-            
-            <Card className="text-center border-purple-200 dark:border-purple-800 bg-gradient-to-br from-purple-50 to-pink-50 dark:from-purple-900/20 dark:to-pink-900/20">
-              <CardContent className="pt-6">
-                <div className="bg-purple-100 dark:bg-purple-900 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <Mail className="h-8 w-8 text-purple-600 dark:text-purple-400" />
-                </div>
-                <CardTitle className="text-xl font-semibold text-gray-900 dark:text-white mb-2">
-                  Available
-                </CardTitle>
-                <CardDescription>
-                  Open to new opportunities and collaborations
-                </CardDescription>
-              </CardContent>
-            </Card>
-          </motion.div>
-        </Container>
-      </Section>
-
       {/* Enhanced About Section - FigmaUI Style */}
       <section id="about" className="py-32 relative">
         <motion.div style={{ y: aboutY }} className="max-w-7xl mx-auto px-6">
@@ -674,111 +621,208 @@ const HomeEnhanced = () => {
         </motion.div>
       </section>
 
-      {/* Skills Section */}
-      <Section className="bg-gray-50 dark:bg-gray-800">
-        <Container>
-          <SectionHeader
-            title="Technical Skills"
-            subtitle="Technologies and tools I work with"
-          />
-          <motion.div 
-            style={{ y: skillsY }}
-            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+      {/* Enhanced Skills & Expertise Section - FigmaUI Style */}
+      <section id="skills" className="py-32 relative">
+        <motion.div style={{ y: skillsY }} className="max-w-7xl mx-auto px-6">
+          <motion.div
+            initial={{ opacity: 0, y: 100 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            viewport={{ once: true }}
+            className="text-center mb-20"
           >
+            <h2 className="text-5xl font-bold text-gray-900 dark:text-white mb-6">
+              Skills & <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-purple-600">Expertise</span>
+            </h2>
+            <div className="w-20 h-1 bg-gradient-to-r from-cyan-400 to-purple-600 rounded-full mx-auto mb-6" />
+            <p className="text-xl text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
+              Cutting-edge technologies and frameworks that power modern digital experiences
+            </p>
+          </motion.div>
+
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             {skills.map((skill, index) => {
               const Icon = skill.icon;
               return (
-                <Card key={index} className="border-gray-200 dark:border-gray-700">
-                  <CardContent className="pt-6">
-                    <div className="flex items-center space-x-4 mb-4">
-                      <div className={`p-3 rounded-lg bg-gradient-to-r ${skill.color}`}>
-                        <Icon className="h-6 w-6 text-white" />
+                <motion.div
+                  key={skill.name}
+                  initial={{ opacity: 0, y: 50 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.6, delay: index * 0.1 }}
+                  viewport={{ once: true }}
+                  whileHover={{ y: -10, scale: 1.02 }}
+                  className="group relative"
+                >
+                  <div className="backdrop-blur-2xl bg-gradient-to-br from-white/50 to-gray-100/50 dark:from-black/50 dark:to-gray-900/50 border border-cyan-500/20 rounded-2xl p-8 shadow-2xl hover:border-cyan-400/50 transition-all duration-300 relative overflow-hidden">
+                    {/* Animated background gradient */}
+                    <div className={`absolute inset-0 bg-gradient-to-br ${skill.color} opacity-0 group-hover:opacity-10 transition-opacity duration-300`} />
+                    
+                    <div className="relative z-10">
+                      <div className="flex items-center gap-4 mb-6">
+                        <div className={`w-14 h-14 bg-gradient-to-r ${skill.color} rounded-xl flex items-center justify-center shadow-lg`}>
+                          <Icon className="w-7 h-7 text-white" />
+                        </div>
+                        <h3 className="text-xl font-semibold text-gray-900 dark:text-white">{skill.name}</h3>
                       </div>
-                      <div>
-                        <CardTitle className="text-lg">{skill.name}</CardTitle>
-                        <CardDescription>{skill.level}%</CardDescription>
+                      
+                      <div className="space-y-3">
+                        <div className="flex justify-between items-center">
+                          <span className="text-gray-600 dark:text-gray-400 text-sm">Proficiency</span>
+                          <span className="text-cyan-400 font-semibold">{skill.level}%</span>
+                        </div>
+                        <div className="relative h-3 bg-gray-200 dark:bg-gray-800 rounded-full overflow-hidden">
+                          <motion.div
+                            initial={{ width: 0 }}
+                            whileInView={{ width: `${skill.level}%` }}
+                            transition={{ duration: 1.5, delay: index * 0.1 + 0.5, ease: "easeOut" }}
+                            viewport={{ once: true }}
+                            className={`h-full bg-gradient-to-r ${skill.color} rounded-full relative`}
+                          >
+                            <div className="absolute inset-0 bg-white/20 animate-pulse" />
+                          </motion.div>
+                        </div>
                       </div>
                     </div>
-                    <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
-                      <div 
-                        className={`h-2 rounded-full bg-gradient-to-r ${skill.color}`}
-                        style={{ width: `${skill.level}%` }}
-                      />
-                    </div>
-                  </CardContent>
-                </Card>
+                  </div>
+                </motion.div>
               );
             })}
-          </motion.div>
-        </Container>
-      </Section>
+          </div>
+        </motion.div>
+      </section>
 
-      {/* Featured Projects */}
-      <Section>
-        <Container>
-          <SectionHeader
-            title="Featured Projects"
-            subtitle="Some of my recent work that I'm proud of"
-          />
-          <motion.div 
-            style={{ y: projectsY }}
-            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+      {/* Enhanced Featured Projects Section - FigmaUI Style */}
+      <section id="projects" className="py-32 relative">
+        <motion.div style={{ y: projectsY }} className="max-w-7xl mx-auto px-6">
+          <motion.div
+            initial={{ opacity: 0, y: 100 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            viewport={{ once: true }}
+            className="text-center mb-20"
           >
-            {projects.map((project, index) => (
-              <Card key={index} className="group hover:shadow-xl transition-all duration-300 border-gray-200 dark:border-gray-700">
-                <div className="relative overflow-hidden rounded-t-xl">
-                  <ImageWithFallback
-                    src={project.image}
-                    alt={project.title}
-                    className="w-full h-48 object-cover group-hover:scale-110 transition-transform duration-300"
-                  />
-                  {project.featured && (
-                    <Badge className="absolute top-4 left-4 bg-gradient-to-r from-blue-600 to-purple-600 text-white">
-                      Featured
-                    </Badge>
-                  )}
-                </div>
-                <CardHeader>
-                  <CardTitle className="text-xl group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
-                    {project.title}
-                  </CardTitle>
-                  <CardDescription className="line-clamp-3">
-                    {project.description}
-                  </CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <div className="flex flex-wrap gap-2 mb-4">
-                    {project.tags.map((tag, tagIndex) => (
-                      <Badge key={tagIndex} variant="outline" className="text-xs">
-                        {tag}
-                      </Badge>
-                    ))}
-                  </div>
-                </CardContent>
-                <CardFooter className="flex justify-between">
-                  <Button variant="outline" size="sm">
-                    <Github className="h-4 w-4 mr-2" />
-                    Code
-                  </Button>
-                  <Button size="sm" className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white border-0">
-                    <ExternalLink className="h-4 w-4 mr-2" />
-                    Demo
-                  </Button>
-                </CardFooter>
-              </Card>
-            ))}
+            <h2 className="text-5xl font-bold text-gray-900 dark:text-white mb-6">
+              Featured <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-purple-600">Projects</span>
+            </h2>
+            <div className="w-20 h-1 bg-gradient-to-r from-cyan-400 to-purple-600 rounded-full mx-auto mb-6" />
+            <p className="text-xl text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
+              Innovative solutions that showcase technical expertise and creative problem-solving
+            </p>
           </motion.div>
-          
-          <div className="text-center mt-12">
+
+          <div className="grid lg:grid-cols-2 gap-8 mb-16">
+            {projects.filter(p => p.featured).map((project, index) => (
+              <motion.div
+                key={project.title}
+                initial={{ opacity: 0, y: 50 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: index * 0.2 }}
+                viewport={{ once: true }}
+                whileHover={{ y: -15 }}
+                className="group relative"
+              >
+                <Card className="backdrop-blur-2xl bg-gradient-to-br from-white/50 to-gray-100/50 dark:from-black/50 dark:to-gray-900/50 border border-cyan-500/20 shadow-2xl overflow-hidden hover:border-cyan-400/50 transition-all duration-300 h-full">
+                  <div className="relative overflow-hidden">
+                    <ImageWithFallback
+                      src={project.image}
+                      alt={project.title}
+                      className="w-full h-64 object-cover group-hover:scale-110 transition-transform duration-500"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
+                    <div className="absolute top-4 right-4">
+                      <Badge className="bg-gradient-to-r from-cyan-500 to-purple-600 text-white border-0">
+                        Featured
+                      </Badge>
+                    </div>
+                  </div>
+                  
+                  <div className="p-8 space-y-6">
+                    <h3 className="text-2xl font-bold text-gray-900 dark:text-white group-hover:text-cyan-400 transition-colors">
+                      {project.title}
+                    </h3>
+                    <p className="text-gray-600 dark:text-gray-300 leading-relaxed">{project.description}</p>
+                    
+                    <div className="flex flex-wrap gap-2">
+                      {project.tags.map((tag) => (
+                        <Badge key={tag} className="bg-cyan-500/20 text-cyan-600 dark:text-cyan-300 border-cyan-500/30 hover:bg-cyan-500/30 transition-colors">
+                          {tag}
+                        </Badge>
+                      ))}
+                    </div>
+                    
+                    <div className="flex gap-4 pt-4">
+                      <Button size="sm" variant="outline" className="border-cyan-400/50 text-cyan-600 dark:text-cyan-400 hover:bg-cyan-500/10 hover:border-cyan-400">
+                        <Github className="w-4 h-4 mr-2" />
+                        Code
+                      </Button>
+                      <Button size="sm" className="bg-gradient-to-r from-cyan-500 to-purple-600 hover:from-cyan-600 hover:to-purple-700 text-white border-0">
+                        <ExternalLink className="w-4 h-4 mr-2" />
+                        Live Demo
+                      </Button>
+                    </div>
+                  </div>
+                </Card>
+              </motion.div>
+            ))}
+          </div>
+
+          <div className="grid md:grid-cols-2 gap-8 mb-16">
+            {projects.filter(p => !p.featured).map((project, index) => (
+              <motion.div
+                key={project.title}
+                initial={{ opacity: 0, y: 50 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: index * 0.2 }}
+                viewport={{ once: true }}
+                whileHover={{ y: -10 }}
+                className="group"
+              >
+                <Card className="backdrop-blur-2xl bg-gradient-to-br from-white/30 to-gray-100/30 dark:from-black/30 dark:to-gray-900/30 border border-gray-300/50 dark:border-gray-700/50 shadow-xl overflow-hidden hover:border-cyan-400/50 transition-all duration-300">
+                  <div className="relative overflow-hidden h-48">
+                    <ImageWithFallback
+                      src={project.image}
+                      alt={project.title}
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+                  </div>
+                  
+                  <div className="p-6 space-y-4">
+                    <h3 className="text-xl font-semibold text-gray-900 dark:text-white">{project.title}</h3>
+                    <p className="text-gray-600 dark:text-gray-400 text-sm leading-relaxed">{project.description}</p>
+                    
+                    <div className="flex flex-wrap gap-1">
+                      {project.tags.slice(0, 3).map((tag) => (
+                        <Badge key={tag} className="bg-gray-200/50 dark:bg-gray-700/50 text-gray-700 dark:text-gray-300 border-gray-300/50 dark:border-gray-600/50 text-xs">
+                          {tag}
+                        </Badge>
+                      ))}
+                    </div>
+                    
+                    <div className="flex gap-3 pt-2">
+                      <Button size="sm" variant="ghost" className="text-gray-600 dark:text-gray-400 hover:text-cyan-600 dark:hover:text-cyan-400 p-2">
+                        <Github className="w-4 h-4" />
+                      </Button>
+                      <Button size="sm" variant="ghost" className="text-gray-600 dark:text-gray-400 hover:text-cyan-600 dark:hover:text-cyan-400 p-2">
+                        <ExternalLink className="w-4 h-4" />
+                      </Button>
+                    </div>
+                  </div>
+                </Card>
+              </motion.div>
+            ))}
+          </div>
+
+          <div className="text-center">
             <Link to={ROUTES.PROJECTS}>
-              <Button variant="outline" size="lg" className="border-blue-400 text-blue-600 hover:bg-blue-50 dark:text-blue-400 dark:border-blue-400 dark:hover:bg-blue-900/20">
+              <Button variant="outline" size="lg" className="border-cyan-400/50 text-cyan-600 dark:text-cyan-400 hover:bg-cyan-500/10 hover:border-cyan-400">
                 View All Projects
                 <ArrowRight className="ml-2 h-5 w-5" />
               </Button>
             </Link>
           </div>
-        </Container>
-      </Section>
+        </motion.div>
+      </section>
     </div>
   );
 };
