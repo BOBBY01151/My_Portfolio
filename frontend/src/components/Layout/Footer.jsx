@@ -49,24 +49,43 @@ const Footer = () => {
                 A showcase of my projects, experience, and skills. Built with modern technologies
                 and designed for performance with a futuristic touch.
               </p>
-              <div className="flex space-x-4">
+              <div className="grid grid-cols-3 gap-3 max-w-xs">
                 {socialLinks.map((link, index) => {
                   const Icon = link.icon
+                  const colors = [
+                    'from-blue-400 to-cyan-500',
+                    'from-purple-400 to-pink-500', 
+                    'from-green-400 to-emerald-500'
+                  ]
+                  const colorClass = colors[index % colors.length]
+                  
                   return (
                     <motion.a
                       key={link.name}
                       href={link.href}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="w-10 h-10 bg-gradient-to-r from-cyan-500/20 to-purple-600/20 border border-cyan-500/30 rounded-full flex items-center justify-center text-gray-300 hover:text-cyan-400 hover:bg-cyan-500/30 transition-all duration-300 group"
+                      className="group relative"
                       aria-label={link.name}
-                      whileHover={{ scale: 1.1, y: -2 }}
+                      whileHover={{ scale: 1.05, y: -2 }}
                       initial={{ opacity: 0, y: 20 }}
                       whileInView={{ opacity: 1, y: 0 }}
                       transition={{ duration: 0.6, delay: index * 0.1 }}
                       viewport={{ once: true }}
                     >
-                      <Icon className="h-5 w-5 group-hover:text-cyan-400 transition-colors" />
+                      <div className="backdrop-blur-2xl bg-gradient-to-br from-black/50 to-gray-900/50 border border-cyan-500/20 rounded-xl p-4 shadow-2xl hover:border-cyan-400/50 transition-all duration-300 relative overflow-hidden">
+                        {/* Animated background gradient */}
+                        <div className={`absolute inset-0 bg-gradient-to-br ${colorClass} opacity-0 group-hover:opacity-10 transition-opacity duration-300`} />
+                        
+                        <div className="relative z-10 text-center">
+                          <div className={`w-8 h-8 bg-gradient-to-r ${colorClass} rounded-lg flex items-center justify-center shadow-lg mx-auto mb-2`}>
+                            <Icon className="w-4 h-4 text-white" />
+                          </div>
+                          <span className="text-xs text-gray-300 group-hover:text-cyan-400 transition-colors font-medium">
+                            {link.name}
+                          </span>
+                        </div>
+                      </div>
                     </motion.a>
                   )
                 })}
@@ -85,30 +104,41 @@ const Footer = () => {
               Quick Links
               <div className="w-8 h-0.5 bg-gradient-to-r from-cyan-400 to-purple-600 rounded-full mt-2" />
             </h3>
-            <ul className="space-y-3">
+            <div className="space-y-3">
               {[
-                { name: 'Home', href: ROUTES.HOME },
-                { name: 'Projects', href: ROUTES.PROJECTS },
-                { name: 'Experience', href: ROUTES.EXPERIENCE },
-                { name: 'Contact', href: ROUTES.CONTACT },
+                { name: 'Home', href: ROUTES.HOME, icon: '🏠', color: 'from-cyan-400 to-blue-500' },
+                { name: 'Projects', href: ROUTES.PROJECTS, icon: '💼', color: 'from-purple-400 to-pink-500' },
+                { name: 'Experience', href: ROUTES.EXPERIENCE, icon: '🚀', color: 'from-green-400 to-emerald-500' },
+                { name: 'Contact', href: ROUTES.CONTACT, icon: '📧', color: 'from-orange-400 to-red-500' },
               ].map((link, index) => (
-                <motion.li 
+                <motion.div 
                   key={link.name}
                   initial={{ opacity: 0, x: -20 }}
                   whileInView={{ opacity: 1, x: 0 }}
                   transition={{ duration: 0.6, delay: 0.3 + index * 0.1 }}
                   viewport={{ once: true }}
+                  whileHover={{ scale: 1.02, x: 5 }}
+                  className="group"
                 >
                   <Link
                     to={link.href}
-                    className="text-gray-300 hover:text-cyan-400 transition-colors relative group inline-block"
+                    className="flex items-center gap-3 p-3 rounded-lg backdrop-blur-2xl bg-gradient-to-br from-black/30 to-gray-900/30 border border-gray-700/50 hover:border-cyan-400/50 transition-all duration-300 relative overflow-hidden"
                   >
-                    {link.name}
-                    <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-cyan-400 to-purple-600 group-hover:w-full transition-all duration-300" />
+                    {/* Animated background gradient */}
+                    <div className={`absolute inset-0 bg-gradient-to-br ${link.color} opacity-0 group-hover:opacity-10 transition-opacity duration-300`} />
+                    
+                    <div className="relative z-10 flex items-center gap-3 w-full">
+                      <div className={`w-8 h-8 bg-gradient-to-r ${link.color} rounded-lg flex items-center justify-center shadow-lg text-white text-sm`}>
+                        {link.icon}
+                      </div>
+                      <span className="text-gray-300 group-hover:text-cyan-400 transition-colors font-medium">
+                        {link.name}
+                      </span>
+                    </div>
                   </Link>
-                </motion.li>
+                </motion.div>
               ))}
-            </ul>
+            </div>
           </motion.div>
 
           {/* Contact */}
@@ -122,35 +152,62 @@ const Footer = () => {
               Contact
               <div className="w-8 h-0.5 bg-gradient-to-r from-cyan-400 to-purple-600 rounded-full mt-2" />
             </h3>
-            <ul className="space-y-3">
-              <motion.li
+            <div className="space-y-4">
+              <motion.div
                 initial={{ opacity: 0, x: -20 }}
                 whileInView={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.6, delay: 0.5 }}
                 viewport={{ once: true }}
+                whileHover={{ scale: 1.02, x: 5 }}
+                className="group"
               >
                 <a
                   href="mailto:contact@example.com"
-                  className="text-gray-300 hover:text-cyan-400 transition-colors relative group inline-block"
+                  className="flex items-center gap-3 p-3 rounded-lg backdrop-blur-2xl bg-gradient-to-br from-black/30 to-gray-900/30 border border-gray-700/50 hover:border-cyan-400/50 transition-all duration-300 relative overflow-hidden"
                 >
-                  contact@example.com
-                  <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-cyan-400 to-purple-600 group-hover:w-full transition-all duration-300" />
+                  {/* Animated background gradient */}
+                  <div className="absolute inset-0 bg-gradient-to-br from-blue-400 to-cyan-500 opacity-0 group-hover:opacity-10 transition-opacity duration-300" />
+                  
+                  <div className="relative z-10 flex items-center gap-3 w-full">
+                    <div className="w-8 h-8 bg-gradient-to-r from-blue-400 to-cyan-500 rounded-lg flex items-center justify-center shadow-lg">
+                      <Mail className="w-4 h-4 text-white" />
+                    </div>
+                    <div>
+                      <span className="text-gray-300 group-hover:text-cyan-400 transition-colors font-medium block">
+                        contact@example.com
+                      </span>
+                      <span className="text-xs text-gray-400">Get in touch</span>
+                    </div>
+                  </div>
                 </a>
-              </motion.li>
-              <motion.li
+              </motion.div>
+              
+              <motion.div
                 initial={{ opacity: 0, x: -20 }}
                 whileInView={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.6, delay: 0.6 }}
                 viewport={{ once: true }}
+                whileHover={{ scale: 1.02, x: 5 }}
+                className="group"
               >
-                <div className="flex items-center gap-2">
-                  <div className="w-2 h-2 bg-gradient-to-r from-cyan-400 to-purple-600 rounded-full animate-pulse" />
-                  <span className="text-gray-300">
-                    Available for opportunities
-                  </span>
+                <div className="flex items-center gap-3 p-3 rounded-lg backdrop-blur-2xl bg-gradient-to-br from-black/30 to-gray-900/30 border border-gray-700/50 hover:border-cyan-400/50 transition-all duration-300 relative overflow-hidden">
+                  {/* Animated background gradient */}
+                  <div className="absolute inset-0 bg-gradient-to-br from-green-400 to-emerald-500 opacity-0 group-hover:opacity-10 transition-opacity duration-300" />
+                  
+                  <div className="relative z-10 flex items-center gap-3 w-full">
+                    <div className="w-8 h-8 bg-gradient-to-r from-green-400 to-emerald-500 rounded-lg flex items-center justify-center shadow-lg">
+                      <div className="w-3 h-3 bg-white rounded-full animate-pulse" />
+                    </div>
+                    <div>
+                      <span className="text-gray-300 group-hover:text-cyan-400 transition-colors font-medium block">
+                        Available for opportunities
+                      </span>
+                      <span className="text-xs text-gray-400">Open to work</span>
+                    </div>
+                  </div>
                 </div>
-              </motion.li>
-            </ul>
+              </motion.div>
+            </div>
           </motion.div>
         </div>
 
