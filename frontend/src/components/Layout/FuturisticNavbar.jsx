@@ -74,26 +74,36 @@ const FuturisticNavbar = () => {
                 <ThemeToggle />
                 
                 {/* Social Links */}
-                <a 
+                <motion.a 
                   href="https://github.com/vimukthi-buddika" 
                   target="_blank" 
                   rel="noopener noreferrer"
                   className="inline-block"
+                  whileHover={{ scale: 1.1, y: -2 }}
+                  whileTap={{ scale: 0.95 }}
+                  initial={{ opacity: 0, x: 20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.6, delay: 0.2 }}
                 >
-                  <Button variant="ghost" size="sm" className="text-gray-300 hover:text-cyan-400 hover:bg-cyan-500/10 border border-cyan-500/30">
-                    <Github className="w-4 h-4" />
+                  <Button variant="ghost" size="sm" className="text-gray-300 hover:text-cyan-400 hover:bg-cyan-500/10 border border-cyan-500/30 transition-all duration-300 group">
+                    <Github className="w-4 h-4 group-hover:text-cyan-400 transition-colors" />
                   </Button>
-                </a>
-                <a 
+                </motion.a>
+                <motion.a 
                   href="https://linkedin.com/in/vimukthi-buddika" 
                   target="_blank" 
                   rel="noopener noreferrer"
                   className="inline-block"
+                  whileHover={{ scale: 1.1, y: -2 }}
+                  whileTap={{ scale: 0.95 }}
+                  initial={{ opacity: 0, x: 20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.6, delay: 0.3 }}
                 >
-                  <Button variant="ghost" size="sm" className="text-gray-300 hover:text-cyan-400 hover:bg-cyan-500/10 border border-cyan-500/30">
-                    <Linkedin className="w-4 h-4" />
+                  <Button variant="ghost" size="sm" className="text-gray-300 hover:text-cyan-400 hover:bg-cyan-500/10 border border-cyan-500/30 transition-all duration-300 group">
+                    <Linkedin className="w-4 h-4 group-hover:text-cyan-400 transition-colors" />
                   </Button>
-                </a>
+                </motion.a>
 
                 {/* Auth Actions */}
                 {isAuthenticated ? (
@@ -167,26 +177,36 @@ const FuturisticNavbar = () => {
               <div className="pt-4 border-t border-cyan-500/30 space-y-2">
                 {/* Social Links */}
                 <div className="flex space-x-2 justify-center">
-                  <a 
+                  <motion.a 
                     href="https://github.com/vimukthi-buddika" 
                     target="_blank" 
                     rel="noopener noreferrer"
                     className="inline-block"
+                    whileHover={{ scale: 1.1 }}
+                    whileTap={{ scale: 0.95 }}
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.4, delay: 0.1 }}
                   >
-                    <Button variant="ghost" size="sm" className="text-gray-300 hover:text-cyan-400 hover:bg-cyan-500/10 border border-cyan-500/30">
-                      <Github className="w-4 h-4" />
+                    <Button variant="ghost" size="sm" className="text-gray-300 hover:text-cyan-400 hover:bg-cyan-500/10 border border-cyan-500/30 transition-all duration-300 group">
+                      <Github className="w-4 h-4 group-hover:text-cyan-400 transition-colors" />
                     </Button>
-                  </a>
-                  <a 
+                  </motion.a>
+                  <motion.a 
                     href="https://linkedin.com/in/vimukthi-buddika" 
                     target="_blank" 
                     rel="noopener noreferrer"
                     className="inline-block"
+                    whileHover={{ scale: 1.1 }}
+                    whileTap={{ scale: 0.95 }}
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.4, delay: 0.2 }}
                   >
-                    <Button variant="ghost" size="sm" className="text-gray-300 hover:text-cyan-400 hover:bg-cyan-500/10 border border-cyan-500/30">
-                      <Linkedin className="w-4 h-4" />
+                    <Button variant="ghost" size="sm" className="text-gray-300 hover:text-cyan-400 hover:bg-cyan-500/10 border border-cyan-500/30 transition-all duration-300 group">
+                      <Linkedin className="w-4 h-4 group-hover:text-cyan-400 transition-colors" />
                     </Button>
-                  </a>
+                  </motion.a>
                 </div>
 
                 {/* Auth Actions */}

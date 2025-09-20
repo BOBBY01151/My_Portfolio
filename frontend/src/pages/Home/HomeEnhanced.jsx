@@ -776,56 +776,69 @@ const HomeEnhanced = () => {
                 whileHover={{ y: -15 }}
                 className="group relative"
               >
-                <Card className="backdrop-blur-2xl bg-gradient-to-br from-black/50 to-gray-900/50 border border-cyan-500/20 shadow-2xl overflow-hidden hover:border-cyan-400/50 transition-all duration-300 h-full relative">
+                <div className="backdrop-blur-2xl bg-gradient-to-br from-black/50 to-gray-900/50 border border-cyan-500/20 rounded-2xl shadow-2xl overflow-hidden hover:border-cyan-400/50 transition-all duration-300 h-full relative">
                   {/* Animated background gradient */}
                   <div className={`absolute inset-0 bg-gradient-to-br ${project.color} opacity-0 group-hover:opacity-10 transition-opacity duration-300`} />
-                  <div className="relative overflow-hidden">
-                    <ImageWithFallback
-                      src={project.image}
-                      alt={project.title}
-                      className="w-full h-64 object-cover group-hover:scale-110 transition-transform duration-500"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
-                    <div className="absolute top-4 right-4">
-                      <Badge className={`bg-gradient-to-r ${project.color} text-white border-0 shadow-lg`}>
-                        Featured
-                      </Badge>
+                  
+                  <div className="relative z-10">
+                    {/* Project Header with Icon and Title */}
+                    <div className="p-8 pb-6">
+                      <div className="flex items-center gap-4 mb-6">
+                        <div className={`w-16 h-16 bg-gradient-to-r ${project.color} rounded-xl flex items-center justify-center shadow-lg`}>
+                          <Briefcase className="w-8 h-8 text-white" />
+                        </div>
+                        <div className="flex-1">
+                          <div className="flex items-center gap-3 mb-2">
+                            <h3 className="text-xl font-semibold text-white">{project.title}</h3>
+                            <Badge className={`bg-gradient-to-r ${project.color} text-white border-0 shadow-lg text-xs`}>
+                              Featured
+                            </Badge>
+                          </div>
+                          <p className="text-gray-300 text-sm leading-relaxed">{project.description}</p>
+                        </div>
+                      </div>
+                      
+                      {/* Project Image */}
+                      <div className="relative overflow-hidden rounded-xl mb-6">
+                        <ImageWithFallback
+                          src={project.image}
+                          alt={project.title}
+                          className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-500"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent" />
+                      </div>
+                      
+                      {/* Technology Tags */}
+                      <div className="space-y-3">
+                        <div className="flex justify-between items-center">
+                          <span className="text-gray-400 text-sm">Technologies Used</span>
+                          <span className="text-cyan-400 font-semibold text-sm">{project.tags.length} Tech</span>
+                        </div>
+                        <div className="flex flex-wrap gap-2">
+                          {project.tags.map((tag, tagIndex) => (
+                            <Badge key={tag} className={`bg-gradient-to-r ${project.color} bg-opacity-20 text-white border-0 hover:bg-opacity-30 transition-all duration-300 text-xs`}>
+                              {tag}
+                            </Badge>
+                          ))}
+                        </div>
+                      </div>
                     </div>
                     
-                    {/* Colorful project icon */}
-                    <div className="absolute top-4 left-4">
-                      <div className={`w-12 h-12 bg-gradient-to-r ${project.color} rounded-xl flex items-center justify-center shadow-lg`}>
-                        <Briefcase className="w-6 h-6 text-white" />
+                    {/* Action Buttons */}
+                    <div className="p-8 pt-0">
+                      <div className="flex gap-3">
+                        <Button size="sm" variant="outline" className={`flex-1 border-transparent bg-gradient-to-r ${project.color} bg-opacity-20 text-white hover:bg-opacity-30 transition-all duration-300`}>
+                          <Github className="w-4 h-4 mr-2" />
+                          Code
+                        </Button>
+                        <Button size="sm" className={`flex-1 bg-gradient-to-r ${project.color} hover:opacity-90 text-white border-0 shadow-lg`}>
+                          <ExternalLink className="w-4 h-4 mr-2" />
+                          Live Demo
+                        </Button>
                       </div>
                     </div>
                   </div>
-                  
-                  <div className="p-8 space-y-6">
-                    <h3 className="text-2xl font-bold text-white group-hover:text-cyan-400 transition-colors">
-                      {project.title}
-                    </h3>
-                    <p className="text-gray-300 leading-relaxed">{project.description}</p>
-                    
-                    <div className="flex flex-wrap gap-2">
-                      {project.tags.map((tag) => (
-                        <Badge key={tag} className={`bg-gradient-to-r ${project.color} bg-opacity-20 text-white border-0 hover:bg-opacity-30 transition-all duration-300`}>
-                          {tag}
-                        </Badge>
-                      ))}
-                    </div>
-                    
-                    <div className="flex gap-4 pt-4">
-                      <Button size="sm" variant="outline" className={`border-transparent bg-gradient-to-r ${project.color} bg-opacity-20 text-white hover:bg-opacity-30 transition-all duration-300`}>
-                        <Github className="w-4 h-4 mr-2" />
-                        Code
-                      </Button>
-                      <Button size="sm" className={`bg-gradient-to-r ${project.color} hover:opacity-90 text-white border-0 shadow-lg`}>
-                        <ExternalLink className="w-4 h-4 mr-2" />
-                        Live Demo
-                      </Button>
-                    </div>
-                  </div>
-                </Card>
+                </div>
               </motion.div>
             ))}
           </div>
@@ -841,47 +854,64 @@ const HomeEnhanced = () => {
                 whileHover={{ y: -10 }}
                 className="group"
               >
-                <Card className="backdrop-blur-2xl bg-gradient-to-br from-black/30 to-gray-900/30 border border-gray-700/50 shadow-xl overflow-hidden hover:border-cyan-400/50 transition-all duration-300 relative">
+                <div className="backdrop-blur-2xl bg-gradient-to-br from-black/30 to-gray-900/30 border border-gray-700/50 rounded-2xl shadow-xl overflow-hidden hover:border-cyan-400/50 transition-all duration-300 relative">
                   {/* Animated background gradient */}
                   <div className={`absolute inset-0 bg-gradient-to-br ${project.color} opacity-0 group-hover:opacity-10 transition-opacity duration-300`} />
-                  <div className="relative overflow-hidden h-48">
-                    <ImageWithFallback
-                      src={project.image}
-                      alt={project.title}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+                  
+                  <div className="relative z-10">
+                    {/* Project Header */}
+                    <div className="p-6 pb-4">
+                      <div className="flex items-center gap-3 mb-4">
+                        <div className={`w-12 h-12 bg-gradient-to-r ${project.color} rounded-lg flex items-center justify-center shadow-lg`}>
+                          <Code className="w-6 h-6 text-white" />
+                        </div>
+                        <div className="flex-1">
+                          <h3 className="text-lg font-semibold text-white">{project.title}</h3>
+                          <p className="text-gray-400 text-sm leading-relaxed mt-1">{project.description}</p>
+                        </div>
+                      </div>
+                      
+                      {/* Project Image */}
+                      <div className="relative overflow-hidden rounded-lg mb-4">
+                        <ImageWithFallback
+                          src={project.image}
+                          alt={project.title}
+                          className="w-full h-32 object-cover group-hover:scale-105 transition-transform duration-300"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent" />
+                      </div>
+                      
+                      {/* Technology Tags */}
+                      <div className="space-y-2">
+                        <div className="flex justify-between items-center">
+                          <span className="text-gray-400 text-xs">Technologies</span>
+                          <span className="text-cyan-400 font-semibold text-xs">{project.tags.length} Tech</span>
+                        </div>
+                        <div className="flex flex-wrap gap-1">
+                          {project.tags.slice(0, 3).map((tag) => (
+                            <Badge key={tag} className={`bg-gradient-to-r ${project.color} bg-opacity-20 text-white border-0 text-xs`}>
+                              {tag}
+                            </Badge>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
                     
-                    {/* Colorful project icon */}
-                    <div className="absolute top-4 left-4">
-                      <div className={`w-10 h-10 bg-gradient-to-r ${project.color} rounded-lg flex items-center justify-center shadow-lg`}>
-                        <Code className="w-5 h-5 text-white" />
+                    {/* Action Buttons */}
+                    <div className="p-6 pt-0">
+                      <div className="flex gap-2">
+                        <Button size="sm" variant="outline" className={`flex-1 border-transparent bg-gradient-to-r ${project.color} bg-opacity-20 text-white hover:bg-opacity-30 transition-all duration-300 text-xs`}>
+                          <Github className="w-3 h-3 mr-1" />
+                          Code
+                        </Button>
+                        <Button size="sm" className={`flex-1 bg-gradient-to-r ${project.color} hover:opacity-90 text-white border-0 shadow-lg text-xs`}>
+                          <ExternalLink className="w-3 h-3 mr-1" />
+                          Demo
+                        </Button>
                       </div>
                     </div>
                   </div>
-                  
-                  <div className="p-6 space-y-4">
-                    <h3 className="text-xl font-semibold text-white">{project.title}</h3>
-                    <p className="text-gray-400 text-sm leading-relaxed">{project.description}</p>
-                    
-                    <div className="flex flex-wrap gap-1">
-                      {project.tags.slice(0, 3).map((tag) => (
-                        <Badge key={tag} className={`bg-gradient-to-r ${project.color} bg-opacity-20 text-white border-0 text-xs`}>
-                          {tag}
-                        </Badge>
-                      ))}
-                    </div>
-                    
-                    <div className="flex gap-3 pt-2">
-                      <Button size="sm" variant="ghost" className="text-gray-400 hover:text-cyan-400 p-2">
-                        <Github className="w-4 h-4" />
-                      </Button>
-                      <Button size="sm" variant="ghost" className="text-gray-400 hover:text-cyan-400 p-2">
-                        <ExternalLink className="w-4 h-4" />
-                      </Button>
-                    </div>
-                  </div>
-                </Card>
+                </div>
               </motion.div>
             ))}
           </div>
