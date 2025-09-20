@@ -25,8 +25,14 @@ const Footer = () => {
   ]
 
   return (
-    <footer className="backdrop-blur-2xl bg-black/50 border-t border-cyan-500/30 shadow-2xl shadow-cyan-500/10">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <footer className="relative overflow-hidden">
+      {/* Animated background gradients */}
+      <div className="absolute inset-0 bg-gradient-to-br from-black via-gray-900 to-black" />
+      <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/10 via-purple-500/10 to-pink-500/10 animate-pulse" />
+      <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-cyan-400 via-purple-500 to-pink-500" />
+      
+      <div className="relative backdrop-blur-2xl bg-black/40 border-t border-cyan-500/30 shadow-2xl shadow-cyan-500/10">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           {/* Brand */}
           <div className="col-span-1 md:col-span-2">
@@ -227,6 +233,7 @@ const Footer = () => {
             </p>
           </div>
         </motion.div>
+        </div>
       </div>
     </footer>
   )
