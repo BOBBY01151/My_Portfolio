@@ -12,6 +12,7 @@ export * from './ui/label'
 export * from './ui/textarea'
 export * from './ui/accordion'
 export * from './ui/progress'
+export * from './ui/select'
 
 // Export custom components
 export { TypingEffect } from './TypingEffect'

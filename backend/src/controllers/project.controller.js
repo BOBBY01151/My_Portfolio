@@ -1,4 +1,5 @@
 const projectService = require('../services/project.service');
+const githubService = require('../services/github.service');
 const { successResponse, errorResponse } = require('../utils/response');
 
 const getAllProjects = async (req, res) => {
@@ -56,11 +57,36 @@ const getFeaturedProjects = async (req, res) => {
   }
 };
 
+const importFromGitHub = async (req, res) => {
+  try {
+    const { url, save = false } = req.body;
+    
+    if (!url) {
+      return errorResponse(res, 'GitHub URL is required', 400);
+    }
+    
+    // Fetch repository information
+    const projectData = await githubService.fetchRepositoryInfo(url);
+    
+    // If save is true, create the project in database
+    if (save) {
+      const project = await projectService.createProject(projectData);
+      return successResponse(res, project, 'Project imported and saved successfully', 201);
+    }
+    
+    // Otherwise, just return the fetched data for preview
+    successResponse(res, projectData, 'Repository information fetched successfully');
+  } catch (error) {
+    errorResponse(res, error.message, 400);
+  }
+};
+
 module.exports = {
   getAllProjects,
   getProjectById,
   createProject,
   updateProject,
   deleteProject,
-  getFeaturedProjects
+  getFeaturedProjects,
+  importFromGitHub
 };

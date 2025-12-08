@@ -7,23 +7,25 @@
     "dev": "node src/server.js",
     "start": "node src/serverless.js",
     "test": "jest",
-    "test:watch": "jest --watch"
+    "test:watch": "jest --watch",
+    "create-admin": "node scripts/createAdmin.js"
   },
   "dependencies": {
-    "express": "^4.18.2",
-    "mongoose": "^7.5.0",
-    "cors": "^2.8.5",
-    "helmet": "^7.0.0",
-    "dotenv": "^16.3.1",
+    "axios": "^1.13.2",
     "bcryptjs": "^2.4.3",
+    "cors": "^2.8.5",
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "express-rate-limit": "^6.10.0",
+    "helmet": "^7.0.0",
     "jsonwebtoken": "^9.0.2",
-    "zod": "^3.22.2",
-    "express-rate-limit": "^6.10.0"
+    "mongoose": "^7.5.0",
+    "zod": "^3.22.2"
   },
   "devDependencies": {
     "jest": "^29.6.2",
-    "supertest": "^6.3.3",
-    "nodemon": "^3.0.1"
+    "nodemon": "^3.0.1",
+    "supertest": "^6.3.3"
   },
   "engines": {
     "node": ">=18.0.0"
