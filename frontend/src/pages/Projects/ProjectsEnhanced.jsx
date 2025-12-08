@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { motion } from 'motion/react';
 import { 
   ExternalLink, 
@@ -8,7 +8,8 @@ import {
   Eye,
   Search,
   Star,
-  Briefcase
+  Briefcase,
+  Loader2
 } from 'lucide-react';
 
 // Import FigmaUI components
@@ -22,145 +23,87 @@ import {
   Badge,
   Button,
   Input,
-  Tabs,
-  TabsContent,
-  TabsList,
-  TabsTrigger,
   TypingEffect,
-  ImageWithFallback
+  ImageWithFallback,
+  Alert,
+  AlertDescription
 } from '../../components/FigmaUI';
 
 import Container from '../../components/Layout/Container';
-import { Section, SectionHeader, SectionContent } from '../../components/UI/Section';
+import axiosInstance from '../../lib/axiosInstance';
+import { API_ENDPOINTS } from '../../lib/constants';
+
+// Color gradients for projects
+const colorGradients = [
+  'from-cyan-400 to-blue-500',
+  'from-purple-400 to-pink-500',
+  'from-teal-400 to-cyan-500',
+  'from-orange-400 to-red-500',
+  'from-green-400 to-emerald-500',
+  'from-yellow-400 to-orange-500',
+  'from-indigo-400 to-purple-500',
+  'from-pink-400 to-rose-500'
+];
 
 const ProjectsEnhanced = () => {
   const [searchTerm, setSearchTerm] = useState('');
+  const [projects, setProjects] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-  // Frontend-focused projects data with color gradients
-  const projects = [
-    {
-      id: 1,
-      title: 'Modern E-Commerce UI',
-      description: 'A beautiful and responsive e-commerce frontend with shopping cart, product filtering, and smooth animations built with React and Tailwind CSS.',
-      image: 'https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=500&h=300&fit=crop',
-      tags: ['React', 'TypeScript', 'Tailwind CSS', 'Framer Motion'],
-      category: 'web',
-      github: 'https://github.com',
-      demo: 'https://demo.com',
-      featured: true,
-      date: '2024-01-15',
-      color: 'from-cyan-400 to-blue-500'
-    },
-    {
-      id: 2,
-      title: 'Interactive Chat Interface',
-      description: 'A modern real-time chat UI with message bubbles, typing indicators, and emoji picker. Built with React and styled with CSS-in-JS.',
-      image: 'https://images.unsplash.com/photo-1677442136019-21780ecad995?w=500&h=300&fit=crop',
-      tags: ['React', 'JavaScript', 'Styled Components', 'Socket.io Client'],
-      category: 'ui',
-      github: 'https://github.com',
-      demo: 'https://demo.com',
-      featured: true,
-      date: '2024-02-20',
-      color: 'from-purple-400 to-pink-500'
-    },
-    {
-      id: 3,
-      title: 'Task Management App',
-      description: 'A sleek task management application with drag-and-drop functionality, dark mode, and local storage. Built with React and Material-UI.',
-      image: 'https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?w=500&h=300&fit=crop',
-      tags: ['React', 'Material-UI', 'React DnD', 'LocalStorage'],
-      category: 'spa',
-      github: 'https://github.com',
-      demo: 'https://demo.com',
-      featured: false,
-      date: '2024-03-10',
-      color: 'from-teal-400 to-cyan-500'
-    },
-    {
-      id: 4,
-      title: 'Data Visualization Dashboard',
-      description: 'An interactive data visualization dashboard with animated charts, graphs, and real-time updates. Built with React, D3.js, and Chart.js.',
-      image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=500&h=300&fit=crop',
-      tags: ['React', 'D3.js', 'Chart.js', 'Recharts'],
-      category: 'data',
-      github: 'https://github.com',
-      demo: 'https://demo.com',
-      featured: false,
-      date: '2024-04-05',
-      color: 'from-orange-400 to-red-500'
-    },
-    {
-      id: 5,
-      title: 'Portfolio Website',
-      description: 'A stunning portfolio website with smooth scroll animations, interactive sections, and responsive design. Built with React and Framer Motion.',
-      image: 'https://images.unsplash.com/photo-1639762681485-074b7f938ba0?w=500&h=300&fit=crop',
-      tags: ['React', 'Next.js', 'Framer Motion', 'Tailwind CSS'],
-      category: 'web',
-      github: 'https://github.com',
-      demo: 'https://demo.com',
-      featured: true,
-      date: '2024-05-12',
-      color: 'from-green-400 to-emerald-500'
-    },
-    {
-      id: 6,
-      title: 'Weather App UI',
-      description: 'A beautiful weather application with animated weather icons, gradient backgrounds, and location-based forecasts. Built with React and OpenWeather API.',
-      image: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=500&h=300&fit=crop',
-      tags: ['React', 'JavaScript', 'CSS3', 'Weather API'],
-      category: 'ui',
-      github: 'https://github.com',
-      demo: 'https://demo.com',
-      featured: false,
-      date: '2024-06-18',
-      color: 'from-yellow-400 to-orange-500'
-    },
-    {
-      id: 7,
-      title: 'Music Player Interface',
-      description: 'A modern music player with waveform visualization, playlist management, and smooth transitions. Built with React and Web Audio API.',
-      image: 'https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=500&h=300&fit=crop',
-      tags: ['React', 'TypeScript', 'Web Audio API', 'CSS Animations'],
-      category: 'ui',
-      github: 'https://github.com',
-      demo: 'https://demo.com',
-      featured: false,
-      date: '2024-07-25',
-      color: 'from-indigo-400 to-purple-500'
-    },
-    {
-      id: 8,
-      title: 'Landing Page Design',
-      description: 'A conversion-optimized landing page with hero sections, testimonials, and call-to-action buttons. Built with React and Tailwind CSS.',
-      image: 'https://images.unsplash.com/photo-1467232004584-a241de8bcf5d?w=500&h=300&fit=crop',
-      tags: ['React', 'Tailwind CSS', 'React Router', 'Responsive Design'],
-      category: 'web',
-      github: 'https://github.com',
-      demo: 'https://demo.com',
-      featured: false,
-      date: '2024-08-10',
-      color: 'from-pink-400 to-rose-500'
-    }
-  ];
+  // Fetch projects from API
+  useEffect(() => {
+    const fetchProjects = async () => {
+      try {
+        setLoading(true);
+        const response = await axiosInstance.get(`${API_ENDPOINTS.PROJECTS.LIST}?finished=true`);
+        const apiProjects = response.data.data || [];
+        
+        // Map API projects to component format
+        const mappedProjects = apiProjects.map((project, index) => ({
+          id: project._id,
+          title: project.title,
+          description: project.description,
+          shortDescription: project.shortDescription,
+          image: project.image,
+          tags: project.technologies || [],
+          github: project.githubUrl || '',
+          demo: project.liveUrl || '',
+          featured: project.featured || false,
+          finished: project.finished || false,
+          date: project.createdAt || new Date().toISOString(),
+          color: colorGradients[index % colorGradients.length]
+        }));
+        
+        setProjects(mappedProjects);
+        setError(null);
+      } catch (err) {
+        console.error('Error fetching projects:', err);
+        setError(err.response?.data?.message || 'Failed to load projects');
+        setProjects([]);
+      } finally {
+        setLoading(false);
+      }
+    };
 
-  const categories = [
-    { id: 'all', name: 'All Projects', count: projects.length },
-    { id: 'web', name: 'Web Apps', count: projects.filter(p => p.category === 'web').length },
-    { id: 'ui', name: 'UI/UX Design', count: projects.filter(p => p.category === 'ui').length },
-    { id: 'spa', name: 'SPA', count: projects.filter(p => p.category === 'spa').length },
-    { id: 'data', name: 'Data Viz', count: projects.filter(p => p.category === 'data').length }
-  ];
+    fetchProjects();
+  }, []);
 
+  // Filter projects by search term
   const filteredProjects = projects.filter(project => {
-    const matchesSearch = project.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         project.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         project.tags.some(tag => tag.toLowerCase().includes(searchTerm.toLowerCase()));
+    const matchesSearch = project.title?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                         project.description?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                         project.shortDescription?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                         project.tags?.some(tag => tag.toLowerCase().includes(searchTerm.toLowerCase()));
     
     return matchesSearch;
   });
 
-  const featuredProjects = projects.filter(project => project.featured);
+  // Get featured projects
+  const featuredProjects = filteredProjects.filter(project => project.featured);
+
+  // Get all projects (for "all" tab)
+  const allProjects = filteredProjects;
 
   return (
     <div className="min-h-screen bg-black relative overflow-x-hidden">
@@ -270,13 +213,13 @@ const ProjectsEnhanced = () => {
               <h1 className="text-4xl md:text-6xl xl:text-7xl font-bold text-white mb-6">
                 My{' '}
                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-emerald-400 via-yellow-400 to-blue-500">
-                  <TypingEffect 
-                    words={['Projects', 'Creations', 'Innovations', 'Solutions']}
+                <TypingEffect 
+                  words={['Projects', 'Creations', 'Innovations', 'Solutions']}
                     className=""
-                    typingSpeed={100}
-                    deletingSpeed={80}
-                    delayBetweenWords={2000}
-                  />
+                  typingSpeed={100}
+                  deletingSpeed={80}
+                  delayBetweenWords={2000}
+                />
                 </span>
               </h1>
               <p className="text-xl text-gray-300 mb-8 max-w-3xl mx-auto leading-relaxed">
@@ -289,25 +232,9 @@ const ProjectsEnhanced = () => {
 
       <section className="py-32 relative">
         <Container>
-          <Tabs defaultValue="all" className="w-full relative z-30">
-            {/* Category Tabs */}
+          <div className="w-full relative z-30">
+            {/* Search Bar */}
             <div className="flex flex-col md:flex-row gap-6 mb-12">
-              <TabsList className="grid w-full md:w-auto grid-cols-2 md:grid-cols-3 lg:grid-cols-5 bg-black/50 backdrop-blur-xl border border-cyan-500/20">
-                {categories.map((category) => (
-                  <TabsTrigger 
-                    key={category.id} 
-                    value={category.id}
-                    className="flex items-center gap-2 text-gray-300 data-[state=active]:text-white data-[state=active]:bg-gradient-to-r data-[state=active]:from-cyan-500/20 data-[state=active]:to-purple-600/20"
-                  >
-                    {category.name}
-                    <Badge variant="secondary" className="ml-1 bg-cyan-500/20 text-cyan-400 border-cyan-500/30">
-                      {category.count}
-                    </Badge>
-                  </TabsTrigger>
-                ))}
-              </TabsList>
-              
-              {/* Search */}
               <div className="relative flex-1 max-w-md">
                 <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
                 <Input
@@ -319,23 +246,49 @@ const ProjectsEnhanced = () => {
               </div>
             </div>
 
+            {/* Loading State */}
+            {loading && (
+              <div className="flex justify-center items-center py-20">
+                <div className="text-center">
+                  <Loader2 className="w-12 h-12 animate-spin text-cyan-400 mx-auto mb-4" />
+                  <p className="text-gray-300">Loading projects...</p>
+                </div>
+              </div>
+            )}
+
+            {/* Error State */}
+            {error && !loading && (
+              <Alert variant="destructive" className="mb-8 bg-red-500/10 border-red-500/30">
+                <AlertDescription className="text-red-400">{error}</AlertDescription>
+              </Alert>
+            )}
+
+            {/* Projects Content */}
+            {!loading && !error && (
+              <div className="space-y-12">
             {/* Featured Projects Section */}
-            <TabsContent value="all" className="space-y-12">
+                {featuredProjects.length > 0 && (
               <div>
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.6 }}
-                  viewport={{ once: true }}
-                  className="mb-8"
-                >
-                  <h2 className="text-3xl font-bold text-white mb-2 flex items-center gap-3">
-                    <Star className="h-7 w-7 text-yellow-500" />
-                    Featured Projects
-                  </h2>
-                  <div className="w-20 h-1 bg-gradient-to-r from-cyan-400 to-purple-600 rounded-full" />
-                </motion.div>
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <motion.div
+                      initial={{ opacity: 0, y: 20 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.6 }}
+                      viewport={{ once: true }}
+                      className="mb-8"
+                    >
+                      <h2 className="text-3xl font-bold text-white mb-2 flex items-center gap-3">
+                        <Star className="h-7 w-7 text-yellow-500" />
+                        Featured Projects ({featuredProjects.length})
+                </h2>
+                      <div className="w-20 h-1 bg-gradient-to-r from-cyan-400 to-purple-600 rounded-full" />
+                    </motion.div>
+                    {featuredProjects.length === 0 ? (
+                      <div className="text-center py-12">
+                        <Star className="w-12 h-12 text-gray-500 mx-auto mb-4" />
+                        <p className="text-gray-400">No featured projects yet</p>
+                      </div>
+                    ) : (
+                      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                   {featuredProjects.map((project, index) => (
                     <motion.div
                       key={project.id}
@@ -352,82 +305,102 @@ const ProjectsEnhanced = () => {
                         
                         <div className="relative z-10">
                           <div className="relative overflow-hidden">
-                            <ImageWithFallback
-                              src={project.image}
-                              alt={project.title}
+                          <ImageWithFallback
+                            src={project.image}
+                            alt={project.title}
                               className="w-full h-48 object-cover group-hover:scale-110 transition-transform duration-500"
-                            />
+                          />
                             <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent" />
-                            <div className="absolute top-4 left-4">
+                          <div className="absolute top-4 left-4">
                               <Badge className={`bg-gradient-to-r ${project.color} text-white border-0 shadow-lg`}>
-                                <Star className="h-3 w-3 mr-1" />
-                                Featured
-                              </Badge>
-                            </div>
-                            <div className="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity">
-                              <Button size="sm" variant="secondary" className="backdrop-blur-sm bg-black/50 border-gray-600 text-white hover:bg-black/70">
-                                <Eye className="h-4 w-4" />
-                              </Button>
-                            </div>
+                              <Star className="h-3 w-3 mr-1" />
+                              Featured
+                            </Badge>
                           </div>
-                          <CardHeader>
+                          <div className="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity">
+                              <Button size="sm" variant="secondary" className="backdrop-blur-sm bg-black/50 border-gray-600 text-white hover:bg-black/70">
+                              <Eye className="h-4 w-4" />
+                            </Button>
+                          </div>
+                        </div>
+                        <CardHeader>
                             <CardTitle className="group-hover:text-cyan-400 transition-colors text-white">
-                              {project.title}
-                            </CardTitle>
+                            {project.title}
+                          </CardTitle>
                             <CardDescription className="line-clamp-2 text-gray-300">
-                              {project.description}
-                            </CardDescription>
-                          </CardHeader>
-                          <CardContent>
-                            <div className="flex flex-wrap gap-2 mb-4">
-                              {project.tags.map((tag, tagIndex) => (
-                                <Badge key={tagIndex} className={`bg-gradient-to-r ${project.color} bg-opacity-20 text-white border-0 text-xs`}>
-                                  {tag}
-                                </Badge>
-                              ))}
-                            </div>
+                              {project.shortDescription || project.description}
+                          </CardDescription>
+                        </CardHeader>
+                        <CardContent>
+                            {project.tags && project.tags.length > 0 && (
+                          <div className="flex flex-wrap gap-2 mb-4">
+                            {project.tags.map((tag, tagIndex) => (
+                                  <Badge key={tagIndex} className={`bg-gradient-to-r ${project.color} bg-opacity-20 text-white border-0 text-xs`}>
+                                {tag}
+                              </Badge>
+                            ))}
+                          </div>
+                            )}
                             <div className="flex items-center gap-2 text-sm text-gray-400">
-                              <Calendar className="h-4 w-4" />
-                              {new Date(project.date).toLocaleDateString()}
-                            </div>
-                          </CardContent>
+                            <Calendar className="h-4 w-4" />
+                            {new Date(project.date).toLocaleDateString()}
+                          </div>
+                        </CardContent>
                           <CardFooter className="flex justify-between gap-2">
-                            <Button variant="outline" size="sm" className={`flex-1 border-transparent bg-gradient-to-r ${project.color} bg-opacity-20 text-white hover:bg-opacity-30 transition-all duration-300`} asChild>
-                              <a href={project.github} target="_blank" rel="noopener noreferrer">
-                                <Github className="h-4 w-4 mr-2" />
-                                Code
-                              </a>
-                            </Button>
-                            <Button size="sm" className={`flex-1 bg-gradient-to-r ${project.color} hover:opacity-90 text-white border-0 shadow-lg`} asChild>
-                              <a href={project.demo} target="_blank" rel="noopener noreferrer">
-                                <ExternalLink className="h-4 w-4 mr-2" />
-                                Demo
-                              </a>
-                            </Button>
-                          </CardFooter>
+                            {project.github && (
+                              <Button variant="outline" size="sm" className={`flex-1 border-transparent bg-gradient-to-r ${project.color} bg-opacity-20 text-white hover:bg-opacity-30 transition-all duration-300`} asChild>
+                            <a href={project.github} target="_blank" rel="noopener noreferrer">
+                              <Github className="h-4 w-4 mr-2" />
+                              Code
+                            </a>
+                          </Button>
+                            )}
+                            {project.demo && (
+                              <Button size="sm" className={`flex-1 bg-gradient-to-r ${project.color} hover:opacity-90 text-white border-0 shadow-lg`} asChild>
+                            <a href={project.demo} target="_blank" rel="noopener noreferrer">
+                              <ExternalLink className="h-4 w-4 mr-2" />
+                              Demo
+                            </a>
+                          </Button>
+                            )}
+                            {!project.github && !project.demo && (
+                              <p className="text-sm text-gray-400 text-center w-full py-2">No links available</p>
+                            )}
+                        </CardFooter>
                         </div>
                       </div>
                     </motion.div>
                   ))}
                 </div>
+                    )}
               </div>
+                )}
 
               {/* All Projects */}
               <div>
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.6 }}
-                  viewport={{ once: true }}
-                  className="mb-8"
-                >
-                  <h2 className="text-3xl font-bold text-white mb-2 flex items-center gap-3">
-                    <Code className="h-7 w-7 text-cyan-400" />
-                    All Projects ({filteredProjects.length})
-                  </h2>
-                  <div className="w-20 h-1 bg-gradient-to-r from-cyan-400 to-purple-600 rounded-full" />
-                </motion.div>
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                  <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.6 }}
+                    viewport={{ once: true }}
+                    className="mb-8"
+                  >
+                    <h2 className="text-3xl font-bold text-white mb-2 flex items-center gap-3">
+                      <Code className="h-7 w-7 text-cyan-400" />
+                  All Projects ({filteredProjects.length})
+                </h2>
+                    <div className="w-20 h-1 bg-gradient-to-r from-cyan-400 to-purple-600 rounded-full" />
+                  </motion.div>
+                  
+                  {filteredProjects.length === 0 ? (
+                    <div className="text-center py-16">
+                      <Code className="w-16 h-16 text-gray-500 mx-auto mb-4" />
+                      <p className="text-gray-400 text-lg">
+                        {searchTerm ? 'No projects found matching your search' : 'No projects available yet'}
+                      </p>
+                    </div>
+                  ) : (
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                   {filteredProjects.map((project, index) => (
                     <motion.div
                       key={project.id}
@@ -444,148 +417,72 @@ const ProjectsEnhanced = () => {
                         
                         <div className="relative z-10">
                           <div className="relative overflow-hidden">
-                            <ImageWithFallback
-                              src={project.image}
-                              alt={project.title}
-                              className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"
-                            />
+                              <ImageWithFallback
+                                src={project.image}
+                                alt={project.title}
+                                className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"
+                              />
                             <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent" />
-                            <div className="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity">
+                              <div className="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity">
                               <Button size="sm" variant="secondary" className="backdrop-blur-sm bg-black/50 border-gray-600 text-white hover:bg-black/70">
-                                <Eye className="h-4 w-4" />
-                              </Button>
+                                  <Eye className="h-4 w-4" />
+                                </Button>
+                              </div>
                             </div>
-                          </div>
-                          <CardHeader>
+                            <CardHeader>
                             <CardTitle className="group-hover:text-cyan-400 transition-colors text-white">
-                              {project.title}
-                            </CardTitle>
+                                {project.title}
+                              </CardTitle>
                             <CardDescription className="line-clamp-2 text-gray-300">
-                              {project.description}
-                            </CardDescription>
-                          </CardHeader>
-                          <CardContent>
-                            <div className="flex flex-wrap gap-2 mb-4">
-                              {project.tags.map((tag, tagIndex) => (
-                                <Badge key={tagIndex} className={`bg-gradient-to-r ${project.color} bg-opacity-20 text-white border-0 text-xs`}>
-                                  {tag}
-                                </Badge>
-                              ))}
-                            </div>
+                              {project.shortDescription || project.description}
+                              </CardDescription>
+                            </CardHeader>
+                            <CardContent>
+                            {project.tags && project.tags.length > 0 && (
+                              <div className="flex flex-wrap gap-2 mb-4">
+                                {project.tags.map((tag, tagIndex) => (
+                                  <Badge key={tagIndex} className={`bg-gradient-to-r ${project.color} bg-opacity-20 text-white border-0 text-xs`}>
+                                    {tag}
+                                  </Badge>
+                                ))}
+                              </div>
+                            )}
                             <div className="flex items-center gap-2 text-sm text-gray-400">
-                              <Calendar className="h-4 w-4" />
-                              {new Date(project.date).toLocaleDateString()}
-                            </div>
-                          </CardContent>
+                                <Calendar className="h-4 w-4" />
+                                {new Date(project.date).toLocaleDateString()}
+                              </div>
+                            </CardContent>
                           <CardFooter className="flex justify-between gap-2">
-                            <Button variant="outline" size="sm" className={`flex-1 border-transparent bg-gradient-to-r ${project.color} bg-opacity-20 text-white hover:bg-opacity-30 transition-all duration-300`} asChild>
-                              <a href={project.github} target="_blank" rel="noopener noreferrer">
-                                <Github className="h-4 w-4 mr-2" />
-                                Code
-                              </a>
-                            </Button>
-                            <Button size="sm" className={`flex-1 bg-gradient-to-r ${project.color} hover:opacity-90 text-white border-0 shadow-lg`} asChild>
-                              <a href={project.demo} target="_blank" rel="noopener noreferrer">
-                                <ExternalLink className="h-4 w-4 mr-2" />
-                                Demo
-                              </a>
-                            </Button>
-                          </CardFooter>
+                            {project.github && (
+                              <Button variant="outline" size="sm" className={`flex-1 border-transparent bg-gradient-to-r ${project.color} bg-opacity-20 text-white hover:bg-opacity-30 transition-all duration-300`} asChild>
+                                <a href={project.github} target="_blank" rel="noopener noreferrer">
+                                  <Github className="h-4 w-4 mr-2" />
+                                  Code
+                                </a>
+                              </Button>
+                            )}
+                            {project.demo && (
+                              <Button size="sm" className={`flex-1 bg-gradient-to-r ${project.color} hover:opacity-90 text-white border-0 shadow-lg`} asChild>
+                                <a href={project.demo} target="_blank" rel="noopener noreferrer">
+                                  <ExternalLink className="h-4 w-4 mr-2" />
+                                  Demo
+                                </a>
+                              </Button>
+                            )}
+                            {!project.github && !project.demo && (
+                              <p className="text-sm text-gray-400 text-center w-full py-2">No links available</p>
+                            )}
+                            </CardFooter>
                         </div>
                       </div>
-                    </motion.div>
-                  ))}
-                </div>
-              </div>
-            </TabsContent>
-
-            {/* Category-specific content */}
-            {categories.slice(1).map((category) => (
-              <TabsContent key={category.id} value={category.id}>
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.6 }}
-                  viewport={{ once: true }}
-                >
-                  <h2 className="text-3xl font-bold text-white mb-8">
-                    {category.name} <span className="text-cyan-400">({category.count} projects)</span>
-                  </h2>
-                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                    {projects
-                      .filter(project => project.category === category.id)
-                      .map((project, index) => (
-                        <motion.div
-                          key={project.id}
-                          initial={{ opacity: 0, y: 50 }}
-                          whileInView={{ opacity: 1, y: 0 }}
-                          transition={{ duration: 0.6, delay: index * 0.1 }}
-                          viewport={{ once: true }}
-                          whileHover={{ y: -10 }}
-                          className="group relative"
-                        >
-                          <div className="backdrop-blur-2xl bg-gradient-to-br from-black/30 to-gray-900/30 border border-gray-700/50 rounded-2xl shadow-xl overflow-hidden hover:border-cyan-400/50 transition-all duration-300 relative">
-                            {/* Animated background gradient */}
-                            <div className={`absolute inset-0 bg-gradient-to-br ${project.color} opacity-0 group-hover:opacity-10 transition-opacity duration-300`} />
-                            
-                            <div className="relative z-10">
-                              <div className="relative overflow-hidden">
-                                <ImageWithFallback
-                                  src={project.image}
-                                  alt={project.title}
-                                  className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"
-                                />
-                                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent" />
-                                <div className="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity">
-                                  <Button size="sm" variant="secondary" className="backdrop-blur-sm bg-black/50 border-gray-600 text-white hover:bg-black/70">
-                                    <Eye className="h-4 w-4" />
-                                  </Button>
-                                </div>
-                              </div>
-                              <CardHeader>
-                                <CardTitle className="group-hover:text-cyan-400 transition-colors text-white">
-                                  {project.title}
-                                </CardTitle>
-                                <CardDescription className="line-clamp-2 text-gray-300">
-                                  {project.description}
-                                </CardDescription>
-                              </CardHeader>
-                              <CardContent>
-                                <div className="flex flex-wrap gap-2 mb-4">
-                                  {project.tags.map((tag, tagIndex) => (
-                                    <Badge key={tagIndex} className={`bg-gradient-to-r ${project.color} bg-opacity-20 text-white border-0 text-xs`}>
-                                      {tag}
-                                    </Badge>
-                                  ))}
-                                </div>
-                                <div className="flex items-center gap-2 text-sm text-gray-400">
-                                  <Calendar className="h-4 w-4" />
-                                  {new Date(project.date).toLocaleDateString()}
-                                </div>
-                              </CardContent>
-                              <CardFooter className="flex justify-between gap-2">
-                                <Button variant="outline" size="sm" className={`flex-1 border-transparent bg-gradient-to-r ${project.color} bg-opacity-20 text-white hover:bg-opacity-30 transition-all duration-300`} asChild>
-                                  <a href={project.github} target="_blank" rel="noopener noreferrer">
-                                    <Github className="h-4 w-4 mr-2" />
-                                    Code
-                                  </a>
-                                </Button>
-                                <Button size="sm" className={`flex-1 bg-gradient-to-r ${project.color} hover:opacity-90 text-white border-0 shadow-lg`} asChild>
-                                  <a href={project.demo} target="_blank" rel="noopener noreferrer">
-                                    <ExternalLink className="h-4 w-4 mr-2" />
-                                    Demo
-                                  </a>
-                                </Button>
-                              </CardFooter>
-                            </div>
-                          </div>
                         </motion.div>
                       ))}
                   </div>
-                </motion.div>
-              </TabsContent>
-            ))}
-          </Tabs>
+                  )}
+                </div>
+              </div>
+            )}
+          </div>
         </Container>
       </section>
     </div>
