@@ -14,8 +14,15 @@ const useAuthStore = create(
       login: async (credentials) => {
         set({ isLoading: true })
         try {
+          console.log('Attempting login with:', { username: credentials.username, password: '***' })
           const response = await axiosInstance.post('/auth/login', credentials)
+          console.log('Login response:', response.data)
+          
           const { user, token } = response.data.data
+          
+          // Store token in localStorage for axios interceptor
+          localStorage.setItem('token', token)
+          localStorage.setItem('user', JSON.stringify(user))
           
           set({
             user,
@@ -26,10 +33,12 @@ const useAuthStore = create(
           
           return { success: true, data: response.data.data }
         } catch (error) {
+          console.error('Login error:', error)
+          console.error('Error response:', error.response?.data)
           set({ isLoading: false })
           return {
             success: false,
-            error: error.response?.data?.message || 'Login failed'
+            error: error.response?.data?.message || error.message || 'Login failed'
           }
         }
       },

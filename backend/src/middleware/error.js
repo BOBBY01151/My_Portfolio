@@ -2,8 +2,12 @@ const errorHandler = (err, req, res, next) => {
   let error = { ...err };
   error.message = err.message;
 
-  // Log error
-  console.error(err);
+  // Log full error details for debugging
+  console.error('❌ Error Handler:', {
+    name: err.name,
+    message: err.message,
+    stack: process.env.NODE_ENV === 'development' ? err.stack : undefined
+  });
 
   // Mongoose bad ObjectId
   if (err.name === 'CastError') {
@@ -34,9 +38,18 @@ const errorHandler = (err, req, res, next) => {
     error = { message, statusCode: 401 };
   }
 
+  // Missing environment variable
+  if (err.message && err.message.includes('Missing required environment variable')) {
+    error = { message: err.message, statusCode: 500 };
+  }
+
   res.status(error.statusCode || 500).json({
     success: false,
-    message: error.message || 'Server Error'
+    message: error.message || 'Server Error',
+    ...(process.env.NODE_ENV === 'development' && { 
+      error: err.message,
+      stack: err.stack 
+    })
   });
 };
 
