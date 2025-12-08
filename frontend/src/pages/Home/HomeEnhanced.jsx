@@ -42,13 +42,16 @@ import {
 // Import existing components
 import Container from '../../components/Layout/Container';
 import { Section, SectionHeader, SectionContent } from '../../components/UI/Section';
-import { ROUTES } from '../../lib/constants';
+import { ROUTES, API_ENDPOINTS } from '../../lib/constants';
+import axiosInstance from '../../lib/axiosInstance';
 
 const HomeEnhanced = () => {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const [isHovering, setIsHovering] = useState(false);
   const [windowWidth, setWindowWidth] = useState(1920);
   const [windowHeight, setWindowHeight] = useState(1080);
+  const [projects, setProjects] = useState([]);
+  const [loadingProjects, setLoadingProjects] = useState(true);
   const { scrollY } = useScroll();
 
   // Enhanced parallax transforms
@@ -107,48 +110,49 @@ const HomeEnhanced = () => {
     { name: 'Mobile Development', level: 78, icon: Smartphone, color: 'from-teal-400 to-cyan-500' },
   ];
 
-  const projects = [
-    {
-      title: 'AI-Powered Learning Platform',
-      description: 'Revolutionary e-learning platform with AI-driven personalized learning paths, real-time progress tracking, and interactive content delivery.',
-      image: 'https://images.unsplash.com/photo-1564707944519-7a116ef3841c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxhaSUyMGFydGlmaWNpYWwlMjBpbnRlbGxpZ2VuY2UlMjB0ZWNobm9sb2d5fGVufDF8fHx8MTc1NjkzNTc3Mnww&ixlib=rb-4.1.0&q=80&w=1080',
-      tags: ['React', 'Python', 'TensorFlow', 'PostgreSQL', 'AWS'],
-      github: '#',
-      demo: '#',
-      featured: true,
-      color: 'from-purple-400 to-pink-500'
-    },
-    {
-      title: 'Real-time Collaboration Suite',
-      description: 'Advanced project management and collaboration platform with live editing, video conferencing, and intelligent task automation.',
-      image: 'https://images.unsplash.com/photo-1689692784625-1ce82784a25a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtb2Rlcm4lMjB3b3Jrc3BhY2UlMjBjeWJlcnB1bmslMjBuZW9ufGVufDF8fHx8MTc1Njk1OTU2OHww&ixlib=rb-4.1.0&q=80&w=1080',
-      tags: ['Next.js', 'WebRTC', 'Socket.io', 'Redis', 'Docker'],
-      github: '#',
-      demo: '#',
-      featured: true,
-      color: 'from-cyan-400 to-blue-500'
-    },
-    {
-      title: 'Blockchain Analytics Dashboard',
-      description: 'Comprehensive cryptocurrency and DeFi analytics platform with real-time market data, portfolio tracking, and predictive analysis.',
-      image: 'https://images.unsplash.com/photo-1742072594003-abf6ca86e154?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHx3ZWIlMjBkZXZlbG9wbWVudCUyMGNvZGUlMjBzY3JlZW58ZW58MXx8fHwxNzU2ODUzNzA1fDA&ixlib=rb-4.1.0&q=80&w=1080',
-      tags: ['Vue.js', 'Web3.js', 'Node.js', 'MongoDB', 'Chart.js'],
-      github: '#',
-      demo: '#',
-      featured: false,
-      color: 'from-green-400 to-emerald-500'
-    },
-    {
-      title: 'Smart IoT Home System',
-      description: 'Intelligent home automation system with voice control, energy optimization, and predictive maintenance capabilities.',
-      image: 'https://images.unsplash.com/photo-1689692784625-1ce82784a25a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtb2Rlcm4lMjB3b3Jrc3BhY2UlMjBjeWJlcnB1bmslMjBuZW9ufGVufDF8fHx8MTc1Njk1OTU2OHww&ixlib=rb-4.1.0&q=80&w=1080',
-      tags: ['React Native', 'Python', 'MQTT', 'TensorFlow', 'Raspberry Pi'],
-      github: '#',
-      demo: '#',
-      featured: false,
-      color: 'from-orange-400 to-red-500'
-    }
+  // Color gradients for projects
+  const colorGradients = [
+    'from-purple-400 to-pink-500',
+    'from-cyan-400 to-blue-500',
+    'from-green-400 to-emerald-500',
+    'from-orange-400 to-red-500',
+    'from-yellow-400 to-orange-500',
+    'from-indigo-400 to-purple-500',
+    'from-pink-400 to-rose-500',
+    'from-teal-400 to-cyan-500'
   ];
+
+  // Fetch featured projects from API
+  useEffect(() => {
+    const fetchFeaturedProjects = async () => {
+      try {
+        setLoadingProjects(true);
+        const response = await axiosInstance.get(`${API_ENDPOINTS.PROJECTS.LIST}?finished=true`);
+        const apiProjects = response.data.data || [];
+        
+        // Map API projects to component format
+        const mappedProjects = apiProjects.map((project, index) => ({
+          title: project.title,
+          description: project.description,
+          image: project.image,
+          tags: project.technologies || [],
+          github: project.githubUrl || '',
+          demo: project.liveUrl || '',
+          featured: project.featured || false,
+          color: colorGradients[index % colorGradients.length]
+        }));
+        
+        setProjects(mappedProjects);
+      } catch (err) {
+        console.error('Error fetching featured projects:', err);
+        setProjects([]);
+      } finally {
+        setLoadingProjects(false);
+      }
+    };
+
+    fetchFeaturedProjects();
+  }, []);
 
   return (
     <div className="min-h-screen bg-black relative overflow-x-hidden">
@@ -765,8 +769,21 @@ const HomeEnhanced = () => {
             </p>
           </motion.div>
 
-          <div className="grid lg:grid-cols-2 gap-8 mb-16">
-            {projects.filter(p => p.featured).map((project, index) => (
+          {loadingProjects ? (
+            <div className="flex justify-center items-center py-20">
+              <div className="text-center">
+                <div className="w-12 h-12 border-4 border-cyan-400 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+                <p className="text-gray-300">Loading featured projects...</p>
+              </div>
+            </div>
+          ) : projects.filter(p => p.featured).length === 0 ? (
+            <div className="text-center py-20">
+              <Briefcase className="w-16 h-16 text-gray-500 mx-auto mb-4" />
+              <p className="text-gray-400 text-lg">No featured projects yet. Add some in the admin dashboard!</p>
+            </div>
+          ) : (
+            <div className="grid lg:grid-cols-2 gap-8 mb-16">
+              {projects.filter(p => p.featured).slice(0, 4).map((project, index) => (
               <motion.div
                 key={project.title}
                 initial={{ opacity: 0, y: 50 }}
@@ -814,37 +831,52 @@ const HomeEnhanced = () => {
                           <span className="text-gray-400 text-sm">Technologies Used</span>
                           <span className="text-cyan-400 font-semibold text-sm">{project.tags.length} Tech</span>
                         </div>
-                        <div className="flex flex-wrap gap-2">
-                          {project.tags.map((tag, tagIndex) => (
-                            <Badge key={tag} className={`bg-gradient-to-r ${project.color} bg-opacity-20 text-white border-0 hover:bg-opacity-30 transition-all duration-300 text-xs`}>
-                              {tag}
-                            </Badge>
-                          ))}
-                        </div>
+                        {project.tags && project.tags.length > 0 && (
+                          <div className="flex flex-wrap gap-2">
+                            {project.tags.map((tag, tagIndex) => (
+                              <Badge key={tagIndex} className={`bg-gradient-to-r ${project.color} bg-opacity-20 text-white border-0 hover:bg-opacity-30 transition-all duration-300 text-xs`}>
+                                {tag}
+                              </Badge>
+                            ))}
+                          </div>
+                        )}
                       </div>
                     </div>
                     
                     {/* Action Buttons */}
                     <div className="p-8 pt-0">
                       <div className="flex gap-3">
-                        <Button size="sm" variant="outline" className={`flex-1 border-transparent bg-gradient-to-r ${project.color} bg-opacity-20 text-white hover:bg-opacity-30 transition-all duration-300`}>
-                          <Github className="w-4 h-4 mr-2" />
-                          Code
-                        </Button>
-                        <Button size="sm" className={`flex-1 bg-gradient-to-r ${project.color} hover:opacity-90 text-white border-0 shadow-lg`}>
-                          <ExternalLink className="w-4 h-4 mr-2" />
-                          Live Demo
-                        </Button>
+                        {project.github && (
+                          <Button size="sm" variant="outline" className={`flex-1 border-transparent bg-gradient-to-r ${project.color} bg-opacity-20 text-white hover:bg-opacity-30 transition-all duration-300`} asChild>
+                            <a href={project.github} target="_blank" rel="noopener noreferrer">
+                              <Github className="w-4 h-4 mr-2" />
+                              Code
+                            </a>
+                          </Button>
+                        )}
+                        {project.demo && (
+                          <Button size="sm" className={`flex-1 bg-gradient-to-r ${project.color} hover:opacity-90 text-white border-0 shadow-lg`} asChild>
+                            <a href={project.demo} target="_blank" rel="noopener noreferrer">
+                              <ExternalLink className="w-4 h-4 mr-2" />
+                              Live Demo
+                            </a>
+                          </Button>
+                        )}
+                        {!project.github && !project.demo && (
+                          <p className="text-sm text-gray-400 text-center w-full py-2">No links available</p>
+                        )}
                       </div>
                     </div>
                   </div>
                 </div>
               </motion.div>
-            ))}
-          </div>
+              ))}
+            </div>
+          )}
 
-          <div className="grid md:grid-cols-2 gap-8">
-            {projects.filter(p => !p.featured).map((project, index) => (
+          {!loadingProjects && projects.filter(p => !p.featured).length > 0 && (
+            <div className="grid md:grid-cols-2 gap-8">
+              {projects.filter(p => !p.featured).map((project, index) => (
               <motion.div
                 key={project.title}
                 initial={{ opacity: 0, y: 50 }}
@@ -887,34 +919,48 @@ const HomeEnhanced = () => {
                           <span className="text-gray-400 text-xs">Technologies</span>
                           <span className="text-cyan-400 font-semibold text-xs">{project.tags.length} Tech</span>
                         </div>
-                        <div className="flex flex-wrap gap-1">
-                          {project.tags.slice(0, 3).map((tag) => (
-                            <Badge key={tag} className={`bg-gradient-to-r ${project.color} bg-opacity-20 text-white border-0 text-xs`}>
-                              {tag}
-                            </Badge>
-                          ))}
-                        </div>
+                        {project.tags && project.tags.length > 0 && (
+                          <div className="flex flex-wrap gap-1">
+                            {project.tags.slice(0, 3).map((tag, tagIndex) => (
+                              <Badge key={tagIndex} className={`bg-gradient-to-r ${project.color} bg-opacity-20 text-white border-0 text-xs`}>
+                                {tag}
+                              </Badge>
+                            ))}
+                          </div>
+                        )}
                       </div>
                     </div>
                     
                     {/* Action Buttons */}
                     <div className="p-6 pt-0">
                       <div className="flex gap-2">
-                        <Button size="sm" variant="outline" className={`flex-1 border-transparent bg-gradient-to-r ${project.color} bg-opacity-20 text-white hover:bg-opacity-30 transition-all duration-300 text-xs`}>
-                          <Github className="w-3 h-3 mr-1" />
-                          Code
-                        </Button>
-                        <Button size="sm" className={`flex-1 bg-gradient-to-r ${project.color} hover:opacity-90 text-white border-0 shadow-lg text-xs`}>
-                          <ExternalLink className="w-3 h-3 mr-1" />
-                          Demo
-                        </Button>
+                        {project.github && (
+                          <Button size="sm" variant="outline" className={`flex-1 border-transparent bg-gradient-to-r ${project.color} bg-opacity-20 text-white hover:bg-opacity-30 transition-all duration-300 text-xs`} asChild>
+                            <a href={project.github} target="_blank" rel="noopener noreferrer">
+                              <Github className="w-3 h-3 mr-1" />
+                              Code
+                            </a>
+                          </Button>
+                        )}
+                        {project.demo && (
+                          <Button size="sm" className={`flex-1 bg-gradient-to-r ${project.color} hover:opacity-90 text-white border-0 shadow-lg text-xs`} asChild>
+                            <a href={project.demo} target="_blank" rel="noopener noreferrer">
+                              <ExternalLink className="w-3 h-3 mr-1" />
+                              Demo
+                            </a>
+                          </Button>
+                        )}
+                        {!project.github && !project.demo && (
+                          <p className="text-xs text-gray-400 text-center w-full py-1">No links available</p>
+                        )}
                       </div>
                     </div>
                   </div>
                 </div>
               </motion.div>
-            ))}
-          </div>
+              ))}
+            </div>
+          )}
         </motion.div>
       </section>
 
