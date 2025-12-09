@@ -32,6 +32,14 @@ const Admin = () => {
       link: ROUTES.ADMIN_EXPERIENCE,
       color: 'from-purple-400 to-pink-500',
       features: ['Add Experience', 'Edit Details', 'Timeline View', 'Tech Stack']
+    },
+    {
+      title: 'View Messages',
+      description: 'Read and manage contact form submissions from visitors. Mark as read or replied.',
+      icon: BarChart3,
+      link: ROUTES.ADMIN_MESSAGES,
+      color: 'from-green-400 to-emerald-500',
+      features: ['View Messages', 'Mark as Read', 'Mark as Replied', 'Delete Messages']
     }
   ];
 
@@ -135,7 +143,7 @@ const Admin = () => {
       {/* Admin Cards Section */}
       <section className="py-32 relative">
         <Container>
-          <div className="grid md:grid-cols-2 gap-8 relative z-30">
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 relative z-30">
             {adminCards.map((card, index) => {
               const Icon = card.icon;
               return (

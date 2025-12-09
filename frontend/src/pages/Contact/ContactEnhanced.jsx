@@ -35,6 +35,8 @@ import {
 
 import Container from '../../components/Layout/Container';
 import { Section, SectionHeader, SectionContent } from '../../components/UI/Section';
+import { API_ENDPOINTS } from '../../lib/constants';
+import axiosInstance from '../../lib/axiosInstance';
 
 const ContactEnhanced = () => {
   const [formData, setFormData] = useState({
@@ -57,16 +59,22 @@ const ContactEnhanced = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
+    setSubmitStatus(null);
     
-    // Simulate API call
-    setTimeout(() => {
-      setIsSubmitting(false);
+    try {
+      await axiosInstance.post(API_ENDPOINTS.CONTACT.CREATE, formData);
       setSubmitStatus('success');
       setFormData({ name: '', email: '', subject: '', message: '' });
       
       // Reset success message after 5 seconds
       setTimeout(() => setSubmitStatus(null), 5000);
-    }, 2000);
+    } catch (error) {
+      console.error('Error sending message:', error);
+      setSubmitStatus('error');
+      setTimeout(() => setSubmitStatus(null), 5000);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const contactInfo = [
@@ -313,6 +321,16 @@ const ContactEnhanced = () => {
                           <AlertTitle className="text-green-900 dark:text-green-100">Message Sent!</AlertTitle>
                           <AlertDescription className="text-green-700 dark:text-green-300">
                             Thank you for your message. I'll get back to you within 24 hours.
+                          </AlertDescription>
+                        </Alert>
+                      )}
+
+                      {submitStatus === 'error' && (
+                        <Alert className="border-red-200 bg-red-50 dark:border-red-800 dark:bg-red-900/20">
+                          <AlertCircle className="h-4 w-4 text-red-600" />
+                          <AlertTitle className="text-red-900 dark:text-red-100">Error</AlertTitle>
+                          <AlertDescription className="text-red-700 dark:text-red-300">
+                            Failed to send message. Please try again later.
                           </AlertDescription>
                         </Alert>
                       )}

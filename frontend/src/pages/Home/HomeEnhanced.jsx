@@ -48,6 +48,14 @@ import profileImage from '../../Images/FBC1B388-7E93-4969-BED8-9EEDC798CD62_1_20
 
 const HomeEnhanced = () => {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  const [contactFormData, setContactFormData] = useState({
+    name: '',
+    email: '',
+    subject: '',
+    message: ''
+  });
+  const [isSubmittingContact, setIsSubmittingContact] = useState(false);
+  const [contactSubmitStatus, setContactSubmitStatus] = useState(null);
   const [isHovering, setIsHovering] = useState(false);
   const [windowWidth, setWindowWidth] = useState(1920);
   const [windowHeight, setWindowHeight] = useState(1080);
@@ -154,6 +162,35 @@ const HomeEnhanced = () => {
 
     fetchFeaturedProjects();
   }, []);
+
+  const handleContactInputChange = (e) => {
+    const { name, value } = e.target;
+    setContactFormData(prev => ({
+      ...prev,
+      [name]: value
+    }));
+  };
+
+  const handleContactSubmit = async (e) => {
+    e.preventDefault();
+    setIsSubmittingContact(true);
+    setContactSubmitStatus(null);
+    
+    try {
+      await axiosInstance.post(API_ENDPOINTS.CONTACT.CREATE, contactFormData);
+      setContactSubmitStatus('success');
+      setContactFormData({ name: '', email: '', subject: '', message: '' });
+      
+      // Reset success message after 5 seconds
+      setTimeout(() => setContactSubmitStatus(null), 5000);
+    } catch (error) {
+      console.error('Error sending message:', error);
+      setContactSubmitStatus('error');
+      setTimeout(() => setContactSubmitStatus(null), 5000);
+    } finally {
+      setIsSubmittingContact(false);
+    }
+  };
 
   return (
     <div className="min-h-screen bg-black relative overflow-x-hidden">
@@ -1032,28 +1069,59 @@ const HomeEnhanced = () => {
               className="backdrop-blur-2xl bg-gradient-to-br from-black/50 to-gray-900/50 border border-cyan-500/20 rounded-3xl p-8 shadow-2xl"
             >
               <h3 className="text-2xl font-semibold text-white mb-8">Send a Message</h3>
-              <form className="space-y-6">
+              <form onSubmit={handleContactSubmit} className="space-y-6">
                 <div className="grid md:grid-cols-2 gap-4">
                   <Input
+                    name="name"
+                    value={contactFormData.name}
+                    onChange={handleContactInputChange}
                     placeholder="Your Name"
+                    required
                     className="bg-black/30 border-gray-600 text-white placeholder:text-gray-400 focus:border-cyan-500 focus:ring-cyan-500/20"
                   />
                   <Input
                     type="email"
+                    name="email"
+                    value={contactFormData.email}
+                    onChange={handleContactInputChange}
                     placeholder="Your Email"
+                    required
                     className="bg-black/30 border-gray-600 text-white placeholder:text-gray-400 focus:border-cyan-500 focus:ring-cyan-500/20"
                   />
                 </div>
                 <Input
+                  name="subject"
+                  value={contactFormData.subject}
+                  onChange={handleContactInputChange}
                   placeholder="Subject"
+                  required
                   className="bg-white/30 dark:bg-black/30 border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white placeholder:text-gray-500 dark:placeholder:text-gray-400 focus:border-cyan-500 focus:ring-cyan-500/20"
                 />
                 <Textarea
+                  name="message"
+                  value={contactFormData.message}
+                  onChange={handleContactInputChange}
                   placeholder="Your Message"
                   rows={6}
+                  required
                   className="bg-white/30 dark:bg-black/30 border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white placeholder:text-gray-500 dark:placeholder:text-gray-400 focus:border-cyan-500 focus:ring-cyan-500/20 resize-none"
                 />
-                <Button className="w-full bg-gradient-to-r from-cyan-500 to-purple-600 hover:from-cyan-600 hover:to-purple-700 text-white border-0 py-3 relative overflow-hidden group">
+                {contactSubmitStatus === 'success' && (
+                  <div className="p-4 bg-green-500/20 border border-green-500/50 rounded-lg text-green-300 text-sm">
+                    Message sent successfully! I'll get back to you soon.
+                  </div>
+                )}
+                {contactSubmitStatus === 'error' && (
+                  <div className="p-4 bg-red-500/20 border border-red-500/50 rounded-lg text-red-300 text-sm">
+                    Failed to send message. Please try again.
+                  </div>
+                )}
+                <Button 
+                  type="submit"
+                  className="w-full bg-gradient-to-r from-cyan-500 to-purple-600 hover:from-cyan-600 hover:to-purple-700 text-white border-0 py-3 relative overflow-hidden group"
+                  disabled={isSubmittingContact}
+                  loading={isSubmittingContact}
+                >
                   <span className="relative z-10 flex items-center justify-center gap-2">
                     <Send className="w-5 h-5" />
                     Send Message

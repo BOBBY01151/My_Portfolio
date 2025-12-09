@@ -18,6 +18,7 @@ import ContactEnhanced from '../pages/Contact/ContactEnhanced'
 import Admin from '../pages/Admin/Admin'
 import AdminProjects from '../pages/Admin/Projects/List'
 import AdminExperience from '../pages/Admin/Experience/List'
+import AdminMessages from '../pages/Admin/Messages/List'
 
 const AppRoutes = () => {
   return (
@@ -54,6 +55,14 @@ const AppRoutes = () => {
             element={
               <ProtectedRoute>
                 <AdminExperience />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path={ROUTES.ADMIN_MESSAGES}
+            element={
+              <ProtectedRoute>
+                <AdminMessages />
               </ProtectedRoute>
             }
           />

@@ -8,6 +8,7 @@ export const ROUTES = {
   ADMIN: '/admin',
   ADMIN_PROJECTS: '/admin/projects',
   ADMIN_EXPERIENCE: '/admin/experience',
+  ADMIN_MESSAGES: '/admin/messages',
 }
 
 export const API_ENDPOINTS = {
@@ -24,6 +25,13 @@ export const API_ENDPOINTS = {
   EXPERIENCE: {
     LIST: '/experience',
     DETAIL: (id) => `/experience/${id}`,
+  },
+  CONTACT: {
+    CREATE: '/contact',
+    LIST: '/contact',
+    DETAIL: (id) => `/contact/${id}`,
+    MARK_READ: (id) => `/contact/${id}/read`,
+    MARK_REPLIED: (id) => `/contact/${id}/replied`,
   },
 }
 
