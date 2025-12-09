@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import { Github, Linkedin, Mail, Heart, Cpu } from 'lucide-react'
+import { Github, Linkedin, Mail, Heart, Cpu, Home, Briefcase, Rocket, MessageSquare } from 'lucide-react'
 import { motion } from 'motion/react'
 import { ROUTES } from '../../lib/constants'
 
@@ -112,38 +112,41 @@ const Footer = () => {
             </h3>
             <div className="space-y-3">
               {[
-                { name: 'Home', href: ROUTES.HOME, icon: '🏠', color: 'from-cyan-400 to-blue-500' },
-                { name: 'Projects', href: ROUTES.PROJECTS, icon: '💼', color: 'from-purple-400 to-pink-500' },
-                { name: 'Experience', href: ROUTES.EXPERIENCE, icon: '🚀', color: 'from-green-400 to-emerald-500' },
-                { name: 'Contact', href: ROUTES.CONTACT, icon: '📧', color: 'from-orange-400 to-red-500' },
-              ].map((link, index) => (
-                <motion.div 
-                  key={link.name}
-                  initial={{ opacity: 0, x: -20 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  transition={{ duration: 0.6, delay: 0.3 + index * 0.1 }}
-                  viewport={{ once: true }}
-                  whileHover={{ scale: 1.02, x: 5 }}
-                  className="group"
-                >
-                  <Link
-                    to={link.href}
-                    className="flex items-center gap-3 p-3 rounded-lg backdrop-blur-2xl bg-gradient-to-br from-black/30 to-gray-900/30 border border-gray-700/50 hover:border-cyan-400/50 transition-all duration-300 relative overflow-hidden"
+                { name: 'Home', href: ROUTES.HOME, icon: Home, color: 'from-cyan-400 to-blue-500' },
+                { name: 'Projects', href: ROUTES.PROJECTS, icon: Briefcase, color: 'from-purple-400 to-pink-500' },
+                { name: 'Experience', href: ROUTES.EXPERIENCE, icon: Rocket, color: 'from-green-400 to-emerald-500' },
+                { name: 'Contact', href: ROUTES.CONTACT, icon: MessageSquare, color: 'from-orange-400 to-red-500' },
+              ].map((link, index) => {
+                const Icon = link.icon
+                return (
+                  <motion.div 
+                    key={link.name}
+                    initial={{ opacity: 0, x: -20 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    transition={{ duration: 0.6, delay: 0.3 + index * 0.1 }}
+                    viewport={{ once: true }}
+                    whileHover={{ scale: 1.02, x: 5 }}
+                    className="group"
                   >
-                    {/* Animated background gradient */}
-                    <div className={`absolute inset-0 bg-gradient-to-br ${link.color} opacity-0 group-hover:opacity-10 transition-opacity duration-300`} />
-                    
-                    <div className="relative z-10 flex items-center gap-3 w-full">
-                      <div className={`w-8 h-8 bg-gradient-to-r ${link.color} rounded-lg flex items-center justify-center shadow-lg text-white text-sm`}>
-                        {link.icon}
+                    <Link
+                      to={link.href}
+                      className="flex items-center gap-3 p-3 rounded-lg backdrop-blur-2xl bg-gradient-to-br from-black/30 to-gray-900/30 border border-gray-700/50 hover:border-cyan-400/50 transition-all duration-300 relative overflow-hidden"
+                    >
+                      {/* Animated background gradient */}
+                      <div className={`absolute inset-0 bg-gradient-to-br ${link.color} opacity-0 group-hover:opacity-10 transition-opacity duration-300`} />
+                      
+                      <div className="relative z-10 flex items-center gap-3 w-full">
+                        <div className={`w-8 h-8 bg-gradient-to-r ${link.color} rounded-lg flex items-center justify-center shadow-lg`}>
+                          <Icon className="w-4 h-4 text-white" />
+                        </div>
+                        <span className="text-gray-300 group-hover:text-cyan-400 transition-colors font-medium">
+                          {link.name}
+                        </span>
                       </div>
-                      <span className="text-gray-300 group-hover:text-cyan-400 transition-colors font-medium">
-                        {link.name}
-                      </span>
-                    </div>
-                  </Link>
-                </motion.div>
-              ))}
+                    </Link>
+                  </motion.div>
+                )
+              })}
             </div>
           </motion.div>
 
