@@ -44,7 +44,7 @@ import Container from '../../components/Layout/Container';
 import { Section, SectionHeader, SectionContent } from '../../components/UI/Section';
 import { ROUTES, API_ENDPOINTS } from '../../lib/constants';
 import axiosInstance from '../../lib/axiosInstance';
-import profileImage from '../../Images/WhatsApp Image 2025-09-19 at 13.31.21.jpeg';
+import profileImage from '../../Images/FBC1B388-7E93-4969-BED8-9EEDC798CD62_1_201_a.jpeg';
 
 const HomeEnhanced = () => {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
