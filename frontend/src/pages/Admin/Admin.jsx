@@ -8,7 +8,8 @@ import {
   ArrowRight,
   Plus,
   Edit,
-  Zap
+  Zap,
+  FileText
 } from 'lucide-react';
 
 import { Button, Card, CardHeader, CardTitle, CardDescription, CardContent, Badge } from '../../components/FigmaUI';
@@ -40,6 +41,14 @@ const Admin = () => {
       link: ROUTES.ADMIN_MESSAGES,
       color: 'from-green-400 to-emerald-500',
       features: ['View Messages', 'Mark as Read', 'Mark as Replied', 'Delete Messages']
+    },
+    {
+      title: 'Manage CV',
+      description: 'Upload and manage your CV. Visitors can download the active CV from the portfolio.',
+      icon: FileText,
+      link: ROUTES.ADMIN_CV,
+      color: 'from-blue-400 to-indigo-500',
+      features: ['Upload CV', 'Download CV', 'Version Control', 'Active CV Management']
     }
   ];
 

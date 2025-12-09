@@ -192,6 +192,38 @@ const HomeEnhanced = () => {
     }
   };
 
+  const handleDownloadCV = async () => {
+    try {
+      const response = await axiosInstance.get(API_ENDPOINTS.CV.DOWNLOAD, {
+        responseType: 'blob'
+      });
+      
+      // Create blob URL and trigger download
+      const url = window.URL.createObjectURL(new Blob([response.data]));
+      const link = document.createElement('a');
+      link.href = url;
+      
+      // Get filename from response headers or use default
+      const contentDisposition = response.headers['content-disposition'];
+      let fileName = 'CV.pdf';
+      if (contentDisposition) {
+        const fileNameMatch = contentDisposition.match(/filename="?(.+)"?/i);
+        if (fileNameMatch) {
+          fileName = fileNameMatch[1];
+        }
+      }
+      
+      link.setAttribute('download', fileName);
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+      window.URL.revokeObjectURL(url);
+    } catch (error) {
+      console.error('Error downloading CV:', error);
+      alert('CV not available. Please contact the administrator.');
+    }
+  };
+
   return (
     <div className="min-h-screen bg-black relative overflow-x-hidden">
       {/* FigmaUI Animated Grid Background */}
@@ -461,16 +493,15 @@ const HomeEnhanced = () => {
                 whileHover={{ scale: 1.05, y: -5 }}
                 whileTap={{ scale: 0.95 }}
               >
-                <Link to={ROUTES.CONTACT}>
-                  <Button 
-                    size="lg" 
-                    variant="outline" 
-                    className="border-cyan-400/50 text-cyan-400 hover:bg-cyan-500/10 hover:border-cyan-400 px-8 py-4 text-lg backdrop-blur-sm"
-                  >
-                    <Download className="w-5 h-5 mr-2" />
-                    Get In Touch
-                  </Button>
-                </Link>
+                <Button 
+                  size="lg" 
+                  variant="outline" 
+                  className="border-cyan-400/50 text-cyan-400 hover:bg-cyan-500/10 hover:border-cyan-400 px-8 py-4 text-lg backdrop-blur-sm"
+                  onClick={handleDownloadCV}
+                >
+                  <Download className="w-5 h-5 mr-2" />
+                  Download CV
+                </Button>
               </motion.div>
             </motion.div>
           </motion.div>

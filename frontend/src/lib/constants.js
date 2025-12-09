@@ -9,6 +9,7 @@ export const ROUTES = {
   ADMIN_PROJECTS: '/admin/projects',
   ADMIN_EXPERIENCE: '/admin/experience',
   ADMIN_MESSAGES: '/admin/messages',
+  ADMIN_CV: '/admin/cv',
 }
 
 export const API_ENDPOINTS = {
@@ -32,6 +33,13 @@ export const API_ENDPOINTS = {
     DETAIL: (id) => `/contact/${id}`,
     MARK_READ: (id) => `/contact/${id}/read`,
     MARK_REPLIED: (id) => `/contact/${id}/replied`,
+  },
+  CV: {
+    DOWNLOAD: '/cv/download',
+    INFO: '/cv/info',
+    UPLOAD: '/cv/upload',
+    LIST: '/cv',
+    DELETE: (id) => `/cv/${id}`,
   },
 }
 

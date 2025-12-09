@@ -19,6 +19,7 @@ import Admin from '../pages/Admin/Admin'
 import AdminProjects from '../pages/Admin/Projects/List'
 import AdminExperience from '../pages/Admin/Experience/List'
 import AdminMessages from '../pages/Admin/Messages/List'
+import AdminCV from '../pages/Admin/CV/List'
 
 const AppRoutes = () => {
   return (
@@ -63,6 +64,14 @@ const AppRoutes = () => {
             element={
               <ProtectedRoute>
                 <AdminMessages />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path={ROUTES.ADMIN_CV}
+            element={
+              <ProtectedRoute>
+                <AdminCV />
               </ProtectedRoute>
             }
           />

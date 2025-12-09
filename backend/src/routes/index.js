@@ -6,12 +6,14 @@ const authRoutes = require('./auth.routes');
 const projectRoutes = require('./project.routes');
 const experienceRoutes = require('./experience.routes');
 const contactRoutes = require('./contact.routes');
+const cvRoutes = require('./cv.routes');
 
 // Mount routes
 router.use('/auth', authRoutes);
 router.use('/projects', projectRoutes);
 router.use('/experience', experienceRoutes);
 router.use('/contact', contactRoutes);
+router.use('/cv', cvRoutes);
 
 // Health check endpoint
 router.get('/health', (req, res) => {
