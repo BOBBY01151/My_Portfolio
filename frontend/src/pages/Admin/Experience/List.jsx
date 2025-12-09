@@ -308,7 +308,7 @@ const AdminExperience = () => {
                           name="location"
                           value={formData.location}
                           onChange={handleInputChange}
-                          placeholder="e.g., Colombo, Sri Lanka"
+                          placeholder="e.g., Athurugiriya, Sri Lanka"
                           className="bg-black/30 border-gray-600 text-white placeholder:text-gray-400"
                         />
                       </div>

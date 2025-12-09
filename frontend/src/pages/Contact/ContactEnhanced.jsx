@@ -87,7 +87,7 @@ const ContactEnhanced = () => {
     {
       icon: MapPin,
       title: 'Location',
-      value: 'Colombo, Sri Lanka',
+      value: 'Athurugiriya, Sri Lanka',
       description: 'Available for remote work',
       color: 'text-purple-500'
     },
