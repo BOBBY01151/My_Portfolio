@@ -75,7 +75,7 @@ const FuturisticNavbar = () => {
                 
                 {/* Social Links */}
                 <motion.a 
-                  href="https://github.com/vimukthi-buddika" 
+                  href="https://github.com/BOBBY01151" 
                   target="_blank" 
                   rel="noopener noreferrer"
                   className="inline-block"
@@ -90,7 +90,7 @@ const FuturisticNavbar = () => {
                   </Button>
                 </motion.a>
                 <motion.a 
-                  href="https://linkedin.com/in/vimukthi-buddika" 
+                  href="https://www.linkedin.com/in/vimukthi-buddika-ba7a90310?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=ios_app" 
                   target="_blank" 
                   rel="noopener noreferrer"
                   className="inline-block"
@@ -178,7 +178,7 @@ const FuturisticNavbar = () => {
                 {/* Social Links */}
                 <div className="flex space-x-2 justify-center">
                   <motion.a 
-                    href="https://github.com/vimukthi-buddika" 
+                    href="https://github.com/BOBBY01151" 
                     target="_blank" 
                     rel="noopener noreferrer"
                     className="inline-block"
@@ -193,7 +193,7 @@ const FuturisticNavbar = () => {
                     </Button>
                   </motion.a>
                   <motion.a 
-                    href="https://linkedin.com/in/vimukthi-buddika" 
+                    href="https://www.linkedin.com/in/vimukthi-buddika-ba7a90310?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=ios_app" 
                     target="_blank" 
                     rel="noopener noreferrer"
                     className="inline-block"
