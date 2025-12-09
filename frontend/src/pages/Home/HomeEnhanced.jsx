@@ -44,6 +44,7 @@ import Container from '../../components/Layout/Container';
 import { Section, SectionHeader, SectionContent } from '../../components/UI/Section';
 import { ROUTES, API_ENDPOINTS } from '../../lib/constants';
 import axiosInstance from '../../lib/axiosInstance';
+import profileImage from '../../Images/WhatsApp Image 2025-09-19 at 13.31.21.jpeg';
 
 const HomeEnhanced = () => {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
@@ -498,7 +499,7 @@ const HomeEnhanced = () => {
                 }}
               >
                 <ImageWithFallback
-                  src="/src/Images/WhatsApp Image 2025-09-19 at 13.31.21.jpeg"
+                  src={profileImage}
                   alt="Vimukthi Buddika"
                   className="w-80 h-80 md:w-96 md:h-96 object-cover rounded-full"
                 />
