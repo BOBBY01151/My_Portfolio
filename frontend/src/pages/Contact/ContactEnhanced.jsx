@@ -73,14 +73,14 @@ const ContactEnhanced = () => {
     {
       icon: Mail,
       title: 'Email',
-      value: 'contact@example.com',
+      value: 'vimukthibudi0007@icloud.com',
       description: 'Send me an email anytime',
       color: 'text-blue-500'
     },
     {
       icon: Phone,
       title: 'Phone',
-      value: '+1 (555) 123-4567',
+      value: '+94 756137623',
       description: 'Call or text me',
       color: 'text-green-500'
     },

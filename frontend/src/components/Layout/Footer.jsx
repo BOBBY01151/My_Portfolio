@@ -19,7 +19,7 @@ const Footer = () => {
     },
     {
       name: 'Email',
-      href: 'mailto:contact@example.com',
+      href: 'mailto:vimukthibudi0007@icloud.com',
       icon: Mail,
     },
   ]
@@ -168,7 +168,7 @@ const Footer = () => {
                 className="group"
               >
                 <a
-                  href="mailto:contact@example.com"
+                  href="mailto:vimukthibudi0007@icloud.com"
                   className="flex items-center gap-3 p-3 rounded-lg backdrop-blur-2xl bg-gradient-to-br from-black/30 to-gray-900/30 border border-gray-700/50 hover:border-cyan-400/50 transition-all duration-300 relative overflow-hidden"
                 >
                   {/* Animated background gradient */}
@@ -180,7 +180,7 @@ const Footer = () => {
                     </div>
                     <div>
                       <span className="text-gray-300 group-hover:text-cyan-400 transition-colors font-medium block">
-                        contact@example.com
+                        vimukthibudi0007@icloud.com
                       </span>
                       <span className="text-xs text-gray-400">Get in touch</span>
                     </div>

@@ -895,8 +895,8 @@ export default function App() {
                 <h3 className="text-2xl font-semibold text-white mb-8">Let's Connect</h3>
                 <div className="space-y-6">
                   {[
-                    { icon: Mail, label: 'Email', value: 'vimukthi.buddika@email.com', color: 'from-blue-500 to-cyan-500' },
-                    { icon: Phone, label: 'Phone', value: '+94 71 234 5678', color: 'from-green-500 to-emerald-500' },
+                    { icon: Mail, label: 'Email', value: 'vimukthibudi0007@icloud.com', color: 'from-blue-500 to-cyan-500' },
+                    { icon: Phone, label: 'Phone', value: '+94 756137623', color: 'from-green-500 to-emerald-500' },
                     { icon: MapPin, label: 'Location', value: 'Colombo, Sri Lanka', color: 'from-purple-500 to-pink-500' }
                   ].map((contact, index) => {
                     const Icon = contact.icon;
