@@ -103,17 +103,17 @@ const HomeEnhanced = () => {
   }, []);
 
   const typingWords = [
-    'Full-Stack Developer',
-    'AI Enthusiast', 
+    'MERN Fullstack Developer',
+    'React Specialist', 
+    'Node.js Expert',
     'Problem Solver',
-    'Tech Innovator',
     'Code Artist'
   ];
 
   const skills = [
     { name: 'React & Next.js', level: 92, icon: Code, color: 'from-cyan-400 to-blue-500' },
     { name: 'Node.js & Express', level: 88, icon: Server, color: 'from-green-400 to-emerald-500' },
-    { name: 'Python & AI/ML', level: 85, icon: Brain, color: 'from-purple-400 to-pink-500' },
+    { name: 'MongoDB', level: 85, icon: Database, color: 'from-purple-400 to-pink-500' },
     { name: 'TypeScript', level: 90, icon: Terminal, color: 'from-blue-400 to-indigo-500' },
     { name: 'Database Design', level: 82, icon: Database, color: 'from-orange-400 to-red-500' },
     { name: 'Mobile Development', level: 78, icon: Smartphone, color: 'from-teal-400 to-cyan-500' },
@@ -461,8 +461,8 @@ const HomeEnhanced = () => {
                 transition={{ duration: 0.8, delay: 0.9 }}
               className="text-lg text-gray-300 max-w-2xl mx-auto lg:mx-0 leading-relaxed"
               >
-                Passionate software engineer from Sri Lanka, specializing in cutting-edge web technologies, 
-                artificial intelligence, and creating digital experiences that push the boundaries of innovation.
+                Passionate MERN fullstack developer from Sri Lanka, specializing in building modern web applications 
+                with MongoDB, Express.js, React, and Node.js. Creating scalable, efficient, and user-friendly digital experiences.
               </motion.p>
 
               <motion.div
@@ -669,7 +669,7 @@ const HomeEnhanced = () => {
                 
                 <ImageWithFallback
                   src="https://images.unsplash.com/photo-1564707944519-7a116ef3841c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxhaSUyMGFydGlmaWNpYWwlMjBpbnRlbGxpZ2VuY2UlMjB0ZWNobm9sb2d5fGVufDF8fHx8MTc1NjkzNTc3Mnww&ixlib=rb-4.1.0&q=80&w=1080"
-                  alt="AI Technology"
+                  alt="MERN Fullstack Development"
                   className="w-full h-80 object-cover rounded-2xl relative z-10"
                 />
                 
@@ -703,9 +703,9 @@ const HomeEnhanced = () => {
                 viewport={{ once: true }}
                 className="text-lg text-gray-600 dark:text-gray-300 leading-relaxed"
               >
-                I'm a passionate software engineer and tech enthusiast from Sri Lanka, currently pursuing advanced 
-                studies in Computer Science. My journey in technology spans full-stack development, artificial 
-                intelligence, and emerging technologies that shape our digital future.
+                I'm a passionate MERN fullstack developer from Sri Lanka, specializing in building modern, scalable 
+                web applications. With expertise in MongoDB, Express.js, React, and Node.js, I create end-to-end 
+                solutions that deliver exceptional user experiences and robust backend systems.
               </motion.p>
 
               <motion.p
@@ -715,9 +715,10 @@ const HomeEnhanced = () => {
                 viewport={{ once: true }}
                 className="text-lg text-gray-600 dark:text-gray-300 leading-relaxed"
               >
-                When I'm not immersed in code, you'll find me exploring the latest tech trends, contributing to 
-                open-source projects, or capturing the breathtaking landscapes of Sri Lanka. I believe in the 
-                power of technology to solve real-world problems and create meaningful impact.
+                My passion lies in crafting clean, maintainable code and implementing best practices in fullstack 
+                development. I enjoy working with RESTful APIs, managing databases, and building responsive frontend 
+                interfaces. When I'm not coding, I'm exploring new technologies, contributing to open-source 
+                projects, and continuously learning to stay at the forefront of web development.
               </motion.p>
 
               <motion.div
