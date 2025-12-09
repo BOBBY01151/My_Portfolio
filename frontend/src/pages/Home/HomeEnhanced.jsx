@@ -45,6 +45,7 @@ import { Section, SectionHeader, SectionContent } from '../../components/UI/Sect
 import { ROUTES, API_ENDPOINTS } from '../../lib/constants';
 import axiosInstance from '../../lib/axiosInstance';
 import profileImage from '../../Images/FBC1B388-7E93-4969-BED8-9EEDC798CD62_1_201_a.jpeg';
+import sliitImage from '../../Images/SLIIT.jpg';
 
 const HomeEnhanced = () => {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
@@ -668,8 +669,8 @@ const HomeEnhanced = () => {
                 <div className="absolute bottom-0 left-0 w-32 h-32 bg-gradient-to-tr from-purple-400/20 to-transparent rounded-full blur-2xl" />
                 
                 <ImageWithFallback
-                  src="https://images.unsplash.com/photo-1564707944519-7a116ef3841c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxhaSUyMGFydGlmaWNpYWwlMjBpbnRlbGxpZ2VuY2UlMjB0ZWNobm9sb2d5fGVufDF8fHx8MTc1NjkzNTc3Mnww&ixlib=rb-4.1.0&q=80&w=1080"
-                  alt="MERN Fullstack Development"
+                  src={sliitImage}
+                  alt="SLIIT - MERN Fullstack Development"
                   className="w-full h-80 object-cover rounded-2xl relative z-10"
                 />
                 
