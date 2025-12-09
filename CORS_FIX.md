@@ -10,13 +10,16 @@ Frontend at `https://my-portfolio-eight-silk-68.vercel.app` cannot access backen
 1. Go to **Vercel Dashboard** → Your **Backend Project** (`my-portfolio-3g4c`)
 2. Navigate to **Settings** → **Environment Variables**
 3. Find or create the `CLIENT_ORIGIN` variable
-4. Set the value to include ALL your frontend URLs:
+4. Set the value to include your production frontend URL:
    ```
-   http://localhost:5173,https://my-portfolio-eight-silk-68.vercel.app,https://vimukthi-buddika-portfolio-3lzk8x1sb.vercel.app
+   http://localhost:5173,https://my-portfolio-eight-silk-68.vercel.app
    ```
-   (Include localhost for local dev, production URL, and any preview URLs)
    
-   **Note:** Vercel preview deployments get new URLs. You may need to add new preview URLs as they're created, or consider using a wildcard pattern if your backend supports it.
+   **Important:** 
+   - All `*.vercel.app` URLs are **automatically allowed** (no need to add each preview URL)
+   - `localhost` is also automatically allowed for development
+   - You only need to add your **production URL** and any **custom domains**
+   - Example: `CLIENT_ORIGIN=http://localhost:5173,https://www.yourdomain.com`
 
 5. **Important:** Make sure to select the correct **Environment** (Production, Preview, Development)
    - For production: Select **Production**

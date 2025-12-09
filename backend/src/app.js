@@ -38,7 +38,18 @@ app.use(cors({
     // Check if origin is in allowed list
     if (allowedOrigins.includes(origin)) {
       callback(null, true);
-    } else {
+    } 
+    // Automatically allow all Vercel preview URLs (*.vercel.app)
+    else if (origin.endsWith('.vercel.app')) {
+      console.log(`CORS allowed Vercel preview URL: ${origin}`);
+      callback(null, true);
+    }
+    // Automatically allow localhost for development
+    else if (origin.startsWith('http://localhost:') || origin.startsWith('http://127.0.0.1:')) {
+      console.log(`CORS allowed localhost: ${origin}`);
+      callback(null, true);
+    }
+    else {
       // Log for debugging
       console.warn(`CORS blocked origin: ${origin}`);
       console.warn(`Allowed origins: ${allowedOrigins.join(', ')}`);
