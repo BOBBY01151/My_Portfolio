@@ -45,7 +45,7 @@ import { Section, SectionHeader, SectionContent } from '../../components/UI/Sect
 import { ROUTES, API_ENDPOINTS } from '../../lib/constants';
 import axiosInstance from '../../lib/axiosInstance';
 import profileImage from '../../Images/FBC1B388-7E93-4969-BED8-9EEDC798CD62_1_201_a.jpeg';
-import sliitImage from '../../Images/SLIIT.jpg';
+
 
 const HomeEnhanced = () => {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
@@ -67,7 +67,7 @@ const HomeEnhanced = () => {
   // Enhanced parallax transforms
   const heroY = useTransform(scrollY, [0, 1000], [0, -300]);
   const heroScale = useTransform(scrollY, [0, 1000], [1, 1.1]);
-  const aboutY = useTransform(scrollY, [400, 1400], [0, -200]);
+
   const skillsY = useTransform(scrollY, [800, 1800], [0, -150]);
   const projectsY = useTransform(scrollY, [1200, 2200], [0, -100]);
 
@@ -245,8 +245,8 @@ const HomeEnhanced = () => {
           <motion.div
             key={i}
             className={`absolute rounded-full ${i % 4 === 0 ? 'bg-cyan-400' :
-                i % 4 === 1 ? 'bg-emerald-400' :
-                  i % 4 === 2 ? 'bg-yellow-400' : 'bg-blue-400'
+              i % 4 === 1 ? 'bg-emerald-400' :
+                i % 4 === 2 ? 'bg-yellow-400' : 'bg-blue-400'
               }`}
             style={{
               width: `${Math.random() * 8 + 4}px`,
@@ -365,7 +365,7 @@ const HomeEnhanced = () => {
                 <motion.div
                   key={i}
                   className={`absolute border rounded-lg ${i % 3 === 0 ? 'border-cyan-400/40 w-16 h-16' :
-                      i % 3 === 1 ? 'border-emerald-400/40 w-12 h-12' : 'border-yellow-400/40 w-8 h-8'
+                    i % 3 === 1 ? 'border-emerald-400/40 w-12 h-12' : 'border-yellow-400/40 w-8 h-8'
                     } ${i % 2 === 0 ? 'top-0 -right-16' : i % 3 === 1 ? '-top-8 right-8' : 'top-8 -right-12'
                     }`}
                   style={{
@@ -578,8 +578,8 @@ const HomeEnhanced = () => {
                   <motion.div
                     key={i}
                     className={`absolute w-3 h-3 rounded-full ${i % 4 === 0 ? 'bg-cyan-400' :
-                        i % 4 === 1 ? 'bg-emerald-400' :
-                          i % 4 === 2 ? 'bg-yellow-400' : 'bg-blue-400'
+                      i % 4 === 1 ? 'bg-emerald-400' :
+                        i % 4 === 2 ? 'bg-yellow-400' : 'bg-blue-400'
                       }`}
                     style={{
                       left: `${50 + Math.cos(i * Math.PI / 4) * 45}%`,
@@ -644,7 +644,7 @@ const HomeEnhanced = () => {
       </section>
 
       {/* Enhanced About Section - FigmaUI Style */}
-      <section id="about" className="py-32 relative">
+      <section id="about" className="py-10 relative">
         <motion.div style={{ y: aboutY }} className="max-w-7xl mx-auto px-6">
           <motion.div
             initial={{ opacity: 0, y: 100 }}
