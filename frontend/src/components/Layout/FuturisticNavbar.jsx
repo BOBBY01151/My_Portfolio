@@ -37,14 +37,14 @@ const FuturisticNavbar = () => {
   return (
     <>
       {/* Futuristic Navigation */}
-      <nav className="fixed top-0 left-0 right-0 z-50 p-2 md:p-6">
+      <nav className="fixed top-0 left-0 right-0 z-50 p-0 md:p-6">
         <motion.div
           initial={isMobile ? { y: 0, opacity: 1 } : { y: -100, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ duration: 0.8 }}
           className="max-w-7xl mx-auto"
         >
-          <div className="backdrop-blur-2xl bg-black/30 dark:bg-black/50 border border-cyan-500/30 rounded-full px-4 md:px-8 py-3 md:py-4 shadow-2xl shadow-cyan-500/10">
+          <div className="backdrop-blur-2xl bg-black/30 dark:bg-black/50 border-b md:border border-cyan-500/30 rounded-none md:rounded-full px-4 md:px-8 py-3 md:py-4 shadow-2xl shadow-cyan-500/10">
             <div className="flex items-center justify-between">
               {/* Logo */}
               <motion.div
