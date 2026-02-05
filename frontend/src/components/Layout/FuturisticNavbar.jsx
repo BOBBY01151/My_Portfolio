@@ -28,17 +28,17 @@ const FuturisticNavbar = () => {
   return (
     <>
       {/* Futuristic Navigation */}
-      <nav className="fixed top-0 left-0 right-0 z-50 p-6">
+      <nav className="fixed top-0 left-0 right-0 z-50 p-2 md:p-6">
         <motion.div
           initial={{ y: -100, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ duration: 0.8 }}
           className="max-w-7xl mx-auto"
         >
-          <div className="backdrop-blur-2xl bg-black/30 dark:bg-black/50 border border-cyan-500/30 rounded-full px-8 py-4 shadow-2xl shadow-cyan-500/10">
+          <div className="backdrop-blur-2xl bg-black/30 dark:bg-black/50 border border-cyan-500/30 rounded-full px-4 md:px-8 py-3 md:py-4 shadow-2xl shadow-cyan-500/10">
             <div className="flex items-center justify-between">
               {/* Logo */}
-              <motion.div 
+              <motion.div
                 className="flex items-center space-x-3"
                 whileHover={{ scale: 1.05 }}
               >
@@ -50,7 +50,7 @@ const FuturisticNavbar = () => {
                   <span className="text-white font-medium text-lg">Portfolio</span>
                 </Link>
               </motion.div>
-              
+
               {/* Desktop Navigation */}
               <div className="hidden md:flex items-center space-x-8">
                 {navigation.map((item) => (
@@ -68,15 +68,15 @@ const FuturisticNavbar = () => {
                   </motion.div>
                 ))}
               </div>
-              
+
               {/* Desktop Actions */}
               <div className="hidden md:flex items-center space-x-3">
                 <ThemeToggle />
-                
+
                 {/* Social Links */}
-                <motion.a 
-                  href="https://github.com/BOBBY01151" 
-                  target="_blank" 
+                <motion.a
+                  href="https://github.com/BOBBY01151"
+                  target="_blank"
                   rel="noopener noreferrer"
                   className="inline-block"
                   whileHover={{ scale: 1.1, y: -2 }}
@@ -89,9 +89,9 @@ const FuturisticNavbar = () => {
                     <Github className="w-4 h-4 group-hover:text-cyan-400 transition-colors" />
                   </Button>
                 </motion.a>
-                <motion.a 
-                  href="https://www.linkedin.com/in/vimukthi-buddika-ba7a90310?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=ios_app" 
-                  target="_blank" 
+                <motion.a
+                  href="https://www.linkedin.com/in/vimukthi-buddika-ba7a90310?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=ios_app"
+                  target="_blank"
                   rel="noopener noreferrer"
                   className="inline-block"
                   whileHover={{ scale: 1.1, y: -2 }}
@@ -113,9 +113,9 @@ const FuturisticNavbar = () => {
                         Admin
                       </Button>
                     </Link>
-                    <Button 
-                      variant="ghost" 
-                      size="sm" 
+                    <Button
+                      variant="ghost"
+                      size="sm"
                       onClick={handleLogout}
                       className="text-gray-300 hover:text-cyan-400 hover:bg-cyan-500/10 border border-cyan-500/30"
                     >
@@ -154,7 +154,7 @@ const FuturisticNavbar = () => {
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -20 }}
           transition={{ duration: 0.3 }}
-          className="fixed top-24 left-6 right-6 z-40 md:hidden"
+          className="fixed top-20 left-4 right-4 z-40 md:hidden"
         >
           <div className="backdrop-blur-2xl bg-black/40 dark:bg-black/60 border border-cyan-500/30 rounded-2xl p-6 shadow-2xl shadow-cyan-500/10">
             <div className="space-y-4">
@@ -173,13 +173,13 @@ const FuturisticNavbar = () => {
                   {item.name}
                 </Link>
               ))}
-              
+
               <div className="pt-4 border-t border-cyan-500/30 space-y-2">
                 {/* Social Links */}
                 <div className="flex space-x-2 justify-center">
-                  <motion.a 
-                    href="https://github.com/BOBBY01151" 
-                    target="_blank" 
+                  <motion.a
+                    href="https://github.com/BOBBY01151"
+                    target="_blank"
                     rel="noopener noreferrer"
                     className="inline-block"
                     whileHover={{ scale: 1.1 }}
@@ -192,9 +192,9 @@ const FuturisticNavbar = () => {
                       <Github className="w-4 h-4 group-hover:text-cyan-400 transition-colors" />
                     </Button>
                   </motion.a>
-                  <motion.a 
-                    href="https://www.linkedin.com/in/vimukthi-buddika-ba7a90310?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=ios_app" 
-                    target="_blank" 
+                  <motion.a
+                    href="https://www.linkedin.com/in/vimukthi-buddika-ba7a90310?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=ios_app"
+                    target="_blank"
                     rel="noopener noreferrer"
                     className="inline-block"
                     whileHover={{ scale: 1.1 }}
