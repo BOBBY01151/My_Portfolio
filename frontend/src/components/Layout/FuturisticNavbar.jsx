@@ -1,8 +1,9 @@
 import { useState, useEffect } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import { motion } from 'framer-motion'
-import { Cpu, Github, Linkedin, Menu, X, LogIn } from 'lucide-react'
+import { Github, Linkedin, Menu, X, LogIn, Mail } from 'lucide-react'
 import { cn } from '../../lib/helpers'
+import profileImage from '../../Images/FBC1B388-7E93-4969-BED8-9EEDC798CD62_1_201_a.jpeg'
 import { ROUTES } from '../../lib/constants'
 import useAuthStore from '../../store/authStore'
 import { Button } from '../FigmaUI'
@@ -52,11 +53,15 @@ const FuturisticNavbar = () => {
                 whileHover={{ scale: 1.05 }}
               >
                 <Link to={ROUTES.HOME} className="flex items-center space-x-3">
-                  <div className="w-10 h-10 bg-gradient-to-r from-cyan-400 to-purple-600 rounded-full flex items-center justify-center relative">
-                    <Cpu className="w-5 h-5 text-white" />
-                    <div className="absolute inset-0 bg-gradient-to-r from-cyan-400 to-purple-600 rounded-full animate-pulse opacity-75" />
+                  <div className="w-10 h-10 rounded-full border-2 border-cyan-400 p-0.5 relative group overflow-hidden">
+                    <img
+                      src={profileImage}
+                      alt="Profile"
+                      className="w-full h-full object-cover rounded-full"
+                    />
+                    <div className="absolute inset-0 rounded-full border border-white/20 animate-pulse" />
                   </div>
-                  <span className="text-white font-medium text-lg">Portfolio</span>
+                  <span className="text-white font-medium text-lg">VimukthiBuddika</span>
                 </Link>
               </motion.div>
 
@@ -183,66 +188,111 @@ const FuturisticNavbar = () => {
                 </Link>
               ))}
 
-              <div className="pt-4 border-t border-cyan-500/30 space-y-2">
-                {/* Social Links */}
-                <div className="flex space-x-2 justify-center">
-                  <motion.a
-                    href="https://github.com/BOBBY01151"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-block"
-                    whileHover={{ scale: 1.1 }}
-                    whileTap={{ scale: 0.95 }}
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.4, delay: 0.1 }}
-                  >
-                    <Button variant="ghost" size="sm" className="text-gray-300 hover:text-cyan-400 hover:bg-cyan-500/10 border border-cyan-500/30 transition-all duration-300 group">
-                      <Github className="w-4 h-4 group-hover:text-cyan-400 transition-colors" />
-                    </Button>
-                  </motion.a>
-                  <motion.a
-                    href="https://www.linkedin.com/in/vimukthi-buddika-ba7a90310?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=ios_app"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-block"
-                    whileHover={{ scale: 1.1 }}
-                    whileTap={{ scale: 0.95 }}
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.4, delay: 0.2 }}
-                  >
-                    <Button variant="ghost" size="sm" className="text-gray-300 hover:text-cyan-400 hover:bg-cyan-500/10 border border-cyan-500/30 transition-all duration-300 group">
-                      <Linkedin className="w-4 h-4 group-hover:text-cyan-400 transition-colors" />
-                    </Button>
-                  </motion.a>
+              <div className="pt-4 border-t border-cyan-500/30 space-y-3">
+                {/* Email Card */}
+                <motion.a
+                  href="mailto:vimukthibudi0007@icloud.com"
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: 0.1 }}
+                  className="flex items-center gap-3 p-3 rounded-lg backdrop-blur-2xl bg-gradient-to-br from-black/30 to-gray-900/30 border border-gray-700/50 hover:border-cyan-400/50 transition-all duration-300 relative overflow-hidden group"
+                >
+                  <div className="absolute inset-0 bg-gradient-to-br from-blue-400 to-cyan-500 opacity-0 group-hover:opacity-10 transition-opacity duration-300" />
+                  <div className="relative z-10 flex items-center gap-3 w-full">
+                    <div className="w-8 h-8 bg-gradient-to-r from-blue-400 to-cyan-500 rounded-lg flex items-center justify-center shadow-lg">
+                      <Mail className="w-4 h-4 text-white" />
+                    </div>
+                    <div>
+                      <span className="text-gray-300 group-hover:text-cyan-400 transition-colors font-medium block text-sm">
+                        vimukthibudi0007@icloud.com
+                      </span>
+                      <span className="text-xs text-gray-400">Get in touch</span>
+                    </div>
+                  </div>
+                </motion.a>
+
+                {/* Opportunities Card */}
+                <motion.div
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: 0.2 }}
+                  className="flex items-center gap-3 p-3 rounded-lg backdrop-blur-2xl bg-gradient-to-br from-black/30 to-gray-900/30 border border-gray-700/50 hover:border-cyan-400/50 transition-all duration-300 relative overflow-hidden group"
+                >
+                  <div className="absolute inset-0 bg-gradient-to-br from-green-400 to-emerald-500 opacity-0 group-hover:opacity-10 transition-opacity duration-300" />
+                  <div className="relative z-10 flex items-center gap-3 w-full">
+                    <div className="w-8 h-8 bg-gradient-to-r from-green-400 to-emerald-500 rounded-lg flex items-center justify-center shadow-lg">
+                      <div className="w-3 h-3 bg-white rounded-full animate-pulse" />
+                    </div>
+                    <div>
+                      <span className="text-gray-300 group-hover:text-cyan-400 transition-colors font-medium block text-sm">
+                        Available for opportunities
+                      </span>
+                      <span className="text-xs text-gray-400">Open to work</span>
+                    </div>
+                  </div>
+                </motion.div>
+
+                <div className="flex gap-3">
+                  {/* Social Links */}
+                  <div className="flex space-x-2">
+                    <motion.a
+                      href="https://github.com/BOBBY01151"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-block"
+                      whileHover={{ scale: 1.1 }}
+                      whileTap={{ scale: 0.95 }}
+                    >
+                      <Button variant="ghost" size="sm" className="h-14 w-14 p-0 rounded-lg border border-gray-700/50 bg-black/30 hover:bg-cyan-500/10 hover:border-cyan-400/50">
+                        <Github className="w-6 h-6 text-gray-300 hover:text-cyan-400 transition-colors" />
+                      </Button>
+                    </motion.a>
+                    <motion.a
+                      href="https://www.linkedin.com/in/vimukthi-buddika-ba7a90310?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=ios_app"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-block"
+                      whileHover={{ scale: 1.1 }}
+                      whileTap={{ scale: 0.95 }}
+                    >
+                      <Button variant="ghost" size="sm" className="h-14 w-14 p-0 rounded-lg border border-gray-700/50 bg-black/30 hover:bg-cyan-500/10 hover:border-cyan-400/50">
+                        <Linkedin className="w-6 h-6 text-gray-300 hover:text-cyan-400 transition-colors" />
+                      </Button>
+                    </motion.a>
+                  </div>
+
+                  {/* Auth Actions - Login Button (Expanded) */}
+                  {!isAuthenticated && (
+                    <Link
+                      to={ROUTES.LOGIN}
+                      onClick={() => setIsOpen(false)}
+                      className="flex-1 flex items-center justify-center gap-3 p-3 rounded-lg backdrop-blur-2xl bg-gradient-to-br from-black/30 to-gray-900/30 border border-gray-700/50 hover:border-purple-400/50 transition-all duration-300 relative overflow-hidden group"
+                    >
+                      <div className="absolute inset-0 bg-gradient-to-br from-purple-400 to-pink-500 opacity-0 group-hover:opacity-10 transition-opacity duration-300" />
+                      <div className="relative z-10 flex items-center gap-2">
+                        <LogIn className="w-5 h-5 text-purple-400" />
+                        <span className="text-gray-300 group-hover:text-purple-400 transition-colors font-medium">Login</span>
+                      </div>
+                    </Link>
+                  )}
                 </div>
 
-                {/* Auth Actions */}
-                {isAuthenticated ? (
-                  <div className="space-y-2">
+                {isAuthenticated && (
+                  <div className="flex gap-2">
                     <Link
                       to={ROUTES.ADMIN}
-                      className="block px-4 py-3 text-base font-medium text-gray-300 hover:text-cyan-400 hover:bg-cyan-500/10 rounded-lg transition-colors"
+                      className="flex-1 block px-4 py-3 text-base font-medium text-gray-300 hover:text-cyan-400 hover:bg-cyan-500/10 rounded-lg transition-colors text-center border border-cyan-500/30"
                       onClick={() => setIsOpen(false)}
                     >
                       Admin
                     </Link>
                     <button
                       onClick={handleLogout}
-                      className="block w-full text-left px-4 py-3 text-base font-medium text-gray-300 hover:text-cyan-400 hover:bg-cyan-500/10 rounded-lg transition-colors"
+                      className="flex-1 block text-center px-4 py-3 text-base font-medium text-gray-300 hover:text-cyan-400 hover:bg-cyan-500/10 rounded-lg transition-colors border border-gray-700"
                     >
                       Logout
                     </button>
                   </div>
-                ) : (
-                  <Link
-                    to={ROUTES.LOGIN}
-                    className="block px-4 py-3 text-base font-medium text-gray-300 hover:text-cyan-400 hover:bg-cyan-500/10 rounded-lg transition-colors"
-                    onClick={() => setIsOpen(false)}
-                  >
-                    Login
-                  </Link>
                 )}
               </div>
             </div>
