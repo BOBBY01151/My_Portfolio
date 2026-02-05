@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { Cpu, Github, Linkedin, Menu, X, LogIn } from 'lucide-react'
@@ -12,6 +12,15 @@ const FuturisticNavbar = () => {
   const [isOpen, setIsOpen] = useState(false)
   const location = useLocation()
   const { isAuthenticated, logout } = useAuthStore()
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 768)
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 768)
+    }
+    window.addEventListener('resize', handleResize)
+    return () => window.removeEventListener('resize', handleResize)
+  }, [])
 
   const navigation = [
     { name: 'Home', href: ROUTES.HOME },
@@ -30,7 +39,7 @@ const FuturisticNavbar = () => {
       {/* Futuristic Navigation */}
       <nav className="fixed top-0 left-0 right-0 z-50 p-2 md:p-6">
         <motion.div
-          initial={{ y: -100, opacity: 0 }}
+          initial={isMobile ? { y: 0, opacity: 1 } : { y: -100, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ duration: 0.8 }}
           className="max-w-7xl mx-auto"
