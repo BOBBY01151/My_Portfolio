@@ -45,6 +45,7 @@ import { Section, SectionHeader, SectionContent } from '../../components/UI/Sect
 import { ROUTES, API_ENDPOINTS } from '../../lib/constants';
 import axiosInstance from '../../lib/axiosInstance';
 import profileImage from '../../Images/FBC1B388-7E93-4969-BED8-9EEDC798CD62_1_201_a.jpeg';
+import sliitImage from '../../Images/SLIIT.jpg';
 
 
 const HomeEnhanced = () => {
@@ -67,6 +68,7 @@ const HomeEnhanced = () => {
   // Enhanced parallax transforms
   const heroY = useTransform(scrollY, [0, 1000], [0, -300]);
   const heroScale = useTransform(scrollY, [0, 1000], [1, 1.1]);
+  const aboutY = useTransform(scrollY, [400, 1400], [0, -200]);
 
   const skillsY = useTransform(scrollY, [800, 1800], [0, -150]);
   const projectsY = useTransform(scrollY, [1200, 2200], [0, -100]);
